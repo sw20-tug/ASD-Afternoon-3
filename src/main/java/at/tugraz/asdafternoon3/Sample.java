@@ -1,3 +1,5 @@
+package at.tugraz.asdafternoon3;
+
 public class Sample {
 
     private String test;
