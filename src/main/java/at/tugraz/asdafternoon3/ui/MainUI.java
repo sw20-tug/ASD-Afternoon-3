@@ -5,6 +5,7 @@ import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import at.tugraz.asdafternoon3.data.Flat;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -64,7 +65,4 @@ public class MainUI {
         frame.setVisible(true);
     }
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-    }
 }
