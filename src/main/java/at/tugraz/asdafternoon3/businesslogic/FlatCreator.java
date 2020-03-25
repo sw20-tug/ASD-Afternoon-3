@@ -12,6 +12,21 @@ public class FlatCreator {
     }
 
     public boolean validateFlat(Flat flat) {
+        if (flat.getName().length() == 0) {
+            return false;
+        }
+
+        if (flat.getAddress().length() == 0) {
+            return false;
+        }
+
+        if (flat.getSize() == 0) {
+            return false;
+        }
+
+        // TODO: Name should not contain any special characters
+
+
         return true;
     }
 
