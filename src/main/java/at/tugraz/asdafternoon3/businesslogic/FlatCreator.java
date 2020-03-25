@@ -32,7 +32,7 @@ public class FlatCreator {
         for (int i=0; i < charArray.length; i++)
         {
             char ch = charArray[i];
-            if (!(ch >= 'A' && ch <= 'z'))
+            if (!((ch >= 'A' && ch <= 'z') || ch == ' '))
             {
                 return false;
             }
