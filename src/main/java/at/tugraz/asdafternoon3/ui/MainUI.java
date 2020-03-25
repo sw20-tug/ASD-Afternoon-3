@@ -42,6 +42,10 @@ public class MainUI {
         FlatCreator creator = new FlatCreator();
 
         try {
+            if(!creator.validateFlat(newFlat)) {
+                JOptionPane.showMessageDialog(contentPane, "Flat data is not valid");
+            }
+
             newFlat = creator.createFlat(newFlat);
             JOptionPane.showMessageDialog(contentPane, "Created flat with id " + newFlat.getId());
         } catch (SQLException e) {
