@@ -26,7 +26,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>at.tugraz.asdafternoon3.MainUI</mainClass>
+                            <mainClass>at.tugraz.asdafternoon3.ui.MainUI</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
