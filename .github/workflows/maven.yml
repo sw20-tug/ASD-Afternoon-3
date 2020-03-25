@@ -30,6 +30,7 @@ jobs:
         run: mvn -B package --file pom.xml
       - name: Create artifacts
         run: mkdir staging && cp target/*.jar staging
+      - name: Upload artifacts
         uses: actions/upload-artifact@v1
         with:
           name: Package
