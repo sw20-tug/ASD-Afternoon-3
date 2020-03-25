@@ -1,9 +1,12 @@
 package at.tugraz.asdafternoon3;
 
+import at.tugraz.asdafternoon3.data.Flat;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.support.DatabaseConnection;
+import com.j256.ormlite.table.TableUtils;
 import org.sqlite.util.StringUtils;
 
 import java.io.File;
@@ -30,9 +33,7 @@ public class DatabaseSample {
             DatabaseMetaData meta = con.getMetaData();
             ResultSet tables = meta.getTables(null, null, "flats", null);
             if (tables.next()) {
-                System.out.println("Database and tables found, continuing.");
-            } else {
-                migrate();
+                clean();
             }
 
         } catch (SQLException | IOException e) {
@@ -43,19 +44,33 @@ public class DatabaseSample {
     private void initOrm() {
         try {
             ConnectionSource connectionSource = new JdbcConnectionSource(databaseUrl);
-            // TODO
+            Dao<Flat, Integer> flatDao = DaoManager.createDao(connectionSource, Flat.class);
+            TableUtils.createTable(connectionSource, Flat.class);
+
+            Flat flat = new Flat("Test", 5, "Graz");
+            flatDao.create(flat);
+
+            System.out.println("created id " + flat.getId());
+
+            connectionSource.closeQuietly();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void migrate() throws SQLException, IOException {
+    private void runSqlFromFile(String filename) throws SQLException, IOException {
         // Run SQL files to create the necessary tables
-        Path path = Paths.get(getClass().getClassLoader().getResource("migrations/flats.sql").getFile());
+        Path path = Paths.get(getClass().getClassLoader().getResource(filename).getFile());
         String sql = StringUtils.join(Files.readAllLines(path), " ");
 
         Statement query = this.con.createStatement();
         query.executeUpdate(sql);
-        System.out.println("Table flats created");
+        query.close();
+    }
+
+    private void clean() throws SQLException, IOException {
+        runSqlFromFile("migrations/clean.sql");
+        System.out.println("Cleaned database");
     }
 }
