@@ -26,7 +26,6 @@ public class FlatCreator {
 
         // TODO: Name should not contain any special characters
 
-
         return true;
     }
 
