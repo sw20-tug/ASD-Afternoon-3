@@ -25,6 +25,18 @@ public class FlatCreator {
         }
 
         // TODO: Name should not contain any special characters
+        String str;
+        str = flat.getName().toLowerCase();
+
+        char[] charArray = str.toCharArray();
+        for (int i=0; i < charArray.length; i++)
+        {
+            char ch = charArray[i];
+            if (!(ch >= 'A' && ch <= 'z'))
+            {
+                return false;
+            }
+        }
 
         return true;
     }
