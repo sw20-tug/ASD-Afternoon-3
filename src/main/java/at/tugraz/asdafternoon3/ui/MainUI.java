@@ -1,5 +1,7 @@
 package at.tugraz.asdafternoon3.ui;
 
+import at.tugraz.asdafternoon3.database.DatabaseConnection;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +19,9 @@ public class MainUI {
     }
 
     public static void main(String[] args) {
+        // Database initialization
+        DatabaseConnection.getInstance().initOrm();
+
         JFrame frame = new JFrame("MainUI");
         frame.setContentPane(new MainUI().contentPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
