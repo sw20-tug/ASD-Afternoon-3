@@ -1,4 +1,4 @@
-package at.tugraz.asdafternoon3;
+package at.tugraz.asdafternoon3.ui;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
