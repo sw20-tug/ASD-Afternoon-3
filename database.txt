@@ -1,0 +1,58 @@
+CREATE TABLE FLATS (
+	flat_id INTEGER PRIMARY KEY,
+	name TEXT NOT NULL,
+	address TEXT,
+	flatsize INTEGER,
+	persons INTEGER NOT NULL,
+);
+
+CREATE TABLE ROOMMATES (
+	roommate_id INTEGER PRIMARY KEY,
+	flat_id INTEGER FOREIGN KEY,
+	name TEXT NOT NULL,
+	age INTEGER
+);
+
+CREATE TABLE SHOPPINGLISTS (
+	shoppinglist_id INTEGER PRIMARY KEY,
+	flat_id INTEGER FOREIGN KEY,
+	price INTEGER NOT NULL,
+	alreadydone INTEGER(0),
+);
+
+CREATE TABLE CLEANINGSCHEDULES (
+	cleaningschedules_ID INTEGER PRIMARY KEY,
+	roommate_id INTEGER FOREIGN KEY,
+	date TEXT NOT NULL
+);
+
+CREATE TABLE FINANCEEQUIPMENT (
+	financeequipment_id INTEGER PRIMARY KEY,
+	roomate_id INTEGER FOREIGN KEY,
+	buy_in_total_costs INTEGER
+);
+
+CREATE TABLE FINANCEITEM (
+	financeitem_id INTEGER PRIMARY KEY,
+	financeequipment_id INTEGER FOREIGN KEY,
+	name TEXT NOT NULL,
+	price INTEGER NOT NULL
+);
+
+CREATE TABLE FINANCEFLAT (
+	financeflat_id INTEGER PRIMARY KEY,
+	flat_id FOREIGN KEY,
+	roommate_id FOREIGN KEY,
+	rental_fee INTEGER(0),
+	smartphone_bill INTEGER(0),
+	energy_bill INTEGER(0),
+	internet_bill INTEGER(0),
+	tv_bill INTEGER(0)
+);
+
+CREATE TABLE FINANCEFLATITEM (
+	financeflatitem_id INTEGER PRIMARY KEY,
+	financeflat_id INTEGER FOREIGN KEY,
+	name TEXT NOT NULL,
+	price INTEGER NOT NULL
+);
