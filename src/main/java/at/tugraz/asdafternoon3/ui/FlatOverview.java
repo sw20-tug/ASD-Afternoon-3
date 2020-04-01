@@ -1,8 +1,10 @@
 package at.tugraz.asdafternoon3.ui;
 
+import at.tugraz.asdafternoon3.data.Flat;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import jdk.dynalink.StandardNamespace;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,16 +19,23 @@ public class FlatOverview {
     private JButton cleaningScheduleButton;
     private JButton financeFurnitureAndEquipmentButton;
     private JButton financeFlatButton;
+    private JTextArea taName;
+    private JTextArea taSize;
+    private JTextArea taAddress;
 
-    public FlatOverview() {
+    public FlatOverview()
+    {
+
     }
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("FlatOverview");
-        frame.setContentPane(new FlatOverview().contentPane);
+        FlatOverview overview = new FlatOverview();
+        frame.setContentPane(overview.contentPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+        overview.changeTexts();
     }
 
     public JPanel getContentPane() {
@@ -54,32 +63,53 @@ public class FlatOverview {
         main.setLayout(new BorderLayout(0, 0));
         contentPane.add(main, BorderLayout.CENTER);
         BasicOverview = new JPanel();
-        BasicOverview.setLayout(new GridLayoutManager(3, 6, new Insets(0, 0, 0, 0), -1, -1));
+        BasicOverview.setLayout(new GridLayoutManager(9, 4, new Insets(0, 0, 0, 0), -1, -1));
         BasicOverview.setBackground(new Color(-14078925));
         main.add(BasicOverview, BorderLayout.NORTH);
         final JLabel label1 = new JLabel();
-        label1.setBackground(new Color(-14078925));
-        Font label1Font = this.$$$getFont$$$(null, -1, 28, label1.getFont());
-        if (label1Font != null) label1.setFont(label1Font);
         label1.setForeground(new Color(-4145152));
-        label1.setText("Flat");
-        BasicOverview.add(label1, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        label1.setText("Name:");
+        BasicOverview.add(label1, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(68, 18), null, 0, false));
+        final JLabel label2 = new JLabel();
+        label2.setForeground(new Color(-4145152));
+        label2.setText("Size:");
+        BasicOverview.add(label2, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(68, 18), null, 0, false));
+        final JLabel label3 = new JLabel();
+        label3.setForeground(new Color(-4145152));
+        label3.setText("Address:");
+        BasicOverview.add(label3, new GridConstraints(8, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(68, 18), null, 0, false));
+        final JLabel label4 = new JLabel();
+        label4.setBackground(new Color(-14078925));
+        Font label4Font = this.$$$getFont$$$(null, -1, 28, label4.getFont());
+        if (label4Font != null) label4.setFont(label4Font);
+        label4.setForeground(new Color(-4145152));
+        label4.setText("Flat");
+        BasicOverview.add(label4, new GridConstraints(1, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
-        BasicOverview.add(spacer1, new GridConstraints(0, 1, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 35), new Dimension(-1, 35), new Dimension(-1, 35), 35, false));
+        BasicOverview.add(spacer1, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 35), new Dimension(358, 35), new Dimension(-1, 35), 35, false));
         final Spacer spacer2 = new Spacer();
-        BasicOverview.add(spacer2, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 5, false));
+        BasicOverview.add(spacer2, new GridConstraints(5, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 10), new Dimension(358, 10), new Dimension(-1, 10), 10, false));
         final Spacer spacer3 = new Spacer();
-        BasicOverview.add(spacer3, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 5, false));
+        BasicOverview.add(spacer3, new GridConstraints(7, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 10), new Dimension(358, 10), new Dimension(-1, 10), 10, false));
+        taName = new JTextArea();
+        taName.setEnabled(false);
+        taName.setText("");
+        BasicOverview.add(taName, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(358, 50), null, 0, false));
+        taSize = new JTextArea();
+        taSize.setEnabled(false);
+        BasicOverview.add(taSize, new GridConstraints(6, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(358, 50), null, 0, false));
+        taAddress = new JTextArea();
+        taAddress.setEnabled(false);
+        BasicOverview.add(taAddress, new GridConstraints(8, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(358, 50), null, 0, false));
         final Spacer spacer4 = new Spacer();
-        BasicOverview.add(spacer4, new GridConstraints(1, 3, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 5, false));
+        BasicOverview.add(spacer4, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 20, false));
         final Spacer spacer5 = new Spacer();
-        BasicOverview.add(spacer5, new GridConstraints(0, 4, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 5, false));
+        BasicOverview.add(spacer5, new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 20, false));
         final Spacer spacer6 = new Spacer();
-        BasicOverview.add(spacer6, new GridConstraints(2, 2, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 35), new Dimension(-1, 35), new Dimension(-1, 35), 35, false));
-        final Spacer spacer7 = new Spacer();
-        BasicOverview.add(spacer7, new GridConstraints(2, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 5, false));
-        final Spacer spacer8 = new Spacer();
-        BasicOverview.add(spacer8, new GridConstraints(2, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 5, false));
+        BasicOverview.add(spacer6, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 5, false));
+        final JLabel label5 = new JLabel();
+        label5.setText("test");
+        BasicOverview.add(label5, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         Navigation = new JPanel();
         Navigation.setLayout(new GridLayoutManager(11, 4, new Insets(0, 0, 0, 0), -1, -1));
         Navigation.setBackground(new Color(-14078925));
@@ -109,22 +139,22 @@ public class FlatOverview {
         button1.setForeground(new Color(-1));
         button1.setText("Roommates");
         Navigation.add(button1, new GridConstraints(1, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final Spacer spacer7 = new Spacer();
+        Navigation.add(spacer7, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 5, false));
+        final Spacer spacer8 = new Spacer();
+        Navigation.add(spacer8, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 5, false));
         final Spacer spacer9 = new Spacer();
-        Navigation.add(spacer9, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 5, false));
+        Navigation.add(spacer9, new GridConstraints(0, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 35), new Dimension(-1, 35), new Dimension(-1, 35), 35, false));
         final Spacer spacer10 = new Spacer();
-        Navigation.add(spacer10, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 5, false));
+        Navigation.add(spacer10, new GridConstraints(10, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 35), new Dimension(-1, 35), new Dimension(-1, 35), 35, false));
         final Spacer spacer11 = new Spacer();
-        Navigation.add(spacer11, new GridConstraints(0, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 35), new Dimension(-1, 35), new Dimension(-1, 35), 35, false));
+        Navigation.add(spacer11, new GridConstraints(8, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 20), new Dimension(-1, 20), new Dimension(-1, 20), 20, false));
         final Spacer spacer12 = new Spacer();
-        Navigation.add(spacer12, new GridConstraints(10, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 35), new Dimension(-1, 35), new Dimension(-1, 35), 35, false));
+        Navigation.add(spacer12, new GridConstraints(6, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 20), new Dimension(-1, 20), new Dimension(-1, 20), 20, false));
         final Spacer spacer13 = new Spacer();
-        Navigation.add(spacer13, new GridConstraints(8, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 20), new Dimension(-1, 20), new Dimension(-1, 20), 20, false));
+        Navigation.add(spacer13, new GridConstraints(4, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 20), new Dimension(-1, 20), new Dimension(-1, 20), 20, false));
         final Spacer spacer14 = new Spacer();
-        Navigation.add(spacer14, new GridConstraints(6, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 20), new Dimension(-1, 20), new Dimension(-1, 20), 20, false));
-        final Spacer spacer15 = new Spacer();
-        Navigation.add(spacer15, new GridConstraints(4, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 20), new Dimension(-1, 20), new Dimension(-1, 20), 20, false));
-        final Spacer spacer16 = new Spacer();
-        Navigation.add(spacer16, new GridConstraints(2, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 20), new Dimension(-1, 20), new Dimension(-1, 20), 20, false));
+        Navigation.add(spacer14, new GridConstraints(2, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 20), new Dimension(-1, 20), new Dimension(-1, 20), 20, false));
     }
 
     /**
@@ -152,4 +182,14 @@ public class FlatOverview {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
+    public void changeTexts()
+    {
+        Flat flat = new Flat("MYFLAT", 10, "GRAZ");
+
+        taName.setText(flat.getName());
+        taAddress.setText(flat.getAddress());
+        taSize.setText(String.format("%d", flat.getSize()));
+    }
+
 }

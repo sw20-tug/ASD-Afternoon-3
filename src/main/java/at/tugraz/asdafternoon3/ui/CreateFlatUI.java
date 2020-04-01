@@ -212,5 +212,4 @@ public class CreateFlatUI {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
 }
