@@ -45,16 +45,16 @@ public class DatabaseSample {
         try {
             ConnectionSource connectionSource = new JdbcConnectionSource(databaseUrl);
             Dao<Flat, Integer> flatDao = DaoManager.createDao(connectionSource, Flat.class);
-            TableUtils.createTable(connectionSource, Flat.class);
+            TableUtils.createTableIfNotExists(connectionSource, Flat.class);
 
             Flat flat = new Flat("Test", 5, "Graz");
             flatDao.create(flat);
 
             System.out.println("created id " + flat.getId());
 
-            connectionSource.closeQuietly();
+            connectionSource.close();
 
-        } catch (SQLException e) {
+        } catch (SQLException|IOException e) {
             e.printStackTrace();
         }
     }
