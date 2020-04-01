@@ -1,11 +1,7 @@
 package at.tugraz.asdafternoon3;
 
-import at.tugraz.asdafternoon3.ui.MainUI;
-import at.tugraz.asdafternoon3.data.Flat;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class FlatOverview {
     private JPanel panel1;
