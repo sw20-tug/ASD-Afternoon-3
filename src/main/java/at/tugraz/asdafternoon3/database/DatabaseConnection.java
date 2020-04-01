@@ -14,6 +14,7 @@ public class DatabaseConnection {
 
     private static final String databaseUrl = "jdbc:sqlite:flat.db"; // TODO: Check path
     private static DatabaseConnection conn = new DatabaseConnection();
+    private ConnectionSource connectionSource;
 
     // TODO: optimize
     private Dao<Flat, Integer> flatDao;
@@ -27,17 +28,22 @@ public class DatabaseConnection {
 
     public void initOrm() {
         try {
-            ConnectionSource connectionSource = new JdbcConnectionSource(databaseUrl);
+            connectionSource = new JdbcConnectionSource(databaseUrl);
             flatDao = DaoManager.createDao(connectionSource, Flat.class);
             TableUtils.createTableIfNotExists(connectionSource, Flat.class);
             System.out.println("Created flat table");
-            connectionSource.close();
-        } catch (SQLException| IOException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public Dao<Flat, Integer> getFlatDao() {
         return flatDao;
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        // TODO: Rethink the decision to use this method
+        connectionSource.close();
     }
 }
