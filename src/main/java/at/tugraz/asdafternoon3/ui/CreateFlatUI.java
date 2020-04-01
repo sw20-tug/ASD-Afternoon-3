@@ -48,10 +48,11 @@ public class CreateFlatUI {
             if (!creator.validateFlat(newFlat)) {
                 JOptionPane.showMessageDialog(contentPane, "Flat data is not valid");
             }
-
-            newFlat = creator.createFlat(newFlat);
-            JOptionPane.showMessageDialog(contentPane, "Created flat with id " + newFlat.getId());
-            FlatApplication.get().setContentPane(new FlatOverview().getContentPane());
+            else {
+                newFlat = creator.createFlat(newFlat);
+                JOptionPane.showMessageDialog(contentPane, "Created flat with id " + newFlat.getId());
+                FlatApplication.get().setContentPane(new FlatOverview().getContentPane());
+            }
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(contentPane, "Could not create flat");
