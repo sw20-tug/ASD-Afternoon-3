@@ -11,9 +11,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
-public class MainUI {
+public class CreateFlatUI {
     private JPanel contentPane;
     private JPanel Panel1;
     private JButton btCreateNewFlat;
@@ -22,7 +21,7 @@ public class MainUI {
     private JTextField tfSize;
     private JButton clickMeButton;
 
-    public MainUI() {
+    public CreateFlatUI() {
 
         btCreateNewFlat.addActionListener(new ActionListener() {
             @Override
@@ -64,7 +63,7 @@ public class MainUI {
         DatabaseConnection.getInstance().initOrm();
 
         JFrame frame = new JFrame("MainUI");
-        frame.setContentPane(new MainUI().contentPane);
+        frame.setContentPane(new CreateFlatUI().contentPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
@@ -160,7 +159,6 @@ public class MainUI {
         tfAddress = new JTextField();
         tfAddress.setBackground(new Color(-12632257));
         tfAddress.setCaretColor(new Color(-2103318));
-        tfAddress.setForeground(new Color(-2103318));
         panel3.add(tfAddress, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
@@ -175,7 +173,6 @@ public class MainUI {
         tfSize = new JTextField();
         tfSize.setBackground(new Color(-12632257));
         tfSize.setCaretColor(new Color(-2103318));
-        tfSize.setForeground(new Color(-2103318));
         panel4.add(tfSize, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JPanel panel5 = new JPanel();
         panel5.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -214,4 +211,5 @@ public class MainUI {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }
