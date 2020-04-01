@@ -1,6 +1,10 @@
 package at.tugraz.asdafternoon3;
 
-import at.tugraz.asdafternoon3.ui.MainUI;
+import at.tugraz.asdafternoon3.data.Flat;
+import at.tugraz.asdafternoon3.database.DatabaseConnection;
+import at.tugraz.asdafternoon3.ui.FlatOverview;
+import at.tugraz.asdafternoon3.ui.CreateFlatUI;
+import com.j256.ormlite.dao.Dao;
 
 import javax.swing.*;
 
@@ -21,8 +25,21 @@ public class FlatApplication {
 
     public FlatApplication() {
         try {
-            this.frame = new JFrame("MainUI");
-            frame.setContentPane(new MainUI().getContentPane());
+            // init database
+            DatabaseConnection db = DatabaseConnection.getInstance();
+            db.initOrm();
+            // create frame
+            this.frame = new JFrame("Flat Application");
+
+            // check if a flat is existing
+            Dao<Flat, Integer> flatDao = db.getFlatDao();
+            long flatEntryCount = flatDao.countOf();
+
+            if (flatEntryCount == 0) {
+                frame.setContentPane(new CreateFlatUI().getContentPane());
+            } else {
+                frame.setContentPane(new FlatOverview().getContentPane());
+            }
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
             frame.setVisible(true);
@@ -43,8 +60,6 @@ public class FlatApplication {
     }
 
     public static void main(String[] args) {
-        new FlatApplication();
+        FlatApplication.get();
     }
-
-
 }

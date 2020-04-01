@@ -11,9 +11,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
-public class MainUI {
+public class CreateFlatUI {
     private JPanel contentPane;
     private JPanel Panel1;
     private JButton btCreateNewFlat;
@@ -22,7 +21,7 @@ public class MainUI {
     private JTextField tfSize;
     private JButton clickMeButton;
 
-    public MainUI() {
+    public CreateFlatUI() {
 
         btCreateNewFlat.addActionListener(new ActionListener() {
             @Override
@@ -65,7 +64,7 @@ public class MainUI {
         DatabaseConnection.getInstance().initOrm();
 
         JFrame frame = new JFrame("MainUI");
-        frame.setContentPane(new MainUI().contentPane);
+        frame.setContentPane(new CreateFlatUI().contentPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
