@@ -37,7 +37,7 @@ public class Flats
 
     public void addFlat(Flat flat) throws Exception
     {
-        creator_.validateFlat(flat);
+        //creator_.validateFlat(flat);
 
         if (flats_.containsKey(flat.getId()))
         {
@@ -45,7 +45,7 @@ public class Flats
         }
 
         flats_.put(flat.getId(), flat);
-        creator_.createFlat(flat);
+        //creator_.createFlat(flat);
     }
 
 }
