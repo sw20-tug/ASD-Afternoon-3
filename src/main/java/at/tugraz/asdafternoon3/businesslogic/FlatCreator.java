@@ -44,12 +44,12 @@ public class FlatCreator extends Creator<Flat> {
     }
 
     @Override
-    public Flat create(Flat object) throws SQLException {
+    public Flat create(Flat object) throws Exception {
         Dao<Flat, Integer> dao = DatabaseConnection.getInstance().getFlatDao();
-        if(!validateFlat(flat)){
+        if(!validate(object)){
             return null;
         }
-        ensureUniqueCurrentFlat(flat);
+        ensureUniqueCurrentFlat(object);
         dao.create(object);
         return object;
     }
@@ -57,7 +57,7 @@ public class FlatCreator extends Creator<Flat> {
     public Flat updateFlat(Flat flat) throws Exception {
         Dao<Flat, Integer> dao = DatabaseConnection.getInstance().getFlatDao();
 
-        if(!validateFlat(flat)){
+        if(!validate(flat)){
             return null;
         }
         ensureUniqueCurrentFlat(flat);
