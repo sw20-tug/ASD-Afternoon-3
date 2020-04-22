@@ -44,15 +44,26 @@ public class FlatCreator {
         return true;
     }
 
-    public Flat createFlat(Flat flat) throws SQLException {
+    public Flat createFlat(Flat flat) throws Exception {
         Dao<Flat, Integer> dao = DatabaseConnection.getInstance().getFlatDao();
+        if(!validateFlat(flat)){
+            return null;
+        }
+        ensureUniqueCurrentFlat(flat);
         dao.create(flat);
         return flat;
     }
 
-    public Flat updateFlat(Flat flat) throws SQLException {
+    public Flat updateFlat(Flat flat) throws Exception {
         Dao<Flat, Integer> dao = DatabaseConnection.getInstance().getFlatDao();
+
+        if(!validateFlat(flat)){
+            return null;
+        }
+        ensureUniqueCurrentFlat(flat);
+
         int lines_changed = dao.update(flat);
+
         if(lines_changed == 0)
         {
             throw new SQLDataException("Flat not found");
@@ -76,5 +87,17 @@ public class FlatCreator {
             throw new Exception("More than one flats set as current");
         }
         return current_flats.get(0);
+    }
+
+    private void ensureUniqueCurrentFlat(Flat flat) throws Exception {
+        if(flat.isCurrent())
+        {
+            Flat possible_current_flat = getCurrentFlat();
+            if(possible_current_flat != null )
+            {
+                possible_current_flat.setIsCurrent(false);
+                updateFlat(possible_current_flat);
+            }
+        }
     }
 }
