@@ -3,9 +3,11 @@ package at.tugraz.asdafternoon3.businesslogic;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLDataException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class FlatCreator {
 
@@ -60,5 +62,19 @@ public class FlatCreator {
     }
 
 
-
+    public Flat getCurrentFlat() throws Exception {
+        Dao<Flat, Integer> dao = DatabaseConnection.getInstance().getFlatDao();
+        QueryBuilder<Flat, Integer> qb = dao.queryBuilder();
+        qb.where().eq("is_current", true);
+        List<Flat> current_flats = qb.query();
+        if (current_flats.size() == 0)
+        {
+            return null;
+        }
+        if (current_flats.size() > 1)
+        {
+            throw new Exception("More than one flats set as current");
+        }
+        return current_flats.get(0);
+    }
 }

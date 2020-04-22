@@ -74,5 +74,28 @@ public class FlatCreatorTest {
             assertTrue(false);
         }
     }
+    @Test
+    public void getCurrentFlat() {
+        Flat flat = new Flat("Chaos WG", 2, "Graz");
+        Flat current_flat;
+
+        FlatCreator creator = new FlatCreator();
+
+        try {
+            creator.createFlat(flat);
+            current_flat = creator.getCurrentFlat();
+            assertNull(current_flat );
+
+            flat.setIsCurrent(true);
+            creator.updateFlat(flat);
+            current_flat = creator.getCurrentFlat();
+            assertTrue(current_flat != null && current_flat.isCurrent());
+            //TODO:Delete flat
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            assertTrue(false);
+        }
+    }
 
 }
