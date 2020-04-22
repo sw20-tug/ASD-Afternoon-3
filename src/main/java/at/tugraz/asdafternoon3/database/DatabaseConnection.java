@@ -20,6 +20,8 @@ public class DatabaseConnection {
     private Dao<Flat, Integer> flatDao;
 
     private DatabaseConnection() {
+        initOrm();
+
     }
 
     public static DatabaseConnection getInstance() {

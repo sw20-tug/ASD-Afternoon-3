@@ -3,6 +3,8 @@ package at.tugraz.asdafternoon3.businesslogic;
 import at.tugraz.asdafternoon3.data.Flat;
 import org.junit.Test;
 
+import java.sql.SQLException;
+
 import static org.junit.Assert.*;
 
 public class FlatCreatorTest {
@@ -54,9 +56,23 @@ public class FlatCreatorTest {
     public void setFlatAsCurrentFlat() {
         Flat flat = new Flat("Chaos WG", 2, "Graz");
         FlatCreator creator = new FlatCreator();
-        flat.setIsCurrent(true);
-        flat = creator.updateFlat(flat);
-        assertTrue(flat.isCurrent());
+        try {
+            creator.createFlat(flat);
+
+            flat.setIsCurrent(true);
+
+            flat = creator.updateFlat(flat);
+            assertTrue(flat.isCurrent());
+            flat.setIsCurrent(false);
+
+            flat = creator.updateFlat(flat);
+            assertFalse(flat.isCurrent());
+            //TODO:Delete flat
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            assertTrue(false);
+        }
     }
 
 }

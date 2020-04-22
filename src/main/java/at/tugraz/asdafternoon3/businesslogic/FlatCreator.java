@@ -4,6 +4,7 @@ import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import com.j256.ormlite.dao.Dao;
 
+import java.sql.SQLDataException;
 import java.sql.SQLException;
 
 public class FlatCreator {
@@ -47,7 +48,14 @@ public class FlatCreator {
         return flat;
     }
 
-    public Flat updateFlat(Flat flat) {
+    public Flat updateFlat(Flat flat) throws SQLException {
+        Dao<Flat, Integer> dao = DatabaseConnection.getInstance().getFlatDao();
+        int lines_changed = dao.update(flat);
+        if(lines_changed == 0)
+        {
+            throw new SQLDataException("Flat not found");
+        }
+
         return flat;
     }
 
