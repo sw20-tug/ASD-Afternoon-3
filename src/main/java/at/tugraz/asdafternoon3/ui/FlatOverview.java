@@ -1,9 +1,11 @@
 package at.tugraz.asdafternoon3.ui;
 
 import at.tugraz.asdafternoon3.data.Flat;
+import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import com.j256.ormlite.dao.Dao;
 import jdk.dynalink.StandardNamespace;
 
 import javax.swing.*;
@@ -25,7 +27,7 @@ public class FlatOverview {
 
     public FlatOverview()
     {
-
+        setFlatInformation();
     }
 
     public static void main(String[] args) {
@@ -35,7 +37,6 @@ public class FlatOverview {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-        overview.changeTexts();
     }
 
     public JPanel getContentPane() {
@@ -183,13 +184,20 @@ public class FlatOverview {
         return contentPane;
     }
 
-    public void changeTexts()
+    public void setFlatInformation()
     {
-        Flat flat = new Flat("MYFLAT", 10, "GRAZ");
-
-        taName.setText(flat.getName());
-        taAddress.setText(flat.getAddress());
-        taSize.setText(String.format("%d", flat.getSize()));
+        try
+        {
+            Dao<Flat, Integer> dao = DatabaseConnection.getInstance().getFlatDao();
+            Flat flat = dao.queryForId(1);
+            taName.setText(flat.getName());
+            taAddress.setText(flat.getAddress());
+            taSize.setText(String.format("%d", flat.getSize()));
+        }
+        catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(contentPane, "Could not find flat");
+        }
     }
 
 }
