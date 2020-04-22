@@ -1,10 +1,12 @@
 package at.tugraz.asdafternoon3.data;
 
+import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "flats")
-public class Flat {
+public class Flat extends DatabaseObject {
     @DatabaseField()
     private String name;
 
@@ -19,6 +21,9 @@ public class Flat {
 
     @DatabaseField()
     private boolean is_current;
+
+    @ForeignCollectionField
+    ForeignCollection<Roommate> roommates;
 
     public Flat() {
         this.name = "";
@@ -57,6 +62,10 @@ public class Flat {
 
     public int getId() {
         return id;
+    }
+
+    public ForeignCollection<Roommate> getRoommates() {
+        return roommates;
     }
 
     @Override

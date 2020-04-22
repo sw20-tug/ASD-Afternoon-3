@@ -9,34 +9,33 @@ import java.sql.SQLDataException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class FlatCreator {
+public class FlatCreator extends Creator<Flat> {
 
     public FlatCreator() {
     }
-
-    public boolean validateFlat(Flat flat) {
-        if (flat.getName().length() == 0) {
+    
+    @Override
+    public boolean validate(Flat object) {
+        if (object.getName().length() == 0) {
             return false;
         }
 
-        if (flat.getAddress().length() == 0) {
+        if (object.getAddress().length() == 0) {
             return false;
         }
 
-        if (flat.getSize() == 0) {
+        if (object.getSize() == 0) {
             return false;
         }
 
         // TODO: Name should not contain any special characters
         String str;
-        str = flat.getName().toLowerCase();
+        str = object.getName().toLowerCase();
 
         char[] charArray = str.toCharArray();
-        for (int i=0; i < charArray.length; i++)
-        {
+        for (int i = 0; i < charArray.length; i++) {
             char ch = charArray[i];
-            if (!((ch >= 'A' && ch <= 'z') || ch == ' '))
-            {
+            if (!((ch >= 'A' && ch <= 'z') || ch == ' ')) {
                 return false;
             }
         }
@@ -44,14 +43,15 @@ public class FlatCreator {
         return true;
     }
 
-    public Flat createFlat(Flat flat) throws Exception {
+    @Override
+    public Flat create(Flat object) throws SQLException {
         Dao<Flat, Integer> dao = DatabaseConnection.getInstance().getFlatDao();
         if(!validateFlat(flat)){
             return null;
         }
         ensureUniqueCurrentFlat(flat);
-        dao.create(flat);
-        return flat;
+        dao.create(object);
+        return object;
     }
 
     public Flat updateFlat(Flat flat) throws Exception {
