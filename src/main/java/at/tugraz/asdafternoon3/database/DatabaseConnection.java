@@ -22,6 +22,8 @@ public class DatabaseConnection {
     private Dao<Roommate, Integer> roommateDao;
 
     private DatabaseConnection() {
+        initOrm();
+
     }
 
     public static DatabaseConnection getInstance() {
