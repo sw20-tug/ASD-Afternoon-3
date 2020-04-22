@@ -12,11 +12,9 @@ public class FlatModel implements TableModel {
 
     private List<Flat> flats = new ArrayList<>();
 
-    public FlatModel(){
+    public FlatModel(List<Flat> flats){
 
-        Flat testflat = new Flat("test", 10, "graz");
-        flats.add(testflat);
-
+        this.flats.addAll(flats);
     }
 
     @Override

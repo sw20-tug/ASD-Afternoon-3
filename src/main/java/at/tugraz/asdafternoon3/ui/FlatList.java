@@ -1,11 +1,13 @@
 package at.tugraz.asdafternoon3.ui;
 
+        import at.tugraz.asdafternoon3.database.DatabaseConnection;
         import com.intellij.uiDesigner.core.GridConstraints;
         import com.intellij.uiDesigner.core.GridLayoutManager;
         import com.intellij.uiDesigner.core.Spacer;
 
         import javax.swing.*;
         import java.awt.*;
+        import java.sql.SQLException;
         import javax.swing.table.DefaultTableModel;
 
 public class FlatList {
@@ -13,11 +15,25 @@ public class FlatList {
     private JPanel contentPane;
     private JTable flatTable;
 
+    public FlatList() {
+        FlatModel model = null;
+        try {
+            model = new FlatModel(DatabaseConnection.getInstance().getFlatDao().queryForAll());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        flatTable.setModel(model);
+        System.out.println("Hello, World!");
+    }
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
 
 
+    }
+
+    public JPanel getContentPane() {
+        return contentPane;
     }
 
     public static void main(String[] args) {
@@ -29,10 +45,6 @@ public class FlatList {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-
-
-        FlatModel model = new FlatModel();
-        overview.flatTable.setModel(model);
 
 
     }
