@@ -1,6 +1,8 @@
 package at.tugraz.asdafternoon3.data;
 
+import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "flats")
@@ -16,6 +18,9 @@ public class Flat extends DatabaseObject {
 
     @DatabaseField(generatedId = true)
     private int id;
+
+    @ForeignCollectionField
+    ForeignCollection<Roommate> roommates;
 
     public Flat() {
         this.name = "";
@@ -44,6 +49,10 @@ public class Flat extends DatabaseObject {
 
     public int getId() {
         return id;
+    }
+
+    public ForeignCollection<Roommate> getRoommates() {
+        return roommates;
     }
 
     @Override
