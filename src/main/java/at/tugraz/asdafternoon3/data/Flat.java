@@ -4,7 +4,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "flats")
-public class Flat {
+public class Flat extends DatabaseObject {
     @DatabaseField()
     private String name;
 
