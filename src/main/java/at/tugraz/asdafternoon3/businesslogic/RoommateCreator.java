@@ -1,31 +1,29 @@
 package at.tugraz.asdafternoon3.businesslogic;
 
 import at.tugraz.asdafternoon3.data.Flat;
+import at.tugraz.asdafternoon3.data.Roommate;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
 
-public class FlatCreator extends Creator<Flat> {
+public class RoommateCreator extends Creator<Roommate> {
 
-    public FlatCreator() {
+    public RoommateCreator() {
     }
-    
+
+
     @Override
-    public boolean validate(Flat object) {
-        if (object.getName().length() == 0) {
+    public boolean validate(Roommate object) {
+        int count = object.getName().split(" ").length;
+        if (count < 2) {
             return false;
         }
 
-        if (object.getAddress().length() == 0) {
+        if (object.getFlat() == null) {
             return false;
         }
 
-        if (object.getSize() == 0) {
-            return false;
-        }
-
-        // TODO: Name should not contain any special characters
         String str;
         str = object.getName().toLowerCase();
 
@@ -41,9 +39,8 @@ public class FlatCreator extends Creator<Flat> {
     }
 
     @Override
-    public Flat create(Flat object) throws SQLException {
-        Dao<Flat, Integer> dao = DatabaseConnection.getInstance().getFlatDao();
-        dao.create(object);
+    public Roommate create(Roommate object) throws SQLException {
+        DatabaseConnection.getInstance().getRoommateDao().create(object);
         return object;
     }
 }
