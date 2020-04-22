@@ -1,6 +1,7 @@
 package at.tugraz.asdafternoon3.database;
 
 import at.tugraz.asdafternoon3.data.Flat;
+import at.tugraz.asdafternoon3.data.Roommate;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
@@ -18,6 +19,7 @@ public class DatabaseConnection {
 
     // TODO: optimize
     private Dao<Flat, Integer> flatDao;
+    private Dao<Roommate, Integer> roommateDao;
 
     private DatabaseConnection() {
         initOrm();
@@ -34,6 +36,9 @@ public class DatabaseConnection {
             flatDao = DaoManager.createDao(connectionSource, Flat.class);
             TableUtils.createTableIfNotExists(connectionSource, Flat.class);
             System.out.println("Created flat table");
+            roommateDao = DaoManager.createDao(connectionSource, Roommate.class);
+            TableUtils.createTableIfNotExists(connectionSource, Roommate.class);
+            System.out.println("Created roommate table");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -41,6 +46,10 @@ public class DatabaseConnection {
 
     public Dao<Flat, Integer> getFlatDao() {
         return flatDao;
+    }
+
+    public Dao<Roommate, Integer> getRoommateDao() {
+        return roommateDao;
     }
 
     @Override
