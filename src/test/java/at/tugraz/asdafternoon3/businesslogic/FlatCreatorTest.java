@@ -49,4 +49,14 @@ public class FlatCreatorTest {
         FlatCreator creator = new FlatCreator();
         assertFalse(creator.validateFlat(flat));
     }
+
+    @Test
+    public void setFlatAsCurrentFlat() {
+        Flat flat = new Flat("Chaos WG", 2, "Graz");
+        FlatCreator creator = new FlatCreator();
+        flat.setIsCurrent(true);
+        flat = creator.updateFlat(flat);
+        assertTrue(flat.isCurrent());
+    }
+
 }

@@ -17,17 +17,22 @@ public class Flat {
     @DatabaseField(generatedId = true)
     private int id;
 
+    @DatabaseField()
+    private boolean is_current;
+
     public Flat() {
         this.name = "";
         this.size = 0;
         this.address = "";
         this.id = 0;
+        this.is_current = false;
     }
 
     public Flat(String name, int size, String address) {
         this.name = name;
         this.size = size;
         this.address = address;
+        this.is_current = false;
     }
 
     public String getName() {
@@ -36,6 +41,14 @@ public class Flat {
 
     public int getSize() {
         return size;
+    }
+
+    public boolean isCurrent() {
+        return is_current;
+    }
+
+    public void setIsCurrent(boolean state) {
+        is_current = state;
     }
 
     public String getAddress() {

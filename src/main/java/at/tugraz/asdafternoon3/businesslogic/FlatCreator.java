@@ -46,4 +46,11 @@ public class FlatCreator {
         dao.create(flat);
         return flat;
     }
+
+    public Flat updateFlat(Flat flat) {
+        return flat;
+    }
+
+
+
 }
