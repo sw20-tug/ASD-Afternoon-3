@@ -42,9 +42,10 @@ public class CreateFlatUI {
         }
 
         newFlat = new Flat(tfName.getText(), size, tfAddress.getText());
-        FlatDAO creator = new FlatDAO();
 
         try {
+            FlatDAO creator = DatabaseConnection.getInstance().createDao(FlatDAO.class);
+
             if (!creator.validate(newFlat)) {
                 JOptionPane.showMessageDialog(contentPane, "Flat data is not valid");
             }
@@ -60,9 +61,6 @@ public class CreateFlatUI {
     }
 
     public static void main(String[] args) {
-        // Database initialization
-        DatabaseConnection.getInstance().initOrm();
-
         JFrame frame = new JFrame("MainUI");
         frame.setContentPane(new CreateFlatUI().contentPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

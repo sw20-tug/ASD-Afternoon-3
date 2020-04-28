@@ -12,8 +12,6 @@ import java.util.Set;
 public class DatabaseSample {
 
     public static void main(String[] args) {
-        DatabaseConnection.getInstance().initOrm();
-
         DatabaseSample sample = new DatabaseSample();
         sample.createSample();
     }

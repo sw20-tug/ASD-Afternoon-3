@@ -5,6 +5,7 @@ import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import at.tugraz.asdafternoon3.ui.FlatOverview;
 import at.tugraz.asdafternoon3.ui.CreateFlatUI;
+import org.hibernate.dialect.Database;
 
 import javax.swing.*;
 
@@ -25,14 +26,11 @@ public class FlatApplication {
 
     public FlatApplication() {
         try {
-            // init database
-            DatabaseConnection db = DatabaseConnection.getInstance();
-            db.initOrm();
             // create frame
             this.frame = new JFrame("Flat Application");
 
             // Check if a flat is existing
-            long flatEntryCount = new FlatDAO().count();
+            long flatEntryCount = DatabaseConnection.getInstance().createDao(FlatDAO.class).count();
 
             if (flatEntryCount == 0) {
                 frame.setContentPane(new CreateFlatUI().getContentPane());

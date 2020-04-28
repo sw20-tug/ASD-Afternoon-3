@@ -18,7 +18,7 @@ public class FlatList {
 
     public FlatList() {
         try {
-            FlatModel model = new FlatModel(new FlatDAO().getAll());
+            FlatModel model = new FlatModel(DatabaseConnection.getInstance().createDao(FlatDAO.class).getAll());
             flatTable.setModel(model);
         } catch (Exception e) {
             // TODO

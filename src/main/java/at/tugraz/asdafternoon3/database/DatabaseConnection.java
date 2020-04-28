@@ -1,8 +1,10 @@
 package at.tugraz.asdafternoon3.database;
 
-import org.hibernate.Session;
+import at.tugraz.asdafternoon3.businesslogic.DAO;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
+import java.lang.reflect.InvocationTargetException;
 
 public class DatabaseConnection {
 
@@ -16,22 +18,14 @@ public class DatabaseConnection {
         return conn;
     }
 
-    public void initOrm() {
-        sessionFactory = new Configuration().configure().buildSessionFactory();
-    }
-
     public SessionFactory getSessionFactory() {
+        if (sessionFactory == null) {
+            sessionFactory = new Configuration().configure().buildSessionFactory();
+        }
         return sessionFactory;
     }
 
-    public Session openSession() {
-        return sessionFactory.openSession();
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        // TODO: Rethink the decision to use this method
-        // Don't do this..
-        // sessionFactory.close();
+    public <T extends DAO> T createDao(Class<T> type) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        return type.getDeclaredConstructor(SessionFactory.class).newInstance(getSessionFactory());
     }
 }

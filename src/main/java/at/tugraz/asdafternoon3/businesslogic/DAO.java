@@ -1,10 +1,27 @@
 package at.tugraz.asdafternoon3.businesslogic;
 
 import at.tugraz.asdafternoon3.data.DatabaseObject;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 import java.util.List;
 
 public abstract class DAO<T extends DatabaseObject> {
+
+    protected final SessionFactory sessionFactory;
+
+    protected DAO(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    /**
+     * Opens a new session, to be used in the implementations
+     *
+     * @return a session
+     */
+    public Session openSession() {
+        return sessionFactory.openSession();
+    }
 
     /**
      * Validates the parameter of the object.

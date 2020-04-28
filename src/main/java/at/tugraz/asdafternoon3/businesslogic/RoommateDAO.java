@@ -1,9 +1,10 @@
 package at.tugraz.asdafternoon3.businesslogic;
 
-import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.data.Roommate;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -12,6 +13,10 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class RoommateDAO extends DAO<Roommate> {
+
+    public RoommateDAO(SessionFactory sessionFactory) {
+        super(sessionFactory);
+    }
 
     @Override
     public boolean validate(Roommate object) {
@@ -37,8 +42,10 @@ public class RoommateDAO extends DAO<Roommate> {
             return null;
         }
 
-        try (Session session = DatabaseConnection.getInstance().openSession()) {
+        try (Session session = openSession()) {
+            Transaction t = session.beginTransaction();
             session.persist(object);
+            t.commit();
         }
 
         return object;
@@ -51,7 +58,7 @@ public class RoommateDAO extends DAO<Roommate> {
 
     @Override
     public List<Roommate> getAll() throws Exception {
-        try (Session session = DatabaseConnection.getInstance().openSession()) {
+        try (Session session = openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<Roommate> cr = cb.createQuery(Roommate.class);
             Root<Roommate> root = cr.from(Roommate.class);
@@ -63,7 +70,7 @@ public class RoommateDAO extends DAO<Roommate> {
 
     @Override
     public Long count() throws Exception {
-        try (Session session = DatabaseConnection.getInstance().openSession()) {
+        try (Session session = openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<Long> cr = cb.createQuery(Long.class);
             Root<Roommate> root = cr.from(Roommate.class);
