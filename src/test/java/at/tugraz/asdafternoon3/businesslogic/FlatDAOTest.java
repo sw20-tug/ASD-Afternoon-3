@@ -3,17 +3,15 @@ package at.tugraz.asdafternoon3.businesslogic;
 import at.tugraz.asdafternoon3.data.Flat;
 import org.junit.Test;
 
-import java.sql.SQLException;
-
 import static org.junit.Assert.*;
 
-public class FlatCreatorTest {
+public class FlatDAOTest {
 
     @Test
     public void createFlatValid() {
         Flat flat = new Flat("Chaos WG", 2, "Graz");
 
-        FlatCreator creator = new FlatCreator();
+        FlatDAO creator = new FlatDAO();
         assertTrue(creator.validate(flat));
 
         // TODO: Mocking
@@ -24,7 +22,7 @@ public class FlatCreatorTest {
     public void createFlatInvalidSize() {
         Flat flat = new Flat("Chaos WG", 0, "Graz");
 
-        FlatCreator creator = new FlatCreator();
+        FlatDAO creator = new FlatDAO();
         assertFalse(creator.validate(flat));
     }
 
@@ -32,7 +30,7 @@ public class FlatCreatorTest {
     public void createFlatInvalidName() {
         Flat flat = new Flat("", 2, "Graz");
 
-        FlatCreator creator = new FlatCreator();
+        FlatDAO creator = new FlatDAO();
         assertFalse(creator.validate(flat));
     }
 
@@ -40,7 +38,7 @@ public class FlatCreatorTest {
     public void createFlatInvalidAddress() {
         Flat flat = new Flat("Chaos WG", 2, "");
 
-        FlatCreator creator = new FlatCreator();
+        FlatDAO creator = new FlatDAO();
         assertFalse(creator.validate(flat));
     }
 
@@ -48,7 +46,7 @@ public class FlatCreatorTest {
     public void createFlatNameWithInvalidCharacters() {
         Flat flat = new Flat("Chaos WG????", 2, "Graz");
 
-        FlatCreator creator = new FlatCreator();
+        FlatDAO creator = new FlatDAO();
         assertFalse(creator.validate(flat));
     }
 

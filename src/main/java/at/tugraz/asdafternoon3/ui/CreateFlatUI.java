@@ -1,7 +1,7 @@
 package at.tugraz.asdafternoon3.ui;
 
 import at.tugraz.asdafternoon3.FlatApplication;
-import at.tugraz.asdafternoon3.businesslogic.FlatCreator;
+import at.tugraz.asdafternoon3.businesslogic.FlatDAO;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import at.tugraz.asdafternoon3.data.Flat;
 import com.intellij.uiDesigner.core.GridConstraints;
@@ -42,7 +42,7 @@ public class CreateFlatUI {
         }
 
         newFlat = new Flat(tfName.getText(), size, tfAddress.getText());
-        FlatCreator creator = new FlatCreator();
+        FlatDAO creator = new FlatDAO();
 
         try {
             if (!creator.validate(newFlat)) {

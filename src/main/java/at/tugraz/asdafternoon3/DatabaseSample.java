@@ -1,45 +1,55 @@
 package at.tugraz.asdafternoon3;
 
 import at.tugraz.asdafternoon3.data.Flat;
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
-import com.j256.ormlite.support.ConnectionSource;
-import com.j256.ormlite.support.DatabaseConnection;
-import com.j256.ormlite.table.TableUtils;
-import org.sqlite.util.StringUtils;
+import at.tugraz.asdafternoon3.data.Roommate;
+import at.tugraz.asdafternoon3.database.DatabaseConnection;
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.*;
+import java.util.Set;
 
 public class DatabaseSample {
 
-    private static final String databaseUrl = "jdbc:sqlite:flat.db"; // TODO: Check path
-
     public static void main(String[] args) {
+        DatabaseConnection.getInstance().initOrm();
+
         DatabaseSample sample = new DatabaseSample();
-        sample.initOrm();
+        sample.createSample();
     }
 
-    private void initOrm() {
-        try {
-            ConnectionSource connectionSource = new JdbcConnectionSource(databaseUrl);
-            Dao<Flat, Integer> flatDao = DaoManager.createDao(connectionSource, Flat.class);
-            TableUtils.createTableIfNotExists(connectionSource, Flat.class);
-
+    private void createSample() {
+        try (SessionFactory factory = DatabaseConnection.getInstance().getSessionFactory()) {
             Flat flat = new Flat("Test", 5, "Graz");
-            flatDao.create(flat);
+            Session session = factory.openSession();
+
+            session.beginTransaction();
+            session.persist(flat);
 
             System.out.println("created id " + flat.getId());
 
-            connectionSource.close();
+            Roommate r1 = new Roommate("Anna", flat);
+            Roommate r2 = new Roommate("Paul", flat);
 
-        } catch (SQLException|IOException e) {
-            e.printStackTrace();
+            session.persist(r1);
+            session.persist(r2);
+
+            session.getTransaction().commit();
+
+            System.out.println("created roommates " + r1.getId() + ", " + r2.getId());
+            session.close();
+
+            // --------
+
+            Session session1 = factory.openSession();
+            Flat flat1 = session1.get(Flat.class, flat.getId());
+
+            Set<Roommate> list = flat1.getRoommates();
+            for (Roommate roommate : list) {
+                System.out.println("roommate = " + roommate.getName());
+            }
+
+            session1.close();
         }
     }
 }

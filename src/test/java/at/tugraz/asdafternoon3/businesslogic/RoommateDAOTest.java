@@ -7,16 +7,14 @@ import org.junit.Test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class RoommateCreatorTest {
-
-
+public class RoommateDAOTest {
 
     @Test
     public void createRoommateValid() {
         Flat flat = generateTestFlat();
         Roommate roommate = new Roommate("Liki Norber", flat);
 
-        RoommateCreator creator = new RoommateCreator();
+        RoommateDAO creator = new RoommateDAO();
         assertTrue(creator.validate(roommate));
     }
 
@@ -25,7 +23,7 @@ public class RoommateCreatorTest {
         Flat flat = generateTestFlat();
         Roommate roommate = new Roommate("icecreamforcrow", flat);
 
-        RoommateCreator creator = new RoommateCreator();
+        RoommateDAO creator = new RoommateDAO();
         assertFalse(creator.validate(roommate));
     }
 
@@ -34,7 +32,7 @@ public class RoommateCreatorTest {
         Flat flat = generateTestFlat();
         Roommate roommate = new Roommate("blueöystercult", flat);
 
-        RoommateCreator creator = new RoommateCreator();
+        RoommateDAO creator = new RoommateDAO();
         assertFalse(creator.validate(roommate));
     }
 
@@ -42,7 +40,7 @@ public class RoommateCreatorTest {
     public void createRoommateNoFlat() {
         Roommate roommate = new Roommate("Andi Goldberger", null);
 
-        RoommateCreator creator = new RoommateCreator();
+        RoommateDAO creator = new RoommateDAO();
         assertFalse(creator.validate(roommate));
     }
 
