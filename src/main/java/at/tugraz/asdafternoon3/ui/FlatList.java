@@ -1,6 +1,7 @@
 package at.tugraz.asdafternoon3.ui;
 
 import at.tugraz.asdafternoon3.businesslogic.FlatDAO;
+import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -30,7 +31,7 @@ public class FlatList {
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-               addFlatClicked();
+                addFlatClicked();
             }
         });
         removeButton.addActionListener(new ActionListener() {
@@ -47,8 +48,7 @@ public class FlatList {
         });
     }
 
-    private void addFlatClicked()
-    {
+    private void addFlatClicked() {
         /*CreateFlatUI createUi = new CreateFlatUI();
         JFrame frame = new JFrame("Add Flat");
         frame.setContentPane(createUi.getContentPane());
@@ -59,10 +59,21 @@ public class FlatList {
 
     }
 
-    private void deleteFlatClicked()
-    {
+    private void deleteFlatClicked() {
         int selectedRow = flatTable.getSelectedRow();
-        int selectedFlatId = (int) flatTable.getModel().getValueAt(selectedRow, 0);
+        Flat selectedFlat = ((FlatModel) flatTable.getModel()).getElement(selectedRow);
+
+        try {
+            FlatDAO creator = DatabaseConnection.getInstance().createDao(FlatDAO.class);
+            creator.delete(selectedFlat);
+            ((FlatModel) flatTable.getModel()).removeFlat(selectedRow);
+            ((FlatModel) flatTable.getModel()).fireTableDataChanged();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(contentPane, "Could not delete flat");
+        }
+
+
     }
 
     private void setToCurrentClicked() {

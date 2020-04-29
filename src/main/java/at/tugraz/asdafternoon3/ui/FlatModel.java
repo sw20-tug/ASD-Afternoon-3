@@ -2,16 +2,19 @@ package at.tugraz.asdafternoon3.ui;
 
 import at.tugraz.asdafternoon3.data.Flat;
 
+import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class FlatModel implements TableModel {
+public class FlatModel extends AbstractTableModel {
 
     private List<Flat> flats = new ArrayList<>();
-
+    private final List<TableModelListener> listeners = new ArrayList<>();
     public FlatModel(List<Flat> flats){
 
         this.flats.addAll(flats);
@@ -79,11 +82,42 @@ public class FlatModel implements TableModel {
 
     @Override
     public void addTableModelListener(TableModelListener l) {
-
+        listeners.add(l);
     }
 
     @Override
     public void removeTableModelListener(TableModelListener l) {
-
+        listeners.add(l);
     }
+
+    public Flat getElement(int rowIndex) {
+        return flats.get(rowIndex);
+    }
+
+    public void addFlat(Flat flat) {
+        int rowIndex = flats.size();
+        flats.add(flat);
+
+        TableModelEvent event = new TableModelEvent(
+                this, rowIndex, rowIndex, TableModelEvent.ALL_COLUMNS, TableModelEvent.INSERT);
+
+        emitTableChanged(event);
+    }
+
+    public void removeFlat(int rowIndex) {
+        flats.remove(rowIndex);
+
+        TableModelEvent event = new TableModelEvent(
+                this, rowIndex, rowIndex, TableModelEvent.ALL_COLUMNS, TableModelEvent.DELETE);
+
+        emitTableChanged(event);
+    }
+    private void emitTableChanged(TableModelEvent event) {
+        for (TableModelListener listener : listeners) {
+            listener.tableChanged(event);
+        }
+    }
+
+
+
 }
