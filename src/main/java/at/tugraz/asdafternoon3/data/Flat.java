@@ -14,7 +14,7 @@ public class Flat extends DatabaseObject {
     private String name;
 
     @Column
-    private int size;
+    private Integer size;
 
     @Column
     private String address;
@@ -44,7 +44,7 @@ public class Flat extends DatabaseObject {
         return name;
     }
 
-    public int getSize() {
+    public Integer getSize() {
         return size;
     }
 

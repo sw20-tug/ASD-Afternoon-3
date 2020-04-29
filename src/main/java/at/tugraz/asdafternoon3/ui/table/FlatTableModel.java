@@ -1,4 +1,4 @@
-package at.tugraz.asdafternoon3.ui;
+package at.tugraz.asdafternoon3.ui.table;
 
 import at.tugraz.asdafternoon3.data.Flat;
 
@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class FlatModel extends AbstractTableModel {
+public class FlatTableModel extends AbstractTableModel {
 
     private List<Flat> flats = new ArrayList<>();
     private final List<TableModelListener> listeners = new ArrayList<>();
-    public FlatModel(List<Flat> flats){
+    public FlatTableModel(List<Flat> flats){
 
         this.flats.addAll(flats);
     }
@@ -32,7 +32,7 @@ public class FlatModel extends AbstractTableModel {
 
     @Override
     public String getColumnName(int columnIndex) {
-        switch( columnIndex ) {
+        switch (columnIndex) {
             case 0:
                 return "Id";
             case 1:

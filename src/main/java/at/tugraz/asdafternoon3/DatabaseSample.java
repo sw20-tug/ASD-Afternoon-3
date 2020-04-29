@@ -26,8 +26,8 @@ public class DatabaseSample {
 
             System.out.println("created id " + flat.getId());
 
-            Roommate r1 = new Roommate("Anna", flat);
-            Roommate r2 = new Roommate("Paul", flat);
+            Roommate r1 = new Roommate("Anna", 12, flat);
+            Roommate r2 = new Roommate("Paul", 22, flat);
 
             session.persist(r1);
             session.persist(r2);

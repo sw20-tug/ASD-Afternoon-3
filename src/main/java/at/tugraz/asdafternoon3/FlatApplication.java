@@ -1,5 +1,6 @@
 package at.tugraz.asdafternoon3;
 
+import at.tugraz.asdafternoon3.businesslogic.DAO;
 import at.tugraz.asdafternoon3.businesslogic.FlatDAO;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
@@ -30,12 +31,14 @@ public class FlatApplication {
             this.frame = new JFrame("Flat Application");
 
             // Check if a flat is existing
-            long flatEntryCount = DatabaseConnection.getInstance().createDao(FlatDAO.class).count();
+            FlatDAO flatDao = DatabaseConnection.getInstance().createDao(FlatDAO.class);
+            long flatEntryCount = flatDao.count();
 
             if (flatEntryCount == 0) {
                 frame.setContentPane(new CreateFlatUI().getContentPane());
             } else {
-                frame.setContentPane(new FlatOverview().getContentPane());
+                Flat flat = flatDao.getCurrentFlat();
+                frame.setContentPane(new FlatOverview(flat).getContentPane());
             }
 
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

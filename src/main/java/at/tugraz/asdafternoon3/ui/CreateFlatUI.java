@@ -51,20 +51,12 @@ public class CreateFlatUI {
             } else {
                 newFlat = creator.create(newFlat);
                 JOptionPane.showMessageDialog(contentPane, "Created flat with id " + newFlat.getId());
-                FlatApplication.get().setContentPane(new FlatOverview().getContentPane());
+                FlatApplication.get().setContentPane(new FlatOverview(newFlat).getContentPane());
             }
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(contentPane, "Could not create flat");
         }
-    }
-
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("MainUI");
-        frame.setContentPane(new CreateFlatUI().contentPane);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
     }
 
     public JPanel getContentPane() {

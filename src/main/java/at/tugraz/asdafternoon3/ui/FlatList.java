@@ -4,6 +4,7 @@ import at.tugraz.asdafternoon3.FlatApplication;
 import at.tugraz.asdafternoon3.businesslogic.FlatDAO;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
+import at.tugraz.asdafternoon3.ui.table.FlatTableModel;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -26,7 +27,7 @@ public class FlatList {
 
     public FlatList() {
         try {
-            FlatModel model = new FlatModel(DatabaseConnection.getInstance().createDao(FlatDAO.class).getAll());
+            FlatTableModel model = new FlatTableModel(DatabaseConnection.getInstance().createDao(FlatDAO.class).getAll());
             flatTable.setModel(model);
         } catch (Exception e) {
             // TODO
@@ -64,7 +65,7 @@ public class FlatList {
                 JOptionPane.showMessageDialog(contentPane, "Flat data is not valid");
             } else {
                 newFlat = creator.create(newFlat);
-                ((FlatModel) flatTable.getModel()).addFlat(newFlat);
+                ((FlatTableModel) flatTable.getModel()).addFlat(newFlat);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,12 +76,12 @@ public class FlatList {
     private void deleteFlatClicked() {
         try {
             int selectedRow = flatTable.getSelectedRow();
-            Flat selectedFlat = ((FlatModel) flatTable.getModel()).getElement(selectedRow);
+            Flat selectedFlat = ((FlatTableModel) flatTable.getModel()).getElement(selectedRow);
 
             FlatDAO creator = DatabaseConnection.getInstance().createDao(FlatDAO.class);
             creator.delete(selectedFlat);
-            ((FlatModel) flatTable.getModel()).removeFlat(selectedRow);
-            ((FlatModel) flatTable.getModel()).fireTableDataChanged();
+            ((FlatTableModel) flatTable.getModel()).removeFlat(selectedRow);
+            ((FlatTableModel) flatTable.getModel()).fireTableDataChanged();
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(contentPane, "Could not delete flat");
@@ -92,13 +93,13 @@ public class FlatList {
     private void setToCurrentClicked() {
         try {
             int selectedRow = flatTable.getSelectedRow();
-            Flat selectedFlat = ((FlatModel) flatTable.getModel()).getElement(selectedRow);
+            Flat selectedFlat = ((FlatTableModel) flatTable.getModel()).getElement(selectedRow);
             selectedFlat.setIsCurrent(true);
             FlatDAO creator = DatabaseConnection.getInstance().createDao(FlatDAO.class);
             creator.update(selectedFlat);
-            FlatModel model = new FlatModel(DatabaseConnection.getInstance().createDao(FlatDAO.class).getAll());
+            FlatTableModel model = new FlatTableModel(DatabaseConnection.getInstance().createDao(FlatDAO.class).getAll());
             flatTable.setModel(model);
-            ((FlatModel) flatTable.getModel()).fireTableDataChanged();
+            ((FlatTableModel) flatTable.getModel()).fireTableDataChanged();
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(contentPane, "Could not set flat to current flat");
@@ -212,5 +213,4 @@ public class FlatList {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
 }

@@ -1,6 +1,9 @@
 package at.tugraz.asdafternoon3.businesslogic;
 
 import at.tugraz.asdafternoon3.data.Flat;
+import at.tugraz.asdafternoon3.data.Roommate;
+import at.tugraz.asdafternoon3.database.DatabaseConnection;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -10,6 +13,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Set;
 
 public class FlatDAO extends DAO<Flat> {
 
@@ -96,6 +100,15 @@ public class FlatDAO extends DAO<Flat> {
         }
     }
 
+    @Override
+    public void delete(Flat object) throws Exception {
+        try (Session session = openSession()) {
+            Transaction t = session.beginTransaction();
+            session.delete(object);
+            t.commit();
+        }
+    }
+
     public Flat getCurrentFlat() throws Exception {
         try (Session session = openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -128,14 +141,15 @@ public class FlatDAO extends DAO<Flat> {
         }
     }
 
-    @Override
-    public void delete(Flat object) throws Exception {
+    public List<Roommate> getRoommates(Flat flat) {
         try (Session session = openSession()) {
-            Transaction t = session.beginTransaction();
-            session.delete(object);
-            t.commit();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Roommate> cr = cb.createQuery(Roommate.class);
+            Root<Roommate> root = cr.from(Roommate.class);
+            cr.select(root);
+            cr.where(cb.equal(root.get("flat"), flat));
+            Query<Roommate> query = session.createQuery(cr);
+            return query.getResultList();
         }
-
-
     }
 }
