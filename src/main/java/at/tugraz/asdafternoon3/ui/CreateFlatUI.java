@@ -42,7 +42,7 @@ public class CreateFlatUI {
         }
 
         newFlat = new Flat(tfName.getText(), size, tfAddress.getText());
-
+        newFlat.setIsCurrent(true);
         try {
             FlatDAO creator = DatabaseConnection.getInstance().createDao(FlatDAO.class);
 

@@ -7,6 +7,7 @@ import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import at.tugraz.asdafternoon3.ui.table.FlatTableModel;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,9 +25,12 @@ public class FlatList {
     private JTextField tfName;
     private JTextField tfAddress;
     private JTextField tfSize;
+    private JButton backButton;
+    private Flat currentFlat;
 
-    public FlatList() {
+    public FlatList(Flat flat) {
         try {
+            currentFlat = flat;
             FlatTableModel model = new FlatTableModel(DatabaseConnection.getInstance().createDao(FlatDAO.class).getAll());
             flatTable.setModel(model);
         } catch (Exception e) {
@@ -49,6 +53,12 @@ public class FlatList {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 setToCurrentClicked();
+            }
+        });
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FlatApplication.get().setContentPane(new FlatOverview(currentFlat).getContentPane());
             }
         });
     }
@@ -77,14 +87,16 @@ public class FlatList {
         try {
             int selectedRow = flatTable.getSelectedRow();
             Flat selectedFlat = ((FlatTableModel) flatTable.getModel()).getElement(selectedRow);
-
+            if(selectedFlat.isCurrent()){
+                throw new Exception("Cannot delete current flat");
+            }
             FlatDAO creator = DatabaseConnection.getInstance().createDao(FlatDAO.class);
             creator.delete(selectedFlat);
             ((FlatTableModel) flatTable.getModel()).removeFlat(selectedRow);
             ((FlatTableModel) flatTable.getModel()).fireTableDataChanged();
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(contentPane, "Could not delete flat");
+            JOptionPane.showMessageDialog(contentPane, "Could not delete flat " + e.getMessage());
         }
 
 
@@ -100,6 +112,7 @@ public class FlatList {
             FlatTableModel model = new FlatTableModel(DatabaseConnection.getInstance().createDao(FlatDAO.class).getAll());
             flatTable.setModel(model);
             ((FlatTableModel) flatTable.getModel()).fireTableDataChanged();
+            currentFlat = selectedFlat;
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(contentPane, "Could not set flat to current flat");
@@ -117,7 +130,8 @@ public class FlatList {
     public static void main(String[] args) {
 
         JFrame frame = new JFrame("FlatList");
-        FlatList overview = new FlatList();
+        Flat flat = new Flat("test", 4, "Graz");
+        FlatList overview = new FlatList(flat);
 
         frame.setContentPane(overview.contentPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -145,12 +159,6 @@ public class FlatList {
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel1, BorderLayout.CENTER);
-        final JLabel label1 = new JLabel();
-        Font label1Font = this.$$$getFont$$$(null, -1, 20, label1.getFont());
-        if (label1Font != null) label1.setFont(label1Font);
-        label1.setText("Flat List");
-        label1.setVerticalTextPosition(0);
-        panel1.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -159,21 +167,33 @@ public class FlatList {
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label2 = new JLabel();
-        label2.setText("Name");
-        panel3.add(label2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label1 = new JLabel();
+        label1.setText("Name");
+        panel3.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfName = new JTextField();
         panel3.add(tfName, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         tfAddress = new JTextField();
         panel3.add(tfAddress, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         tfSize = new JTextField();
         panel3.add(tfSize, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label2 = new JLabel();
+        label2.setText("Size");
+        panel3.add(label2, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label3 = new JLabel();
-        label3.setText("Size");
-        panel3.add(label3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        label3.setText("Address");
+        panel3.add(label3, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel4 = new JPanel();
+        panel4.setLayout(new BorderLayout(0, 0));
+        panel1.add(panel4, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        backButton = new JButton();
+        backButton.setText("Back");
+        panel4.add(backButton, BorderLayout.WEST);
         final JLabel label4 = new JLabel();
-        label4.setText("Address");
-        panel3.add(label4, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        Font label4Font = this.$$$getFont$$$(null, -1, 20, label4.getFont());
+        if (label4Font != null) label4.setFont(label4Font);
+        label4.setText("Flat List");
+        label4.setVerticalTextPosition(0);
+        panel4.add(label4, BorderLayout.CENTER);
         pControl = new JPanel();
         pControl.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         contentPane.add(pControl, BorderLayout.SOUTH);
@@ -213,4 +233,5 @@ public class FlatList {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }
