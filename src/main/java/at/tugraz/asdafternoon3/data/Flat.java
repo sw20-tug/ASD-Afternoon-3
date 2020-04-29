@@ -77,4 +77,16 @@ public class Flat extends DatabaseObject {
                 ", id=" + id +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        Flat flat = (Flat)obj;
+        if(flat.id == this.id){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
 }

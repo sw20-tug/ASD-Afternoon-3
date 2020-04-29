@@ -114,7 +114,7 @@ public class FlatDAOTest extends DAOTest {
 
     @Test
     public void deleteFlat() {
-        Flat flat = new Flat("Chaos WG", 2, "Graz");
+        Flat flat = new Flat("Test", 3, "Leibnitz");
 
         FlatDAO creator = new FlatDAO(database);
 

@@ -130,12 +130,12 @@ public class FlatDAO extends DAO<Flat> {
 
     @Override
     public void delete(Flat object) throws Exception {
-       /* try (Session session = openSession()) {
+        try (Session session = openSession()) {
             Transaction t = session.beginTransaction();
             session.delete(object);
             t.commit();
         }
 
-        */
+
     }
 }
