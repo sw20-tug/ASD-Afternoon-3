@@ -87,7 +87,7 @@ public class FlatList {
         try {
             int selectedRow = flatTable.getSelectedRow();
             Flat selectedFlat = ((FlatTableModel) flatTable.getModel()).getElement(selectedRow);
-            if(selectedFlat.isCurrent()){
+            if (selectedFlat.isCurrent()) {
                 throw new Exception("Cannot delete current flat");
             }
             FlatDAO creator = DatabaseConnection.getInstance().createDao(FlatDAO.class);

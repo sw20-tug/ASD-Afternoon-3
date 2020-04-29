@@ -87,8 +87,7 @@ public class Flat extends DatabaseObject {
         isCurrent = current;
     }
 
-    @Override
-    public boolean equals(Object o) {
+    public boolean equalsInformation(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Flat flat = (Flat) o;
