@@ -4,17 +4,14 @@ import at.tugraz.asdafternoon3.businesslogic.RoommateDAO;
 import at.tugraz.asdafternoon3.data.Roommate;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
 
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
+import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class RoommateTableModel implements TableModel {
+public class RoommateTableModel extends AbstractTableModel {
 
     private final List<Roommate> roommateList = new ArrayList<>();
-    private final List<TableModelListener> listeners = new ArrayList<>();
 
     public RoommateTableModel(List<Roommate> roommateList) {
         this.roommateList.addAll(roommateList);
@@ -108,45 +105,18 @@ public class RoommateTableModel implements TableModel {
             System.err.println(ex.getMessage());
         }
 
-        TableModelEvent event = new TableModelEvent(
-                this, rowIndex, rowIndex, columnIndex, TableModelEvent.UPDATE);
-
-        emitTableChanged(event);
-    }
-
-    @Override
-    public void addTableModelListener(TableModelListener l) {
-        listeners.add(l);
-    }
-
-    @Override
-    public void removeTableModelListener(TableModelListener l) {
-        listeners.remove(l);
+        fireTableRowsUpdated(columnIndex, columnIndex);
     }
 
     public void addRoommate(Roommate roommate) {
         int rowIndex = roommateList.size();
         roommateList.add(roommate);
-
-        TableModelEvent event = new TableModelEvent(
-                this, rowIndex, rowIndex, TableModelEvent.ALL_COLUMNS, TableModelEvent.INSERT);
-
-        emitTableChanged(event);
+        fireTableRowsInserted(rowIndex, rowIndex);
     }
 
     public void removeRoommate(int rowIndex) {
         roommateList.remove(rowIndex);
-
-        TableModelEvent event = new TableModelEvent(
-                this, rowIndex, rowIndex, TableModelEvent.ALL_COLUMNS, TableModelEvent.DELETE);
-
-        emitTableChanged(event);
-    }
-
-    private void emitTableChanged(TableModelEvent event) {
-        for (TableModelListener listener : listeners) {
-            listener.tableChanged(event);
-        }
+        fireTableRowsDeleted(rowIndex, rowIndex);
     }
 
     public Roommate getRoommateAtIndex(int rowIndex) {
