@@ -1,18 +1,19 @@
 package at.tugraz.asdafternoon3.data;
 
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
+import javax.persistence.*;
 
-@DatabaseTable(tableName = "roommates")
+@Entity
 public class Roommate extends DatabaseObject {
 
-    @DatabaseField(generatedId = true)
+    @Id
+    @GeneratedValue
     private int id;
 
-    @DatabaseField()
+    @Column
     private String name;
 
-    @DatabaseField(canBeNull = false, foreign = true)
+    @ManyToOne
+    @JoinColumn(nullable = false)
     private Flat flat;
 
     public Roommate() {

@@ -1,43 +1,43 @@
 package at.tugraz.asdafternoon3.data;
 
-import com.j256.ormlite.dao.ForeignCollection;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.ForeignCollectionField;
-import com.j256.ormlite.table.DatabaseTable;
+import javax.persistence.*;
+import java.util.Set;
 
-@DatabaseTable(tableName = "flats")
+@Entity
 public class Flat extends DatabaseObject {
-    @DatabaseField()
-    private String name;
 
-    // TODO
-    private int size;
-
-    @DatabaseField()
-    private String address;
-
-    @DatabaseField(generatedId = true)
+    @Id
+    @GeneratedValue
     private int id;
 
-    @ForeignCollectionField
-    ForeignCollection<Roommate> roommates;
+    @Column
+    private String name;
 
-    @DatabaseField()
-    private boolean is_current;
+    @Column
+    private int size;
+
+    @Column
+    private String address;
+
+    @OneToMany(mappedBy = "flat")
+    private Set<Roommate> roommates;
+
+    @Column
+    private boolean isCurrent;
 
     public Flat() {
         this.name = "";
         this.size = 0;
         this.address = "";
         this.id = 0;
-        this.is_current = false;
+        this.isCurrent = false;
     }
 
     public Flat(String name, int size, String address) {
         this.name = name;
         this.size = size;
         this.address = address;
-        this.is_current = false;
+        this.isCurrent = false;
     }
 
     public String getName() {
@@ -49,11 +49,11 @@ public class Flat extends DatabaseObject {
     }
 
     public boolean isCurrent() {
-        return is_current;
+        return isCurrent;
     }
 
     public void setIsCurrent(boolean state) {
-        is_current = state;
+        isCurrent = state;
     }
 
     public String getAddress() {
@@ -64,7 +64,7 @@ public class Flat extends DatabaseObject {
         return id;
     }
 
-    public ForeignCollection<Roommate> getRoommates() {
+    public Set<Roommate> getRoommates() {
         return roommates;
     }
 

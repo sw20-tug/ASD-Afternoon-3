@@ -1,7 +1,7 @@
 package at.tugraz.asdafternoon3.ui;
 
 import at.tugraz.asdafternoon3.FlatApplication;
-import at.tugraz.asdafternoon3.businesslogic.FlatCreator;
+import at.tugraz.asdafternoon3.businesslogic.FlatDAO;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import at.tugraz.asdafternoon3.data.Flat;
 import com.intellij.uiDesigner.core.GridConstraints;
@@ -42,9 +42,10 @@ public class CreateFlatUI {
         }
 
         newFlat = new Flat(tfName.getText(), size, tfAddress.getText());
-        FlatCreator creator = new FlatCreator();
 
         try {
+            FlatDAO creator = DatabaseConnection.getInstance().createDao(FlatDAO.class);
+
             if (!creator.validate(newFlat)) {
                 JOptionPane.showMessageDialog(contentPane, "Flat data is not valid");
             }
@@ -60,9 +61,6 @@ public class CreateFlatUI {
     }
 
     public static void main(String[] args) {
-        // Database initialization
-        DatabaseConnection.getInstance().initOrm();
-
         JFrame frame = new JFrame("MainUI");
         frame.setContentPane(new CreateFlatUI().contentPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
