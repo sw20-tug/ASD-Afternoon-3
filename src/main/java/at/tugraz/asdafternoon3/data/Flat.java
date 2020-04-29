@@ -1,6 +1,7 @@
 package at.tugraz.asdafternoon3.data;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -19,9 +20,6 @@ public class Flat extends DatabaseObject {
     @Column
     private String address;
 
-    @OneToMany(mappedBy = "flat")
-    private Set<Roommate> roommates;
-
     @Column
     private boolean isCurrent;
 
@@ -37,6 +35,15 @@ public class Flat extends DatabaseObject {
         this.name = name;
         this.size = size;
         this.address = address;
+        this.isCurrent = false;
+    }
+
+    public Flat(Flat flat)
+    {
+        this.id = flat.getId();
+        this.name = flat.getName();
+        this.size = flat.getSize();
+        this.address = flat.getAddress();
         this.isCurrent = false;
     }
 
@@ -64,8 +71,31 @@ public class Flat extends DatabaseObject {
         return id;
     }
 
-    public Set<Roommate> getRoommates() {
-        return roommates;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setCurrent(boolean current) {
+        isCurrent = current;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Flat flat = (Flat) o;
+        return size == flat.size &&
+                isCurrent == flat.isCurrent &&
+                Objects.equals(name, flat.name) &&
+                Objects.equals(address, flat.address);
     }
 
     @Override

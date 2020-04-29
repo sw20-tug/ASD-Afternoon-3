@@ -42,11 +42,6 @@ public class DatabaseSample {
             Session session1 = factory.openSession();
             Flat flat1 = session1.get(Flat.class, flat.getId());
 
-            Set<Roommate> list = flat1.getRoommates();
-            for (Roommate roommate : list) {
-                System.out.println("roommate = " + roommate.getName());
-            }
-
             session1.close();
         }
     }
