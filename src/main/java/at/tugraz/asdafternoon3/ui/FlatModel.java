@@ -27,7 +27,7 @@ public class FlatModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 5;
     }
 
     @Override
@@ -41,6 +41,8 @@ public class FlatModel extends AbstractTableModel {
                 return "Size";
             case 3:
                 return "Adress";
+            case 4:
+                return "Current Flat";
             default:
                 throw new IllegalArgumentException("Wrong column");
         }
@@ -49,10 +51,16 @@ public class FlatModel extends AbstractTableModel {
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         switch( columnIndex ){
-            case 0: return Integer.class;
-            case 1: return String.class;
-            case 2: return Integer.class;
-            case 3: return String.class;
+            case 0:
+                return Integer.class;
+            case 1:
+                return String.class;
+            case 2:
+                return Integer.class;
+            case 3:
+                return String.class;
+            case 4:
+                return Boolean.class;
             default: throw new IllegalArgumentException( "Wrong column" );
         }
     }
@@ -66,10 +74,16 @@ public class FlatModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         Flat flat = flats.get(rowIndex);
         switch ( columnIndex ){
-            case 0: return flat.getId();
-            case 1: return flat.getName();
-            case 2: return flat.getSize();
-            case 3: return flat.getAddress();
+            case 0:
+                return flat.getId();
+            case 1:
+                return flat.getName();
+            case 2:
+                return flat.getSize();
+            case 3:
+                return flat.getAddress();
+            case 4:
+                return flat.isCurrent();
             default: throw new IllegalArgumentException( "Wrong column" );
         }
 

@@ -1,5 +1,6 @@
 package at.tugraz.asdafternoon3.ui;
 
+import at.tugraz.asdafternoon3.FlatApplication;
 import at.tugraz.asdafternoon3.businesslogic.FlatDAO;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
@@ -19,6 +20,9 @@ public class FlatList {
     private JButton addButton;
     private JButton removeButton;
     private JButton setToCurrentButton;
+    private JTextField tfName;
+    private JTextField tfAddress;
+    private JTextField tfSize;
 
     public FlatList() {
         try {
@@ -49,21 +53,30 @@ public class FlatList {
     }
 
     private void addFlatClicked() {
-        /*CreateFlatUI createUi = new CreateFlatUI();
-        JFrame frame = new JFrame("Add Flat");
-        frame.setContentPane(createUi.getContentPane());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-        */
+        int size = 0;
 
+        try {
+            size = Integer.parseInt(tfSize.getText());
+            Flat newFlat = new Flat(tfName.getText(), size, tfAddress.getText());
+            FlatDAO creator = DatabaseConnection.getInstance().createDao(FlatDAO.class);
+
+            if (!creator.validate(newFlat)) {
+                JOptionPane.showMessageDialog(contentPane, "Flat data is not valid");
+            } else {
+                newFlat = creator.create(newFlat);
+                ((FlatModel) flatTable.getModel()).addFlat(newFlat);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(contentPane, "Could not create flat");
+        }
     }
 
     private void deleteFlatClicked() {
-        int selectedRow = flatTable.getSelectedRow();
-        Flat selectedFlat = ((FlatModel) flatTable.getModel()).getElement(selectedRow);
-
         try {
+            int selectedRow = flatTable.getSelectedRow();
+            Flat selectedFlat = ((FlatModel) flatTable.getModel()).getElement(selectedRow);
+
             FlatDAO creator = DatabaseConnection.getInstance().createDao(FlatDAO.class);
             creator.delete(selectedFlat);
             ((FlatModel) flatTable.getModel()).removeFlat(selectedRow);
@@ -77,8 +90,19 @@ public class FlatList {
     }
 
     private void setToCurrentClicked() {
-        int selectedRow = flatTable.getSelectedRow();
-        int selectedFlatId = (int) flatTable.getModel().getValueAt(selectedRow, 0);
+        try {
+            int selectedRow = flatTable.getSelectedRow();
+            Flat selectedFlat = ((FlatModel) flatTable.getModel()).getElement(selectedRow);
+            selectedFlat.setIsCurrent(true);
+            FlatDAO creator = DatabaseConnection.getInstance().createDao(FlatDAO.class);
+            creator.update(selectedFlat);
+            FlatModel model = new FlatModel(DatabaseConnection.getInstance().createDao(FlatDAO.class).getAll());
+            flatTable.setModel(model);
+            ((FlatModel) flatTable.getModel()).fireTableDataChanged();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(contentPane, "Could not set flat to current flat");
+        }
     }
 
     private void createUIComponents() {
@@ -118,7 +142,7 @@ public class FlatList {
         contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout(0, 0));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel1, BorderLayout.CENTER);
         final JLabel label1 = new JLabel();
         Font label1Font = this.$$$getFont$$$(null, -1, 20, label1.getFont());
@@ -131,6 +155,24 @@ public class FlatList {
         panel1.add(panel2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         flatTable = new JTable();
         panel2.add(flatTable, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        final JPanel panel3 = new JPanel();
+        panel3.setLayout(new GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.add(panel3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JLabel label2 = new JLabel();
+        label2.setText("Name");
+        panel3.add(label2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tfName = new JTextField();
+        panel3.add(tfName, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfAddress = new JTextField();
+        panel3.add(tfAddress, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        tfSize = new JTextField();
+        panel3.add(tfSize, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final JLabel label3 = new JLabel();
+        label3.setText("Size");
+        panel3.add(label3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label4 = new JLabel();
+        label4.setText("Address");
+        panel3.add(label4, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         pControl = new JPanel();
         pControl.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         contentPane.add(pControl, BorderLayout.SOUTH);
