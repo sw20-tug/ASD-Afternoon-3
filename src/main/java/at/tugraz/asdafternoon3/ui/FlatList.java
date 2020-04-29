@@ -4,17 +4,20 @@ import at.tugraz.asdafternoon3.businesslogic.FlatDAO;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.SQLException;
-import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class FlatList {
 
     private JPanel contentPane;
     private JTable flatTable;
+    private JPanel pControl;
+    private JButton addButton;
+    private JButton removeButton;
+    private JButton setToCurrentButton;
 
     public FlatList() {
         try {
@@ -24,6 +27,47 @@ public class FlatList {
             // TODO
             e.printStackTrace();
         }
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+               addFlatClicked();
+            }
+        });
+        removeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                deleteFlatClicked();
+            }
+        });
+        setToCurrentButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                setToCurrentClicked();
+            }
+        });
+    }
+
+    private void addFlatClicked()
+    {
+        /*CreateFlatUI createUi = new CreateFlatUI();
+        JFrame frame = new JFrame("Add Flat");
+        frame.setContentPane(createUi.getContentPane());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+        */
+
+    }
+
+    private void deleteFlatClicked()
+    {
+        int selectedRow = flatTable.getSelectedRow();
+        int selectedFlatId = (int) flatTable.getModel().getValueAt(selectedRow, 0);
+    }
+
+    private void setToCurrentClicked() {
+        int selectedRow = flatTable.getSelectedRow();
+        int selectedFlatId = (int) flatTable.getModel().getValueAt(selectedRow, 0);
     }
 
     private void createUIComponents() {
@@ -61,10 +105,10 @@ public class FlatList {
      */
     private void $$$setupUI$$$() {
         contentPane = new JPanel();
-        contentPane.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        contentPane.setLayout(new BorderLayout(0, 0));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
-        contentPane.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        contentPane.add(panel1, BorderLayout.CENTER);
         final JLabel label1 = new JLabel();
         Font label1Font = this.$$$getFont$$$(null, -1, 20, label1.getFont());
         if (label1Font != null) label1.setFont(label1Font);
@@ -76,6 +120,18 @@ public class FlatList {
         panel1.add(panel2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         flatTable = new JTable();
         panel2.add(flatTable, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        pControl = new JPanel();
+        pControl.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        contentPane.add(pControl, BorderLayout.SOUTH);
+        addButton = new JButton();
+        addButton.setText("Add");
+        pControl.add(addButton);
+        removeButton = new JButton();
+        removeButton.setText("Remove");
+        pControl.add(removeButton);
+        setToCurrentButton = new JButton();
+        setToCurrentButton.setText("Set to current");
+        pControl.add(setToCurrentButton);
     }
 
     /**
