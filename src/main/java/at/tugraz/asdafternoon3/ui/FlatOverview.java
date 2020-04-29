@@ -28,12 +28,8 @@ public class FlatOverview {
     public FlatOverview(Flat flat) {
         setFlatInformation(flat);
 
-        roomMateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                FlatApplication.get().setContentPane(new RoommateOverview(flat).getContentPane());
-            }
-        });
+        roomMateButton.addActionListener(e ->
+                FlatApplication.get().setContentPane(new RoommateOverview(flat).getContentPane()));
     }
 
     public JPanel getContentPane() {
