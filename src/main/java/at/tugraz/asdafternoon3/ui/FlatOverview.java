@@ -24,12 +24,17 @@ public class FlatOverview {
     private JTextArea taName;
     private JTextArea taSize;
     private JTextArea taAddress;
+    private JButton selectFlatButton;
 
     public FlatOverview(Flat flat) {
         setFlatInformation(flat);
 
         roomMateButton.addActionListener(e ->
                 FlatApplication.get().setContentPane(new RoommateOverview(flat).getContentPane()));
+        selectFlatButton.addActionListener(e ->
+                FlatApplication.get().setContentPane(new FlatList(flat).getContentPane()));
+
+
     }
 
     public JPanel getContentPane() {
@@ -155,6 +160,9 @@ public class FlatOverview {
         Navigation.add(spacer13, new GridConstraints(4, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 20), new Dimension(-1, 20), new Dimension(-1, 20), 20, false));
         final Spacer spacer14 = new Spacer();
         Navigation.add(spacer14, new GridConstraints(2, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 20), new Dimension(-1, 20), new Dimension(-1, 20), 20, false));
+        selectFlatButton = new JButton();
+        selectFlatButton.setText("Select flat");
+        Navigation.add(selectFlatButton, new GridConstraints(8, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -182,4 +190,5 @@ public class FlatOverview {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

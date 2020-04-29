@@ -1,7 +1,7 @@
 package at.tugraz.asdafternoon3.businesslogic;
 
 import at.tugraz.asdafternoon3.data.Roommate;
-import at.tugraz.asdafternoon3.database.DatabaseConnection;
+import jdk.jshell.spi.ExecutionControl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

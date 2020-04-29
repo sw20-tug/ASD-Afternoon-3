@@ -124,6 +124,7 @@
                 <properties>
                   <background color="-12632257"/>
                   <caretColor color="-2103318"/>
+                  <foreground color="-2103318"/>
                 </properties>
               </component>
             </children>
@@ -157,6 +158,7 @@
                 <properties>
                   <background color="-12632257"/>
                   <caretColor color="-2103318"/>
+                  <foreground color="-2103318"/>
                 </properties>
               </component>
             </children>

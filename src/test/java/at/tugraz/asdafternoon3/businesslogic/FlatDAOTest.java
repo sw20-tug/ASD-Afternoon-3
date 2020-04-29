@@ -111,4 +111,26 @@ public class FlatDAOTest extends DAOTest {
             assert (false);
         }
     }
+
+    @Test
+    public void deleteFlat() {
+        Flat flat = new Flat("Test", 3, "Leibnitz");
+
+        FlatDAO creator = new FlatDAO(database);
+
+        try {
+            creator.create(flat);
+
+            creator.delete(flat);
+            boolean value = creator.getAll().contains(flat);
+
+            assertFalse(value);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            assert (false);
+        }
+    }
+
+
 }

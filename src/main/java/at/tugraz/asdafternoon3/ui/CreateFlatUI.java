@@ -42,7 +42,7 @@ public class CreateFlatUI {
         }
 
         newFlat = new Flat(tfName.getText(), size, tfAddress.getText());
-
+        newFlat.setIsCurrent(true);
         try {
             FlatDAO creator = DatabaseConnection.getInstance().createDao(FlatDAO.class);
 
@@ -149,6 +149,7 @@ public class CreateFlatUI {
         tfAddress = new JTextField();
         tfAddress.setBackground(new Color(-12632257));
         tfAddress.setCaretColor(new Color(-2103318));
+        tfAddress.setForeground(new Color(-2103318));
         panel3.add(tfAddress, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
@@ -163,6 +164,7 @@ public class CreateFlatUI {
         tfSize = new JTextField();
         tfSize.setBackground(new Color(-12632257));
         tfSize.setCaretColor(new Color(-2103318));
+        tfSize.setForeground(new Color(-2103318));
         panel4.add(tfSize, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JPanel panel5 = new JPanel();
         panel5.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -201,4 +203,5 @@ public class CreateFlatUI {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

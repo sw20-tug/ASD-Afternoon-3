@@ -2,17 +2,20 @@ package at.tugraz.asdafternoon3.ui.table;
 
 import at.tugraz.asdafternoon3.data.Flat;
 
+import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class FlatTableModel implements TableModel {
+public class FlatTableModel extends AbstractTableModel {
 
-    private final List<Flat> flats = new ArrayList<>();
-
-    public FlatTableModel(List<Flat> flats) {
+    private List<Flat> flats = new ArrayList<>();
+    private final List<TableModelListener> listeners = new ArrayList<>();
+    public FlatTableModel(List<Flat> flats){
 
         this.flats.addAll(flats);
     }
@@ -24,7 +27,7 @@ public class FlatTableModel implements TableModel {
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 5;
     }
 
     @Override
@@ -38,6 +41,8 @@ public class FlatTableModel implements TableModel {
                 return "Size";
             case 3:
                 return "Adress";
+            case 4:
+                return "Current Flat";
             default:
                 throw new IllegalArgumentException("Wrong column");
         }
@@ -45,7 +50,7 @@ public class FlatTableModel implements TableModel {
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        switch (columnIndex) {
+        switch( columnIndex ){
             case 0:
                 return Integer.class;
             case 1:
@@ -54,8 +59,9 @@ public class FlatTableModel implements TableModel {
                 return Integer.class;
             case 3:
                 return String.class;
-            default:
-                throw new IllegalArgumentException("Wrong column");
+            case 4:
+                return Boolean.class;
+            default: throw new IllegalArgumentException( "Wrong column" );
         }
     }
 
@@ -67,7 +73,7 @@ public class FlatTableModel implements TableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Flat flat = flats.get(rowIndex);
-        switch (columnIndex) {
+        switch ( columnIndex ){
             case 0:
                 return flat.getId();
             case 1:
@@ -76,8 +82,9 @@ public class FlatTableModel implements TableModel {
                 return flat.getSize();
             case 3:
                 return flat.getAddress();
-            default:
-                throw new IllegalArgumentException("Wrong column");
+            case 4:
+                return flat.isCurrent();
+            default: throw new IllegalArgumentException( "Wrong column" );
         }
 
     }
@@ -89,11 +96,42 @@ public class FlatTableModel implements TableModel {
 
     @Override
     public void addTableModelListener(TableModelListener l) {
-
+        listeners.add(l);
     }
 
     @Override
     public void removeTableModelListener(TableModelListener l) {
-
+        listeners.add(l);
     }
+
+    public Flat getElement(int rowIndex) {
+        return flats.get(rowIndex);
+    }
+
+    public void addFlat(Flat flat) {
+        int rowIndex = flats.size();
+        flats.add(flat);
+
+        TableModelEvent event = new TableModelEvent(
+                this, rowIndex, rowIndex, TableModelEvent.ALL_COLUMNS, TableModelEvent.INSERT);
+
+        emitTableChanged(event);
+    }
+
+    public void removeFlat(int rowIndex) {
+        flats.remove(rowIndex);
+
+        TableModelEvent event = new TableModelEvent(
+                this, rowIndex, rowIndex, TableModelEvent.ALL_COLUMNS, TableModelEvent.DELETE);
+
+        emitTableChanged(event);
+    }
+    private void emitTableChanged(TableModelEvent event) {
+        for (TableModelListener listener : listeners) {
+            listener.tableChanged(event);
+        }
+    }
+
+
+
 }
