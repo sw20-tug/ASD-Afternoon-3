@@ -53,7 +53,17 @@ public class RoommateDAO extends DAO<Roommate> {
 
     @Override
     public Roommate update(Roommate object) throws Exception {
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (!validate(object)) {
+            return null;
+        }
+
+        try (Session session = openSession()) {
+            Transaction t = session.beginTransaction();
+            session.merge(object);
+            t.commit();
+        }
+
+        return object;
     }
 
     @Override
@@ -77,6 +87,15 @@ public class RoommateDAO extends DAO<Roommate> {
             cr.select(cb.count(root));
             Query<Long> query = session.createQuery(cr);
             return query.getSingleResult();
+        }
+    }
+
+    @Override
+    public void delete(Roommate object) throws Exception {
+        try (Session session = openSession()) {
+            Transaction t = session.beginTransaction();
+            session.delete(object);
+            t.commit();
         }
     }
 }

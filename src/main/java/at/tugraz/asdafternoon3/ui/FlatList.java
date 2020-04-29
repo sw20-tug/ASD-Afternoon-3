@@ -2,14 +2,12 @@ package at.tugraz.asdafternoon3.ui;
 
 import at.tugraz.asdafternoon3.businesslogic.FlatDAO;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
+import at.tugraz.asdafternoon3.ui.table.FlatTableModel;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.SQLException;
-import javax.swing.table.DefaultTableModel;
 
 public class FlatList {
 
@@ -18,7 +16,7 @@ public class FlatList {
 
     public FlatList() {
         try {
-            FlatModel model = new FlatModel(DatabaseConnection.getInstance().createDao(FlatDAO.class).getAll());
+            FlatTableModel model = new FlatTableModel(DatabaseConnection.getInstance().createDao(FlatDAO.class).getAll());
             flatTable.setModel(model);
         } catch (Exception e) {
             // TODO
@@ -32,17 +30,6 @@ public class FlatList {
 
     public JPanel getContentPane() {
         return contentPane;
-    }
-
-    public static void main(String[] args) {
-
-        JFrame frame = new JFrame("FlatList");
-        FlatList overview = new FlatList();
-
-        frame.setContentPane(overview.contentPane);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
     }
 
     {
@@ -103,5 +90,4 @@ public class FlatList {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
 }
