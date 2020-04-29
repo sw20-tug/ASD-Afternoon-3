@@ -66,6 +66,8 @@ public abstract class DAO<T extends DatabaseObject> {
      * @throws Exception if there a fetch problems
      */
     public abstract Long count() throws Exception;
+
+    public abstract void delete(T object) throws Exception;
 }
 
 /*

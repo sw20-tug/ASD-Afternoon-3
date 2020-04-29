@@ -1,21 +1,22 @@
 package at.tugraz.asdafternoon3.ui;
 
+import at.tugraz.asdafternoon3.FlatApplication;
 import at.tugraz.asdafternoon3.data.Flat;
-import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import jdk.dynalink.StandardNamespace;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class FlatOverview {
     private JPanel contentPane;
     private JPanel main;
     private JPanel BasicOverview;
     private JPanel Navigation;
-    private JButton button1;
+    private JButton roomMateButton;
     private JButton shoppingListButton;
     private JButton cleaningScheduleButton;
     private JButton financeFurnitureAndEquipmentButton;
@@ -24,22 +25,25 @@ public class FlatOverview {
     private JTextArea taSize;
     private JTextArea taAddress;
 
-    public FlatOverview()
-    {
-        setFlatInformation();
-    }
+    public FlatOverview(Flat flat) {
+        setFlatInformation(flat);
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("FlatOverview");
-        FlatOverview overview = new FlatOverview();
-        frame.setContentPane(overview.contentPane);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+        roomMateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FlatApplication.get().setContentPane(new RoommateOverview(flat).getContentPane());
+            }
+        });
     }
 
     public JPanel getContentPane() {
         return contentPane;
+    }
+
+    public void setFlatInformation(Flat flat) {
+        taName.setText(flat.getName());
+        taAddress.setText(flat.getAddress());
+        taSize.setText(flat.getSize().toString());
     }
 
     {
@@ -134,11 +138,11 @@ public class FlatOverview {
         financeFlatButton.setForeground(new Color(-1));
         financeFlatButton.setText("Finance flat");
         Navigation.add(financeFlatButton, new GridConstraints(9, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        button1 = new JButton();
-        button1.setBackground(new Color(-12816512));
-        button1.setForeground(new Color(-1));
-        button1.setText("Roommates");
-        Navigation.add(button1, new GridConstraints(1, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        roomMateButton = new JButton();
+        roomMateButton.setBackground(new Color(-12816512));
+        roomMateButton.setForeground(new Color(-1));
+        roomMateButton.setText("Roommates");
+        Navigation.add(roomMateButton, new GridConstraints(1, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer7 = new Spacer();
         Navigation.add(spacer7, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 5, false));
         final Spacer spacer8 = new Spacer();
@@ -182,21 +186,4 @@ public class FlatOverview {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
-    public void setFlatInformation()
-    {
-        /*try
-        {
-            Dao<Flat, Integer> dao = DatabaseConnection.getInstance().getFlatDao();
-            Flat flat = dao.queryForId(1);
-            taName.setText(flat.getName());
-            taAddress.setText(flat.getAddress());
-            taSize.setText(String.format("%d", flat.getSize()));
-        }
-        catch (Exception e)
-        {
-            JOptionPane.showMessageDialog(contentPane, "Could not find flat");
-        }*/
-    }
-
 }

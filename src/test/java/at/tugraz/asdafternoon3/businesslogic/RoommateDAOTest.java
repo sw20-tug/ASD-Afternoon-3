@@ -12,7 +12,7 @@ public class RoommateDAOTest {
     @Test
     public void createRoommateValid() {
         Flat flat = generateTestFlat();
-        Roommate roommate = new Roommate("Liki Norber", flat);
+        Roommate roommate = new Roommate("Liki Norber", 12, flat);
 
         RoommateDAO creator = new RoommateDAO(null);
         assertTrue(creator.validate(roommate));
@@ -21,7 +21,7 @@ public class RoommateDAOTest {
     @Test
     public void createRoommateInvalid() {
         Flat flat = generateTestFlat();
-        Roommate roommate = new Roommate("icecreamforcrow", flat);
+        Roommate roommate = new Roommate("icecreamforcrow", 21, flat);
 
         RoommateDAO creator = new RoommateDAO(null);
         assertFalse(creator.validate(roommate));
@@ -30,7 +30,7 @@ public class RoommateDAOTest {
     @Test
     public void createRoommateInvalidCharacters() {
         Flat flat = generateTestFlat();
-        Roommate roommate = new Roommate("blueöystercult", flat);
+        Roommate roommate = new Roommate("blueöystercult", 42, flat);
 
         RoommateDAO creator = new RoommateDAO(null);
         assertFalse(creator.validate(roommate));
@@ -38,7 +38,7 @@ public class RoommateDAOTest {
 
     @Test
     public void createRoommateNoFlat() {
-        Roommate roommate = new Roommate("Andi Goldberger", null);
+        Roommate roommate = new Roommate("Andi Goldberger", 50, null);
 
         RoommateDAO creator = new RoommateDAO(null);
         assertFalse(creator.validate(roommate));

@@ -12,6 +12,9 @@ public class Roommate extends DatabaseObject {
     @Column
     private String name;
 
+    @Column
+    private Integer age;
+
     @ManyToOne
     @JoinColumn(nullable = false)
     private Flat flat;
@@ -19,11 +22,13 @@ public class Roommate extends DatabaseObject {
     public Roommate() {
         this.name = "";
         this.id = 0;
+        this.age = 0;
         this.flat = null;
     }
 
-    public Roommate(String name, Flat flat) {
+    public Roommate(String name, Integer age, Flat flat) {
         this.name = name;
+        this.age = age;
         this.flat = flat;
     }
 
@@ -37,6 +42,18 @@ public class Roommate extends DatabaseObject {
 
     public int getId() {
         return id;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     @Override

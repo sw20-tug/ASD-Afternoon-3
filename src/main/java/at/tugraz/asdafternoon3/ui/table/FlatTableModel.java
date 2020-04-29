@@ -1,4 +1,4 @@
-package at.tugraz.asdafternoon3.ui;
+package at.tugraz.asdafternoon3.ui.table;
 
 import at.tugraz.asdafternoon3.data.Flat;
 
@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class FlatModel implements TableModel {
+public class FlatTableModel implements TableModel {
 
-    private List<Flat> flats = new ArrayList<>();
+    private final List<Flat> flats = new ArrayList<>();
 
-    public FlatModel(List<Flat> flats){
+    public FlatTableModel(List<Flat> flats) {
 
         this.flats.addAll(flats);
     }
@@ -29,7 +29,7 @@ public class FlatModel implements TableModel {
 
     @Override
     public String getColumnName(int columnIndex) {
-        switch( columnIndex ) {
+        switch (columnIndex) {
             case 0:
                 return "Id";
             case 1:
@@ -45,12 +45,17 @@ public class FlatModel implements TableModel {
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        switch( columnIndex ){
-            case 0: return Integer.class;
-            case 1: return String.class;
-            case 2: return Integer.class;
-            case 3: return String.class;
-            default: throw new IllegalArgumentException( "Wrong column" );
+        switch (columnIndex) {
+            case 0:
+                return Integer.class;
+            case 1:
+                return String.class;
+            case 2:
+                return Integer.class;
+            case 3:
+                return String.class;
+            default:
+                throw new IllegalArgumentException("Wrong column");
         }
     }
 
@@ -62,12 +67,17 @@ public class FlatModel implements TableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Flat flat = flats.get(rowIndex);
-        switch ( columnIndex ){
-            case 0: return flat.getId();
-            case 1: return flat.getName();
-            case 2: return flat.getSize();
-            case 3: return flat.getAddress();
-            default: throw new IllegalArgumentException( "Wrong column" );
+        switch (columnIndex) {
+            case 0:
+                return flat.getId();
+            case 1:
+                return flat.getName();
+            case 2:
+                return flat.getSize();
+            case 3:
+                return flat.getAddress();
+            default:
+                throw new IllegalArgumentException("Wrong column");
         }
 
     }
