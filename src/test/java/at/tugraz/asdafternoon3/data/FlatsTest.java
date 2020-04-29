@@ -1,5 +1,7 @@
 package at.tugraz.asdafternoon3.data;
 
+import at.tugraz.asdafternoon3.businesslogic.DAOTest;
+import at.tugraz.asdafternoon3.businesslogic.FlatDAO;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.data.Flats;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
@@ -7,133 +9,89 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class FlatsTest
-{
+public class FlatsTest extends DAOTest {
 
     @Test
-    public void createFlatValid()
-    {
+    public void createFlatValid() {
         Flat flat = new Flat("Chaos WG", 2, "Graz");
-        Flats flats = new Flats();
+        Flats flats = new Flats(null);
 
-        DatabaseConnection connection = DatabaseConnection.getInstance();
-        connection.initOrm();
-        try
-        {
+        try {
             flats.addFlat(flat);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             assertFalse(e.toString(), false);
         }
     }
 
     @Test
-    public void createFlatInvalid()
-    {
+    public void createFlatInvalid() {
         Flat flat = new Flat("Chaos WG", 2, "Graz");
-        Flats flats = new Flats();
+        Flats flats = new Flats(null);
 
-        DatabaseConnection connection = DatabaseConnection.getInstance();
-        connection.initOrm();
-        try
-        {
+        try {
             flats.addFlat(flat);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             fail("Flat is added for the first time");
         }
-        try
-        {
+        try {
             flats.addFlat(flat);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return;
         }
         fail("Added same flat twice");
     }
 
     @Test
-    public void updateFlatValid()
-    {
+    public void updateFlatValid() {
         Flat flat = new Flat("Chaos WG", 2, "Graz");
-        Flats flats = new Flats();
+        Flats flats = new Flats(null);
 
-        DatabaseConnection connection = DatabaseConnection.getInstance();
-        connection.initOrm();
-
-        try
-        {
+        try {
             flats.addFlat(flat);
             flats.updateFlat(flat);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             fail(e.toString());
         }
     }
 
     @Test
-    public void updateFlatInvalid()
-    {
+    public void updateFlatInvalid() {
         Flat flat = new Flat("Chaos WG", 2, "Graz");
         Flat flat2 = new Flat("Krabbler WG", 10, "Spielfeld");
-        Flats flats = new Flats();
+        Flats flats = new Flats(null);
 
-        DatabaseConnection connection = DatabaseConnection.getInstance();
-        connection.initOrm();
-
-        try
-        {
+        try {
             flats.addFlat(flat2);
             flats.updateFlat(flat);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return;
         }
         fail("Flat is illegally updated");
     }
 
     @Test
-    public void removeFlatValid()
-    {
+    public void removeFlatValid() {
         Flat flat = new Flat("Chaos WG", 2, "Graz");
-        Flats flats = new Flats();
+        Flats flats = new Flats(null);
 
-        DatabaseConnection connection = DatabaseConnection.getInstance();
-        connection.initOrm();
-
-        try
-        {
+        try {
             flats.addFlat(flat);
             //flats.removeFlat(flat);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             fail(e.toString());
         }
     }
 
     @Test
-    public void removeFlatInvalid()
-    {
+    public void removeFlatInvalid() {
         Flat flat = new Flat("Chaos WG", 2, "Graz");
         Flat flat2 = new Flat("Krabbler WG", 10, "Spielfeld");
-        Flats flats = new Flats();
+        Flats flats = new Flats(null);
 
-        DatabaseConnection connection = DatabaseConnection.getInstance();
-        connection.initOrm();
-
-        try
-        {
+        try {
             flats.addFlat(flat2);
             //flats.removeFlat(flat);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return;
         }
         fail("Flat illegally removed");

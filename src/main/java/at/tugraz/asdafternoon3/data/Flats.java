@@ -1,16 +1,19 @@
 package at.tugraz.asdafternoon3.data;
 
-import at.tugraz.asdafternoon3.businesslogic.FlatCreator;
+import at.tugraz.asdafternoon3.businesslogic.FlatDAO;
+import at.tugraz.asdafternoon3.database.DatabaseConnection;
+import org.hibernate.SessionFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Flats
 {
-    FlatCreator creator_ = new FlatCreator();
+    FlatDAO creator_;
     HashMap<Integer,Flat> flats_ = new HashMap<Integer,Flat>();
-    public Flats()
+    public Flats(SessionFactory sessionfactory)
     {
+        creator_ = new FlatDAO(sessionfactory);
         //loadFlatsFromDatabase();
     }
 
