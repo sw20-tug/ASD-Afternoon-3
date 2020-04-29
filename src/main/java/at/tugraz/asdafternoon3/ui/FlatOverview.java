@@ -5,7 +5,6 @@ import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import com.j256.ormlite.dao.Dao;
 import jdk.dynalink.StandardNamespace;
 
 import javax.swing.*;
@@ -186,7 +185,7 @@ public class FlatOverview {
 
     public void setFlatInformation()
     {
-        try
+        /*try
         {
             Dao<Flat, Integer> dao = DatabaseConnection.getInstance().getFlatDao();
             Flat flat = dao.queryForId(1);
@@ -197,7 +196,7 @@ public class FlatOverview {
         catch (Exception e)
         {
             JOptionPane.showMessageDialog(contentPane, "Could not find flat");
-        }
+        }*/
     }
 
 }
