@@ -1,7 +1,7 @@
 package at.tugraz.asdafternoon3.businesslogic;
 
 import at.tugraz.asdafternoon3.data.Roommate;
-import at.tugraz.asdafternoon3.database.DatabaseConnection;
+import jdk.jshell.spi.ExecutionControl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -78,5 +78,10 @@ public class RoommateDAO extends DAO<Roommate> {
             Query<Long> query = session.createQuery(cr);
             return query.getSingleResult();
         }
+    }
+
+    @Override
+    public void delete(Roommate object) throws Exception {
+        throw new ExecutionControl.NotImplementedException("TODO");
     }
 }

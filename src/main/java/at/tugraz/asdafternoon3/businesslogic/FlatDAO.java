@@ -1,7 +1,6 @@
 package at.tugraz.asdafternoon3.businesslogic;
 
 import at.tugraz.asdafternoon3.data.Flat;
-import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -127,5 +126,16 @@ public class FlatDAO extends DAO<Flat> {
                 update(possible_current_flat);
             }
         }
+    }
+
+    @Override
+    public void delete(Flat object) throws Exception {
+       /* try (Session session = openSession()) {
+            Transaction t = session.beginTransaction();
+            session.delete(object);
+            t.commit();
+        }
+
+        */
     }
 }
