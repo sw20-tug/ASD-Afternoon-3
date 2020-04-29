@@ -31,7 +31,7 @@ public class Flats
 
         for (Flat flat1 : flats_)
         {
-            if (flat1.equals(flat))
+            if (flat1.equalsInformation(flat))
             {
                 throw new Exception("Update not possible: Flat with same information already exists");
             }
@@ -69,7 +69,7 @@ public class Flats
 
         for (Flat flat1 : flats_)
         {
-            if (flat1.equals(flat))
+            if (flat1.equalsInformation(flat))
             {
                 throw new Exception("Update not possible: Flat with same information already exists");
             }
