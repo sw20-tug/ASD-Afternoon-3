@@ -13,6 +13,8 @@
 
         <mapping class="at.tugraz.asdafternoon3.data.Flat"/>
         <mapping class="at.tugraz.asdafternoon3.data.Roommate"/>
+        <mapping class="at.tugraz.asdafternoon3.data.CleaningSchedule"/>
         <mapping class="at.tugraz.asdafternoon3.data.ShoppingListItem"/>
+
     </session-factory>
 </hibernate-configuration>
