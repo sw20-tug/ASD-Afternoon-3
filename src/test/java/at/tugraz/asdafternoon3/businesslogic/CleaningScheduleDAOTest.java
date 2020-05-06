@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class CleaningScheduleDAOTest extends DAOTest {
@@ -32,6 +33,25 @@ public class CleaningScheduleDAOTest extends DAOTest {
 
         CleaningScheduleDAO creator = new CleaningScheduleDAO(null);
         assertTrue(creator.validate(cleaningschedule));
+    }
+    @Test
+    public void invalidSchedule() {
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+        LocalDateTime currentDateAndTime = LocalDateTime.of(currentDate, currentTime);
 
+        CleaningSchedule cleaningschedule =
+                new CleaningSchedule("", currentDateAndTime, testmate);
+
+        CleaningScheduleDAO creator = new CleaningScheduleDAO(null);
+        assertFalse(creator.validate(cleaningschedule));
+
+        cleaningschedule.setName("Partykeller");
+        cleaningschedule.setStartTime(null);
+        assertFalse(creator.validate(cleaningschedule));
+
+        cleaningschedule.setStartTime(currentDateAndTime);
+        cleaningschedule.setCleaner(null);
+        assertFalse(creator.validate(cleaningschedule));
     }
 }

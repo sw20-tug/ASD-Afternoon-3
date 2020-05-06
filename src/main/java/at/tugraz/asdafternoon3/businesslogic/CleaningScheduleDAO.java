@@ -12,9 +12,20 @@ public class CleaningScheduleDAO extends DAO<CleaningSchedule> {
 
     @Override
     public boolean validate(CleaningSchedule object) {
-        return false;
+        if (object == null) {
+            return false;
+        }
+        if (object.getName() == null || object.getName().isEmpty()) {
+            return false;
+        }
+        if (object.getStartTime() == null) {
+            return false;
+        }
+        if (object.getCleaner() == null) {
+            return false;
+        }
+        return true;
     }
-
     @Override
     public CleaningSchedule create(CleaningSchedule object) throws Exception {
         return null;
