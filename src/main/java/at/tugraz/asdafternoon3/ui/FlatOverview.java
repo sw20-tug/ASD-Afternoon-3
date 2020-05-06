@@ -33,11 +33,12 @@ public class FlatOverview {
                 FlatApplication.get().setContentPane(new RoommateOverview(flat).getContentPane()));
         selectFlatButton.addActionListener(e ->
                 FlatApplication.get().setContentPane(new FlatList(flat).getContentPane()));
-
-
+        financeFurnitureAndEquipmentButton.addActionListener(e ->
+            FlatApplication.get().setContentPane(new FinanceOverview(flat).getContentPane()));
+        shoppingListButton.addActionListener(e ->
+                FlatApplication.get().setContentPane(new ShoppingList(flat).getContentPane()));
         cleaningScheduleButton.addActionListener(e ->
                 FlatApplication.get().setContentPane(new CleaningScheduleUI(flat).getContentPane()));
-
     }
 
     public JPanel getContentPane() {
