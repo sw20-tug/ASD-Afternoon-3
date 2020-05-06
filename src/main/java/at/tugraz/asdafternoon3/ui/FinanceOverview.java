@@ -15,6 +15,8 @@ import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +54,7 @@ public class FinanceOverview {
             finances = DatabaseConnection.getInstance().createDao(FlatDAO.class).getFinance(flat);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(getContentPane(), "Finances could not be found.", "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
 
         tableModel = new FinanceFurnitureModel(finances);
@@ -61,6 +64,13 @@ public class FinanceOverview {
 
         backButton.addActionListener(e -> {
             FlatApplication.get().setContentPane(new FlatOverview(activeFlat).getContentPane());
+        });
+
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Finance test = new Finance("test", 2,  );
+            }
         });
     }
 
