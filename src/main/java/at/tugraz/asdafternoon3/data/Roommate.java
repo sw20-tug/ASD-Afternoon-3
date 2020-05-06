@@ -58,11 +58,7 @@ public class Roommate extends DatabaseObject {
 
     @Override
     public String toString() {
-        return "Roommate{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", flat=" + flat +
-                '}';
+        return name;
     }
 }
 
