@@ -91,10 +91,12 @@ public class RoommateTableModel extends AbstractTableModel {
         switch (columnIndex) {
             case 1:
                 roommate.setName((String) aValue);
+                break;
             case 2:
                 if (aValue instanceof Integer) {
                     roommate.setAge((Integer) aValue);
                 }
+                break;
         }
 
         // TODO: Make this nicer, but we need to update this in the database
