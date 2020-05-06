@@ -5,16 +5,17 @@ import at.tugraz.asdafternoon3.data.Finance;
 import at.tugraz.asdafternoon3.data.Roommate;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import java.util.List;
 
-public class FinanceDAOTest {
+import static org.junit.Assert.*;
+
+public class FinanceDAOTest extends DAOTest {
 
     @Test
     public void createFinanceValid() {
         Flat flat = generateTestFlat();
-        Roommate ownerRoomate = generateTestRoommate(flat);
-        Finance finance = new Finance("Sofa", 200, ownerRoomate, flat);
+        Roommate ownerRoommate = generateTestRoommate(flat);
+        Finance finance = new Finance("Sofa", 200, ownerRoommate, flat);
 
         FinanceDAO creator = new FinanceDAO(null);
         assertTrue(creator.validate(finance));
@@ -23,8 +24,18 @@ public class FinanceDAOTest {
     @Test
     public void createFinanceInvalidCosts() {
         Flat flat = generateTestFlat();
-        Roommate roommate = generateTestRoommate(flat);
-        Finance finance = new Finance("Sofa", -10, roommate, flat);
+        Roommate ownerRoommate = generateTestRoommate(flat);
+        Finance finance = new Finance("Sofa", -10, ownerRoommate, flat);
+
+        FinanceDAO creator = new FinanceDAO(null);
+        assertFalse(creator.validate(finance));
+    }
+
+    @Test
+    public void createFinanceInvalidName() {
+        Flat flat = generateTestFlat();
+        Roommate ownerRoommate = generateTestRoommate(flat);
+        Finance finance = new Finance("", 10, ownerRoommate, flat);
 
         FinanceDAO creator = new FinanceDAO(null);
         assertFalse(creator.validate(finance));
@@ -32,13 +43,12 @@ public class FinanceDAOTest {
 
     @Test
     public void createFinanceNoFlat() {
-        Roommate roommate = generateTestRoommate(null);
-        Finance finance = new Finance("Sofa", 300, roommate, null);
+        Roommate ownerRoommate = generateTestRoommate(null);
+        Finance finance = new Finance("Sofa", 300, ownerRoommate, null);
 
         FinanceDAO creator = new FinanceDAO(null);
         assertFalse(creator.validate(finance));
     }
-
 
     private Flat generateTestFlat() {
         return new Flat("Chaos WG", 2, "Graz");
