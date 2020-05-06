@@ -42,7 +42,10 @@ public class CleaningScheduleUI {
         btEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               // editCleaningScheduleEntry();
+
+                CleaningScheduleDialog dialog = new CleaningScheduleDialog();
+                dialog.setSize(300, 300);
+                dialog.setVisible(true);
             }
         });
         btAdd.addActionListener(new ActionListener() {
