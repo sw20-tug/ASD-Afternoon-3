@@ -35,6 +35,9 @@ public class FlatOverview {
                 FlatApplication.get().setContentPane(new FlatList(flat).getContentPane()));
 
 
+        cleaningScheduleButton.addActionListener(e ->
+                FlatApplication.get().setContentPane(new CleaningScheduleUI(flat).getContentPane()));
+
     }
 
     public JPanel getContentPane() {
