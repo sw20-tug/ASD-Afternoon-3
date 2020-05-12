@@ -30,6 +30,13 @@ public class Finance extends DatabaseObject {
         this.flat = flat;
     }
 
+    public Finance(){
+        this.name = "";
+        this.costs = 0;
+        this.ownerRoommate = null;
+        this.flat = null;
+    }
+
     public int getCosts() {
         return costs;
     }

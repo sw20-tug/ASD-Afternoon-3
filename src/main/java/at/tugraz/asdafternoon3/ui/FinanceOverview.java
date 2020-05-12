@@ -2,10 +2,12 @@ package at.tugraz.asdafternoon3.ui;
 
 import at.tugraz.asdafternoon3.FlatApplication;
 import at.tugraz.asdafternoon3.businesslogic.FlatDAO;
+import at.tugraz.asdafternoon3.data.Finance;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.data.Roommate;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import at.tugraz.asdafternoon3.ui.combobox.RoommateComboBoxModel;
+import at.tugraz.asdafternoon3.ui.table.FinanceFurnitureModel;
 import at.tugraz.asdafternoon3.ui.table.RoommateTableModel;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -13,6 +15,8 @@ import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +33,7 @@ public class FinanceOverview {
 
     private final Flat activeFlat;
     private final RoommateComboBoxModel model;
+    private final FinanceFurnitureModel tableModel;
 
     public FinanceOverview(Flat flat) {
         this.activeFlat = flat;
@@ -43,9 +48,29 @@ public class FinanceOverview {
         model = new RoommateComboBoxModel(roommates);
         cbRoommate.setModel(model);
 
+        // TODO: Check if working
+        List<Finance> finances = new ArrayList<>();
+        try {
+            finances = DatabaseConnection.getInstance().createDao(FlatDAO.class).getFinance(flat);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(getContentPane(), "Finances could not be found.", "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+
+        tableModel = new FinanceFurnitureModel(finances);
+        financeTable.setModel(tableModel);
+        //
+
 
         backButton.addActionListener(e -> {
             FlatApplication.get().setContentPane(new FlatOverview(activeFlat).getContentPane());
+        });
+
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Finance test = new Finance("test", 2,  );
+            }
         });
     }
 
