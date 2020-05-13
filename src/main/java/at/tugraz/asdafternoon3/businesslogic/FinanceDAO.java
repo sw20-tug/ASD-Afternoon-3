@@ -29,6 +29,11 @@ public class FinanceDAO extends DAO<Finance> {
             return false;
         }
 
+        int nameLength = object.getName().length();
+        if(nameLength <= 0) {
+            return false;
+        }
+
         if (object.getFlat() == null) {
             return false;
         }
