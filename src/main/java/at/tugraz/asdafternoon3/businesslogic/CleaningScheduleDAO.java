@@ -24,6 +24,10 @@ public class CleaningScheduleDAO extends DAO<CleaningSchedule> {
         if (object.getCleaner() == null) {
             return false;
         }
+        if (!"weekly".equals(object.getIntervall()) && !"monthly".equals(object.getIntervall()))
+        {
+            return false;
+        }
         return true;
     }
     @Override

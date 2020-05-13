@@ -3,14 +3,17 @@ package at.tugraz.asdafternoon3.businesslogic;
 import at.tugraz.asdafternoon3.data.CleaningSchedule;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.data.Roommate;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.junit.After;
 import org.junit.Test;
 
+import javax.persistence.Query;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class CleaningScheduleDAOTest extends DAOTest {
 
@@ -22,6 +25,18 @@ public class CleaningScheduleDAOTest extends DAOTest {
         this.testmate = new Roommate("Mark Weizenberg", 23, testflat);
     }
 
+    @After
+    public void after()
+    {
+        String stringQuery = "DELETE FROM CleaningSchedule ";
+        try(Session session = database.openSession()) {
+            Query query = session.createQuery(stringQuery);
+            Transaction t = session.beginTransaction();
+            query.executeUpdate();
+            t.commit();
+        }
+    }
+
     @Test
     public void validateSchedule() {
         LocalDate currentDate = LocalDate.now();
@@ -29,7 +44,7 @@ public class CleaningScheduleDAOTest extends DAOTest {
         LocalDateTime currentDateAndTime = LocalDateTime.of(currentDate, currentTime);
 
         CleaningSchedule cleaningschedule =
-                new CleaningSchedule("Partykeller", currentDateAndTime, testmate);
+                new CleaningSchedule("Partykeller", currentDateAndTime, testmate, "weekly");
 
         CleaningScheduleDAO creator = new CleaningScheduleDAO(null);
         assertTrue(creator.validate(cleaningschedule));
@@ -41,7 +56,7 @@ public class CleaningScheduleDAOTest extends DAOTest {
         LocalDateTime currentDateAndTime = LocalDateTime.of(currentDate, currentTime);
 
         CleaningSchedule cleaningschedule =
-                new CleaningSchedule("", currentDateAndTime, testmate);
+                new CleaningSchedule("", currentDateAndTime, testmate, "weekly");
 
         CleaningScheduleDAO creator = new CleaningScheduleDAO(null);
         assertFalse(creator.validate(cleaningschedule));
@@ -53,5 +68,109 @@ public class CleaningScheduleDAOTest extends DAOTest {
         cleaningschedule.setStartTime(currentDateAndTime);
         cleaningschedule.setCleaner(null);
         assertFalse(creator.validate(cleaningschedule));
+
+        cleaningschedule.setCleaner(testmate);
+        cleaningschedule.setIntervall("");
+        assertFalse(creator.validate(cleaningschedule));
     }
+
+    @Test
+    public void create()  {
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+        LocalDateTime currentDateAndTime = LocalDateTime.of(currentDate, currentTime);
+
+        CleaningSchedule cleaningschedule =
+                new CleaningSchedule("Keller", currentDateAndTime, testmate, "weekly");
+
+        CleaningScheduleDAO creator = new CleaningScheduleDAO(null);
+        try {
+            assertNotNull(creator.create(cleaningschedule));
+        } catch (Exception e) {
+            e.printStackTrace();
+            assert(false);
+        }
+    }
+
+    @Test
+    public void update() {
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+        LocalDateTime currentDateAndTime = LocalDateTime.of(currentDate, currentTime);
+
+        CleaningSchedule cleaningschedule =
+                new CleaningSchedule("Keller", currentDateAndTime, testmate, "weekly");
+
+        CleaningScheduleDAO creator = new CleaningScheduleDAO(null);
+        try {
+            assertNotNull(creator.create(cleaningschedule));
+            cleaningschedule.setName("Balkon");
+            assertNotNull(creator.update(cleaningschedule));
+        } catch (Exception e) {
+            e.printStackTrace();
+            assert(false);
+        };
+    }
+
+    @Test
+    public void getAll() {
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+        LocalDateTime currentDateAndTime = LocalDateTime.of(currentDate, currentTime);
+
+        CleaningSchedule cleaningschedule =
+                new CleaningSchedule("Keller", currentDateAndTime, testmate, "weekly");
+
+        CleaningScheduleDAO creator = new CleaningScheduleDAO(null);
+        try {
+            assertNotNull(creator.create(cleaningschedule));
+            assertNotEquals(0, creator.getAll().size());
+        } catch (Exception e) {
+            e.printStackTrace();
+            assert(false);
+        }
+    }
+
+    @Test
+    public void count() throws Exception {
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+        LocalDateTime currentDateAndTime = LocalDateTime.of(currentDate, currentTime);
+
+        CleaningSchedule cleaningschedule =
+                new CleaningSchedule("Keller", currentDateAndTime, testmate, "weekly");
+
+        CleaningScheduleDAO creator = new CleaningScheduleDAO(null);
+        try {
+            assertNotNull(creator.create(cleaningschedule));
+            assertNotEquals(0, Integer.parseInt(Long.toString(creator.count())));
+        } catch (Exception e) {
+            e.printStackTrace();
+            assert(false);
+        }
+    }
+
+    @Test
+    public void delete() throws Exception {
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+        LocalDateTime currentDateAndTime = LocalDateTime.of(currentDate, currentTime);
+
+        CleaningSchedule cleaningschedule =
+                new CleaningSchedule("Keller", currentDateAndTime, testmate, "weekly");
+
+        CleaningScheduleDAO creator = new CleaningScheduleDAO(null);
+        try {
+            assertNotNull(creator.create(cleaningschedule));
+            creator.delete(cleaningschedule);
+            assertTrue(creator.count().equals(0L));
+        } catch (Exception e) {
+            e.printStackTrace();
+            assert(false);
+        }
+    }
+
+
+
+
 }

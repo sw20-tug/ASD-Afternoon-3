@@ -3,6 +3,7 @@ package at.tugraz.asdafternoon3.data;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+
 @Entity
 public class CleaningSchedule extends DatabaseObject {
 
@@ -16,6 +17,9 @@ public class CleaningSchedule extends DatabaseObject {
     @Column
     private LocalDateTime startTime;
 
+    @Column
+    private String intervall;
+
     @ManyToOne
     @JoinColumn(nullable = false)
     private Roommate cleaner;
@@ -25,13 +29,15 @@ public class CleaningSchedule extends DatabaseObject {
         this.id = 0;
         this.startTime = null;
         this.cleaner = null;
+        this.intervall = null;
     }
 
     public CleaningSchedule(String name, LocalDateTime startTime,
-                            Roommate cleaner) {
+                            Roommate cleaner, String intervall) {
         this.name = name;
         this.startTime = startTime;
         this.cleaner = cleaner;
+        this.intervall = intervall;
     }
 
     public int getId() {
@@ -66,12 +72,22 @@ public class CleaningSchedule extends DatabaseObject {
         this.cleaner = cleaner;
     }
 
+
+    public String getIntervall() {
+        return intervall;
+    }
+
+    public void setIntervall(String intervall) {
+        this.intervall = intervall;
+    }
+
     @Override
     public String toString() {
         return "CleaningSchedule{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", startTime=" + startTime +
+                ", intervall='" + intervall + '\'' +
                 ", cleaner=" + cleaner +
                 '}';
     }
