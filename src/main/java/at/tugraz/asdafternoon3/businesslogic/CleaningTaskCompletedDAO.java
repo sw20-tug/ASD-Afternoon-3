@@ -13,7 +13,11 @@ public class CleaningTaskCompletedDAO extends DAO<CleaningTaskCompleted> {
 
     @Override
     public boolean validate(CleaningTaskCompleted object) {
-        return false;
+        if (object.getCleaningSchedule() == null)
+            return false;
+        if(object.getCompleted() == null)
+            return false;
+        return true;
     }
 
     @Override

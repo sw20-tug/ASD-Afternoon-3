@@ -14,8 +14,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 public class CleaningTaskCompletedDAOTest extends DAOTest {
 
@@ -77,23 +77,81 @@ public class CleaningTaskCompletedDAOTest extends DAOTest {
     }
 
     @Test
-    public void create() {
+    public void create()  {
 
+        CleaningTaskCompleted cleaningTaskCompleted =
+                new CleaningTaskCompleted(cleaningSchedule, currentDateAndTime.plusDays(2));
+
+        try {
+            assertNotNull(cleaningTaskCompletedDAO.create(cleaningTaskCompleted));
+        } catch (Exception e) {
+            e.printStackTrace();
+            assert(false);
+        }
     }
 
     @Test
     public void update() {
+        CleaningTaskCompleted cleaningTaskCompleted =
+                new CleaningTaskCompleted(cleaningSchedule, currentDateAndTime.plusDays(2));
+
+        try {
+            cleaningTaskCompletedDAO.create(cleaningTaskCompleted);
+            cleaningTaskCompleted.setCompleted(currentDateAndTime.plusDays(3));
+            assertNotNull(cleaningTaskCompletedDAO.update(cleaningTaskCompleted));
+            System.out.println(cleaningTaskCompleted.getCompleted().toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            assert(false);
+        }
     }
 
     @Test
     public void getAll() {
+        CleaningTaskCompleted cleaningTaskCompleted =
+                new CleaningTaskCompleted(cleaningSchedule, currentDateAndTime.plusDays(2));
+
+        try {
+            cleaningTaskCompletedDAO.create(cleaningTaskCompleted);
+
+            assertNotEquals(0, cleaningTaskCompletedDAO.getAll().size());
+        } catch (Exception e) {
+            e.printStackTrace();
+            assert(false);
+        }
     }
 
     @Test
-    public void count() {
+    public void count() throws Exception {
+        CleaningTaskCompleted cleaningTaskCompleted =
+                new CleaningTaskCompleted(cleaningSchedule, currentDateAndTime.plusDays(2));
+
+        try {
+            cleaningTaskCompletedDAO.create(cleaningTaskCompleted);
+
+            assertTrue(cleaningTaskCompletedDAO.count().equals(1L));
+        } catch (Exception e) {
+            e.printStackTrace();
+            assert(false);
+        }
     }
 
     @Test
-    public void delete() {
+    public void delete() throws Exception {
+
+        CleaningTaskCompleted cleaningTaskCompleted =
+                new CleaningTaskCompleted(cleaningSchedule, currentDateAndTime.plusDays(2));
+
+        try {
+            cleaningTaskCompletedDAO.create(cleaningTaskCompleted);
+            cleaningTaskCompletedDAO.delete(cleaningTaskCompleted);
+            assertTrue(cleaningTaskCompletedDAO.count().equals(0L));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            assert(false);
+        }
     }
+
+
 }
