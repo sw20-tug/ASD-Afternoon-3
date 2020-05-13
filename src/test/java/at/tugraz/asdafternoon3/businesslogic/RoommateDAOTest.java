@@ -1,13 +1,18 @@
 package at.tugraz.asdafternoon3.businesslogic;
 
+import at.tugraz.asdafternoon3.data.CleaningSchedule;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.data.Roommate;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 
-public class RoommateDAOTest {
+import static org.junit.Assert.*;
+
+public class RoommateDAOTest extends DAOTest {
 
     @Test
     public void createRoommateValid() {
@@ -42,6 +47,37 @@ public class RoommateDAOTest {
 
         RoommateDAO creator = new RoommateDAO(null);
         assertFalse(creator.validate(roommate));
+    }
+
+    @Test
+    public void getCleaningSchedules() {
+
+        Flat flat = generateTestFlat();
+        Roommate roommate = new Roommate("Andi Goldberger", 50, flat);
+
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+        LocalDateTime currentDateAndTime = LocalDateTime.of(currentDate, currentTime);
+
+        CleaningSchedule cleaningSchedule = new CleaningSchedule("Garten", currentDateAndTime, roommate, "weekly");
+
+        FlatDAO flatDAO = new FlatDAO(database);
+        RoommateDAO roommateDAO = new RoommateDAO(database);
+        CleaningScheduleDAO cleaningScheduleDAO = new CleaningScheduleDAO(database);
+
+        try {
+            flatDAO.create(flat);
+            roommateDAO.create(roommate);
+            cleaningScheduleDAO.create(cleaningSchedule);
+
+            List<CleaningSchedule> cleaningScheduleList = roommateDAO.getCleaningSchedules(roommate);
+            System.out.println(cleaningScheduleList.toString());
+            assertEquals(1, cleaningScheduleList.size());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            assert (false);
+        }
     }
 
     private Flat generateTestFlat() {

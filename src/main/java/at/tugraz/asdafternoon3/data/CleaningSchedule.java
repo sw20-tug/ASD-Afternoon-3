@@ -22,21 +22,21 @@ public class CleaningSchedule extends DatabaseObject {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Roommate cleaner;
+    private Roommate roommate;
 
     public CleaningSchedule() {
         this.name = "";
         this.id = 0;
         this.startTime = null;
-        this.cleaner = null;
+        this.roommate = null;
         this.intervall = null;
     }
 
     public CleaningSchedule(String name, LocalDateTime startTime,
-                            Roommate cleaner, String intervall) {
+                            Roommate roommate, String intervall) {
         this.name = name;
         this.startTime = startTime;
-        this.cleaner = cleaner;
+        this.roommate = roommate;
         this.intervall = intervall;
     }
 
@@ -64,12 +64,12 @@ public class CleaningSchedule extends DatabaseObject {
         this.startTime = startTime;
     }
 
-    public Roommate getCleaner() {
-        return cleaner;
+    public Roommate getRoommate() {
+        return roommate;
     }
 
-    public void setCleaner(Roommate cleaner) {
-        this.cleaner = cleaner;
+    public void setRoommate(Roommate cleaner) {
+        this.roommate = cleaner;
     }
 
 
@@ -88,7 +88,7 @@ public class CleaningSchedule extends DatabaseObject {
                 ", name='" + name + '\'' +
                 ", startTime=" + startTime +
                 ", intervall='" + intervall + '\'' +
-                ", cleaner=" + cleaner +
+                ", roommate=" + roommate +
                 '}';
     }
 }

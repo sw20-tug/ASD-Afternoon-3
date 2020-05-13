@@ -76,10 +76,10 @@ public class CleaningScheduleDAOTest extends DAOTest {
         assertFalse(creator.validate(cleaningschedule));
 
         cleaningschedule.setStartTime(currentDateAndTime);
-        cleaningschedule.setCleaner(null);
+        cleaningschedule.setRoommate(null);
         assertFalse(creator.validate(cleaningschedule));
 
-        cleaningschedule.setCleaner(testmate);
+        cleaningschedule.setRoommate(testmate);
         cleaningschedule.setIntervall("");
         assertFalse(creator.validate(cleaningschedule));
     }

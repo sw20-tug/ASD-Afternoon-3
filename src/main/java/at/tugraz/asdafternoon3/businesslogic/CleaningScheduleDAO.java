@@ -27,7 +27,7 @@ public class CleaningScheduleDAO extends DAO<CleaningSchedule> {
         if (object.getStartTime() == null) {
             return false;
         }
-        if (object.getCleaner() == null) {
+        if (object.getRoommate() == null) {
             return false;
         }
         if (!"weekly".equals(object.getIntervall()) && !"monthly".equals(object.getIntervall()))
@@ -99,4 +99,5 @@ public class CleaningScheduleDAO extends DAO<CleaningSchedule> {
             t.commit();
         }
     }
+
 }
