@@ -21,8 +21,11 @@ public class FinanceDAO extends DAO<Finance> {
 
     @Override
     public boolean validate(Finance object) {
-        int costs = object.getCosts();
-        if (costs < 0) {
+        if (object.getCosts() <= 0) {
+            return false;
+        }
+
+        if(object.getName().length() <= 0) {
             return false;
         }
 

@@ -31,6 +31,16 @@ public class FinanceDAOTest {
     }
 
     @Test
+    public void createFinanceNoCost() {
+        Flat flat = generateTestFlat();
+        Roommate ownerRoommate = generateTestRoommate(flat);
+        Finance finance = new Finance("Sofa", 0, ownerRoommate, flat);
+
+        FinanceDAO creator = new FinanceDAO(null);
+        assertFalse(creator.validate(finance));
+    }
+
+    @Test
     public void createFinanceNoFlat() {
         Roommate roommate = generateTestRoommate(null);
         Finance finance = new Finance("Sofa", 300, roommate, null);

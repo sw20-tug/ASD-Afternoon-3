@@ -1,7 +1,9 @@
 package at.tugraz.asdafternoon3.ui;
 
 import at.tugraz.asdafternoon3.FlatApplication;
+import at.tugraz.asdafternoon3.businesslogic.FinanceDAO;
 import at.tugraz.asdafternoon3.businesslogic.FlatDAO;
+import at.tugraz.asdafternoon3.businesslogic.RoommateDAO;
 import at.tugraz.asdafternoon3.data.Finance;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.data.Roommate;
@@ -26,10 +28,9 @@ public class FinanceOverview {
     private JButton backButton;
     private JButton removeButton;
     private JButton addButton;
-    private JComboBox cbRoommate;
+    private JComboBox<Roommate> cbRoommate;
     private JSpinner spMoney;
     private JTextField tfName;
-
 
     private final Flat activeFlat;
     private final RoommateComboBoxModel model;
@@ -48,7 +49,6 @@ public class FinanceOverview {
         model = new RoommateComboBoxModel(roommates);
         cbRoommate.setModel(model);
 
-        // TODO: Check if working
         List<Finance> finances = new ArrayList<>();
         try {
             finances = DatabaseConnection.getInstance().createDao(FlatDAO.class).getFinance(flat);
@@ -59,19 +59,57 @@ public class FinanceOverview {
 
         tableModel = new FinanceFurnitureModel(finances);
         financeTable.setModel(tableModel);
-        //
-
 
         backButton.addActionListener(e -> {
             FlatApplication.get().setContentPane(new FlatOverview(activeFlat).getContentPane());
         });
 
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Finance test = new Finance("test", 2,  );
+        addButton.addActionListener(e -> {
+            Finance finance = createFinance();
+            if (finance != null) {
+                tableModel.addFinance(finance);
             }
         });
+
+        removeButton.addActionListener(e -> {
+            int rowIndex = financeTable.getSelectedRow();
+            Finance finance = tableModel.getFinanceAtIndex(rowIndex);
+
+            try {
+                DatabaseConnection.getInstance().createDao(FinanceDAO.class).delete(finance);
+                tableModel.removeFinance(rowIndex);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(contentPane, "Could not remove roommate");
+            }
+        });
+    }
+
+    private Finance createFinance() {
+        Roommate roommate = (Roommate) cbRoommate.getSelectedItem();
+
+        if (roommate == null) {
+            JOptionPane.showMessageDialog(contentPane, "Roommate not selected");
+            return null;
+        }
+
+        Finance newFinance = new Finance(tfName.getText(),
+                (Integer) spMoney.getValue(),
+                roommate,
+                activeFlat);
+
+        try {
+            FinanceDAO creator = DatabaseConnection.getInstance().createDao(FinanceDAO.class);
+
+            if (!creator.validate(newFinance)) {
+                JOptionPane.showMessageDialog(contentPane, "Finance data is not valid");
+            } else {
+                return creator.create(newFinance);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(contentPane, "Could not create finance");
+        }
+
+        return null;
     }
 
     public JPanel getContentPane() {
@@ -155,4 +193,5 @@ public class FinanceOverview {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }
