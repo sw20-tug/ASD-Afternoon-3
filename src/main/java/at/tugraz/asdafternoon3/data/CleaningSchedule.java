@@ -40,6 +40,15 @@ public class CleaningSchedule extends DatabaseObject {
         this.intervall = intervall;
     }
 
+    public CleaningSchedule(int id, String name, LocalDateTime startTime,
+                            Roommate roommate, String intervall) {
+        this.id = id;
+        this.name = name;
+        this.startTime = startTime;
+        this.roommate = roommate;
+        this.intervall = intervall;
+    }
+
     public int getId() {
         return id;
     }
