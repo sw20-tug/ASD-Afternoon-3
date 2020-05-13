@@ -1,6 +1,6 @@
 package at.tugraz.asdafternoon3.businesslogic;
 
-import at.tugraz.asdafternoon3.data.CleaningSchedule;
+import at.tugraz.asdafternoon3.data.CleaningTaskCompleted;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -11,34 +11,23 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-public class CleaningScheduleDAO extends DAO<CleaningSchedule> {
-    protected CleaningScheduleDAO(SessionFactory sessionFactory) {
+public class CleaningTaskCompletedDAO extends DAO<CleaningTaskCompleted> {
+
+    public CleaningTaskCompletedDAO(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 
     @Override
-    public boolean validate(CleaningSchedule object) {
-        if (object == null) {
+    public boolean validate(CleaningTaskCompleted object) {
+        if (object.getCleaningSchedule() == null)
             return false;
-        }
-        if (object.getName() == null || object.getName().isEmpty()) {
+        if (object.getCompleted() == null)
             return false;
-        }
-        if (object.getStartTime() == null) {
-            return false;
-        }
-        if (object.getRoommate() == null) {
-            return false;
-        }
-        if (!"weekly".equals(object.getIntervall()) && !"monthly".equals(object.getIntervall()))
-        {
-            return false;
-        }
         return true;
     }
 
     @Override
-    public CleaningSchedule create(CleaningSchedule object) throws Exception {
+    public CleaningTaskCompleted create(CleaningTaskCompleted object) throws Exception {
         if (!validate(object)) {
             return null;
         }
@@ -53,7 +42,7 @@ public class CleaningScheduleDAO extends DAO<CleaningSchedule> {
     }
 
     @Override
-    public CleaningSchedule update(CleaningSchedule object) throws Exception {
+    public CleaningTaskCompleted update(CleaningTaskCompleted object) throws Exception {
         if (!validate(object)) {
             return null;
         }
@@ -68,13 +57,13 @@ public class CleaningScheduleDAO extends DAO<CleaningSchedule> {
     }
 
     @Override
-    public List<CleaningSchedule> getAll() throws Exception {
+    public List<CleaningTaskCompleted> getAll() throws Exception {
         try (Session session = openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery<CleaningSchedule> cr = cb.createQuery(CleaningSchedule.class);
-            Root<CleaningSchedule> root = cr.from(CleaningSchedule.class);
+            CriteriaQuery<CleaningTaskCompleted> cr = cb.createQuery(CleaningTaskCompleted.class);
+            Root<CleaningTaskCompleted> root = cr.from(CleaningTaskCompleted.class);
             cr.select(root);
-            Query<CleaningSchedule> query = session.createQuery(cr);
+            Query<CleaningTaskCompleted> query = session.createQuery(cr);
             return query.getResultList();
         }
     }
@@ -84,7 +73,7 @@ public class CleaningScheduleDAO extends DAO<CleaningSchedule> {
         try (Session session = openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<Long> cr = cb.createQuery(Long.class);
-            Root<CleaningSchedule> root = cr.from(CleaningSchedule.class);
+            Root<CleaningTaskCompleted> root = cr.from(CleaningTaskCompleted.class);
             cr.select(cb.count(root));
             Query<Long> query = session.createQuery(cr);
             return query.getSingleResult();
@@ -92,12 +81,11 @@ public class CleaningScheduleDAO extends DAO<CleaningSchedule> {
     }
 
     @Override
-    public void delete(CleaningSchedule object) throws Exception {
+    public void delete(CleaningTaskCompleted object) throws Exception {
         try (Session session = openSession()) {
             Transaction t = session.beginTransaction();
             session.delete(object);
             t.commit();
         }
     }
-
 }

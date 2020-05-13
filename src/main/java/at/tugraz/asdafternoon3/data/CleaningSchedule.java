@@ -3,6 +3,7 @@ package at.tugraz.asdafternoon3.data;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+
 @Entity
 public class CleaningSchedule extends DatabaseObject {
 
@@ -16,22 +17,36 @@ public class CleaningSchedule extends DatabaseObject {
     @Column
     private LocalDateTime startTime;
 
+    @Column
+    private String intervall;
+
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Roommate cleaner;
+    private Roommate roommate;
 
     public CleaningSchedule() {
         this.name = "";
         this.id = 0;
         this.startTime = null;
-        this.cleaner = null;
+        this.roommate = null;
+        this.intervall = null;
     }
 
     public CleaningSchedule(String name, LocalDateTime startTime,
-                            Roommate cleaner) {
+                            Roommate roommate, String intervall) {
         this.name = name;
         this.startTime = startTime;
-        this.cleaner = cleaner;
+        this.roommate = roommate;
+        this.intervall = intervall;
+    }
+
+    public CleaningSchedule(int id, String name, LocalDateTime startTime,
+                            Roommate roommate, String intervall) {
+        this.id = id;
+        this.name = name;
+        this.startTime = startTime;
+        this.roommate = roommate;
+        this.intervall = intervall;
     }
 
     public int getId() {
@@ -58,12 +73,21 @@ public class CleaningSchedule extends DatabaseObject {
         this.startTime = startTime;
     }
 
-    public Roommate getCleaner() {
-        return cleaner;
+    public Roommate getRoommate() {
+        return roommate;
     }
 
-    public void setCleaner(Roommate cleaner) {
-        this.cleaner = cleaner;
+    public void setRoommate(Roommate cleaner) {
+        this.roommate = cleaner;
+    }
+
+
+    public String getIntervall() {
+        return intervall;
+    }
+
+    public void setIntervall(String intervall) {
+        this.intervall = intervall;
     }
 
     @Override
@@ -72,7 +96,8 @@ public class CleaningSchedule extends DatabaseObject {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", startTime=" + startTime +
-                ", cleaner=" + cleaner +
+                ", intervall='" + intervall + '\'' +
+                ", roommate=" + roommate +
                 '}';
     }
 }
