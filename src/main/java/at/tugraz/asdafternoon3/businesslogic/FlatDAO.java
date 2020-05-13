@@ -1,7 +1,9 @@
 package at.tugraz.asdafternoon3.businesslogic;
 
+import at.tugraz.asdafternoon3.data.Finance;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.data.Roommate;
+import at.tugraz.asdafternoon3.data.ShoppingListItem;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -148,6 +150,30 @@ public class FlatDAO extends DAO<Flat> {
             cr.select(root);
             cr.where(cb.equal(root.get("flat"), flat));
             Query<Roommate> query = session.createQuery(cr);
+            return query.getResultList();
+        }
+    }
+
+    public List<Finance> getFinance(Flat flat) {
+        try (Session session = openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Finance> cr = cb.createQuery(Finance.class);
+            Root<Finance> root = cr.from(Finance.class);
+            cr.select(root);
+            cr.where(cb.equal(root.get("flat"), flat));
+            Query<Finance> query = session.createQuery(cr);
+            return query.getResultList();
+        }
+    }
+
+    public List<ShoppingListItem> getShoppingList(Flat flat) {
+        try (Session session = openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<ShoppingListItem> cr = cb.createQuery(ShoppingListItem.class);
+            Root<ShoppingListItem> root = cr.from(ShoppingListItem.class);
+            cr.select(root);
+            cr.where(cb.equal(root.get("flat"), flat));
+            Query<ShoppingListItem> query = session.createQuery(cr);
             return query.getResultList();
         }
     }

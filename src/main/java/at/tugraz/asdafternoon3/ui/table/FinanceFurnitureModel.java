@@ -1,30 +1,30 @@
 package at.tugraz.asdafternoon3.ui.table;
 
+import at.tugraz.asdafternoon3.businesslogic.FinanceDAO;
 import at.tugraz.asdafternoon3.businesslogic.RoommateDAO;
-import at.tugraz.asdafternoon3.data.Roommate;
+import at.tugraz.asdafternoon3.data.Finance;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
+public class FinanceFurnitureModel extends AbstractTableModel {
 
-public class RoommateTableModel extends AbstractTableModel {
+    private final List<Finance> financeList = new ArrayList<>();
 
-    private final List<Roommate> roommateList = new ArrayList<>();
-
-    public RoommateTableModel(List<Roommate> roommateList) {
-        this.roommateList.addAll(roommateList);
+    public FinanceFurnitureModel(List<Finance> financeList) {
+        this.financeList.addAll(financeList);
     }
 
     @Override
     public int getRowCount() {
-        return roommateList.size();
+        return financeList.size();
     }
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
 
     @Override
@@ -35,7 +35,9 @@ public class RoommateTableModel extends AbstractTableModel {
             case 1:
                 return "Name";
             case 2:
-                return "Age";
+                return "Cost";
+            case 3:
+                return "Owner";
             default:
                 throw new IllegalArgumentException("Wrong column");
         }
@@ -50,6 +52,8 @@ public class RoommateTableModel extends AbstractTableModel {
                 return String.class;
             case 2:
                 return Integer.class;
+            case 3:
+                return String.class;
             default:
                 throw new IllegalArgumentException("Wrong column");
         }
@@ -64,6 +68,8 @@ public class RoommateTableModel extends AbstractTableModel {
                 return true;
             case 2:
                 return true;
+            case 3:
+                return false;
             default:
                 return false;
         }
@@ -71,14 +77,16 @@ public class RoommateTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Roommate roommate = roommateList.get(rowIndex);
+        Finance finance = financeList.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                return roommate.getId();
+                return finance.getId();
             case 1:
-                return roommate.getName();
+                return finance.getName();
             case 2:
-                return roommate.getAge();
+                return finance.getCosts();
+            case 3:
+                return finance.getOwnerRoommate().getName();
             default:
                 throw new IllegalArgumentException("Wrong column");
         }
@@ -86,22 +94,22 @@ public class RoommateTableModel extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        Roommate roommate = roommateList.get(rowIndex);
+        Finance finance = financeList.get(rowIndex);
 
         switch (columnIndex) {
             case 1:
-                roommate.setName((String) aValue);
+                finance.setName((String) aValue);
                 break;
             case 2:
                 if (aValue instanceof Integer) {
-                    roommate.setAge((Integer) aValue);
+                    finance.setCosts((Integer) aValue);
                 }
                 break;
         }
 
         // TODO: Make this nicer, but we need to update this in the database
         try {
-            DatabaseConnection.getInstance().createDao(RoommateDAO.class).update(roommate);
+            DatabaseConnection.getInstance().createDao(FinanceDAO.class).update(finance);
         } catch (Exception ex) {
             // TODO: reset values
             System.err.println(ex.getMessage());
@@ -110,18 +118,19 @@ public class RoommateTableModel extends AbstractTableModel {
         fireTableRowsUpdated(columnIndex, columnIndex);
     }
 
-    public void addRoommate(Roommate roommate) {
-        int rowIndex = roommateList.size();
-        roommateList.add(roommate);
+
+    public void addFinance(Finance finance) {
+        int rowIndex = financeList.size();
+        financeList.add(finance);
         fireTableRowsInserted(rowIndex, rowIndex);
     }
 
-    public void removeRoommate(int rowIndex) {
-        roommateList.remove(rowIndex);
+    public void removeFinance(int rowIndex) {
+        financeList.remove(rowIndex);
         fireTableRowsDeleted(rowIndex, rowIndex);
     }
 
-    public Roommate getRoommateAtIndex(int rowIndex) {
-        return roommateList.get(rowIndex);
+    public Finance getFinanceAtIndex(int rowIndex) {
+        return financeList.get(rowIndex);
     }
 }
