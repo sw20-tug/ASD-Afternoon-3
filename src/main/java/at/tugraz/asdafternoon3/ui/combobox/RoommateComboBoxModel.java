@@ -7,7 +7,7 @@ import javax.swing.event.ListDataListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoommateComboBoxModel extends AbstractListModel implements ComboBoxModel {
+public class RoommateComboBoxModel extends AbstractListModel<Roommate> implements ComboBoxModel<Roommate> {
 
     private List<Roommate> roommates = new ArrayList<>();
     private int selection = -1;
@@ -33,7 +33,7 @@ public class RoommateComboBoxModel extends AbstractListModel implements ComboBox
     }
 
     @Override
-    public Object getElementAt(int index) {
+    public Roommate getElementAt(int index) {
         if (index < 0) {
             return null;
         }

@@ -9,7 +9,7 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FinanceFurnitureModel extends AbstractTableModel{
+public class FinanceFurnitureModel extends AbstractTableModel {
 
     private final List<Finance> financeList = new ArrayList<>();
 
@@ -24,7 +24,7 @@ public class FinanceFurnitureModel extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
 
     @Override
@@ -36,6 +36,8 @@ public class FinanceFurnitureModel extends AbstractTableModel{
                 return "Name";
             case 2:
                 return "Cost";
+            case 3:
+                return "Owner";
             default:
                 throw new IllegalArgumentException("Wrong column");
         }
@@ -50,6 +52,8 @@ public class FinanceFurnitureModel extends AbstractTableModel{
                 return String.class;
             case 2:
                 return Integer.class;
+            case 3:
+                return String.class;
             default:
                 throw new IllegalArgumentException("Wrong column");
         }
@@ -64,6 +68,8 @@ public class FinanceFurnitureModel extends AbstractTableModel{
                 return true;
             case 2:
                 return true;
+            case 3:
+                return false;
             default:
                 return false;
         }
@@ -79,6 +85,8 @@ public class FinanceFurnitureModel extends AbstractTableModel{
                 return finance.getName();
             case 2:
                 return finance.getCosts();
+            case 3:
+                return finance.getOwnerRoommate().getName();
             default:
                 throw new IllegalArgumentException("Wrong column");
         }

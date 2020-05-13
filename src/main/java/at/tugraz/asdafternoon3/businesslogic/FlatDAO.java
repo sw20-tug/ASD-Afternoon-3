@@ -154,7 +154,6 @@ public class FlatDAO extends DAO<Flat> {
         }
     }
 
-    // TODO: Check if this worked
     public List<Finance> getFinance(Flat flat) {
         try (Session session = openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -166,7 +165,6 @@ public class FlatDAO extends DAO<Flat> {
             return query.getResultList();
         }
     }
-    //
 
     public List<ShoppingListItem> getShoppingList(Flat flat) {
         try (Session session = openSession()) {
