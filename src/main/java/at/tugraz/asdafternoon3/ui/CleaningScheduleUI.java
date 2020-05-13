@@ -24,6 +24,7 @@ public class CleaningScheduleUI {
     private JButton btAdd;
     private JButton btDelete;
     private JComboBox cbIntervall;
+    private JButton exportButton;
     private Flat currentFlat;
 
 
@@ -65,6 +66,12 @@ public class CleaningScheduleUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 FlatApplication.get().setContentPane(new FlatOverview(currentFlat).getContentPane());
+            }
+        });
+        exportButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FlatApplication.get().setContentPane(new CleaningScheduleExportView(currentFlat).getContentPane());
             }
         });
     }
@@ -174,7 +181,7 @@ public class CleaningScheduleUI {
         cbIntervall = new JComboBox();
         panel2.add(cbIntervall, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
-        panel3.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
+        panel3.setLayout(new GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel3, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         btEdit = new JButton();
         btEdit.setText("Edit");
@@ -185,6 +192,9 @@ public class CleaningScheduleUI {
         btDelete = new JButton();
         btDelete.setText("Delete");
         panel3.add(btDelete, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        exportButton = new JButton();
+        exportButton.setText("Export");
+        panel3.add(exportButton, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -193,4 +203,5 @@ public class CleaningScheduleUI {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }
