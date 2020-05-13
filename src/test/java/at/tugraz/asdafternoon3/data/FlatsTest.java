@@ -1,11 +1,6 @@
 package at.tugraz.asdafternoon3.data;
 
 import at.tugraz.asdafternoon3.TestUtils;
-import at.tugraz.asdafternoon3.businesslogic.DAOTest;
-import at.tugraz.asdafternoon3.businesslogic.FlatDAO;
-import at.tugraz.asdafternoon3.data.Flat;
-import at.tugraz.asdafternoon3.data.Flats;
-import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import org.hibernate.SessionFactory;
 import org.junit.*;
 
