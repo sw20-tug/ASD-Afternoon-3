@@ -33,9 +33,7 @@ public class CleaningScheduleDAOTest extends DAOTest {
             e.printStackTrace();
             assert(false);
         }
-
     }
-
 
     @After
     public void after()
