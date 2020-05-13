@@ -23,7 +23,19 @@ public class CleaningScheduleDAOTest extends DAOTest {
     public CleaningScheduleDAOTest() {
         this.testflat = new Flat("ChaosWG", 22, "Ragnitzstraße 102");
         this.testmate = new Roommate("Mark Weizenberg", 23, testflat);
+        FlatDAO flatDAO = new FlatDAO(database);
+        RoommateDAO roommateDAO = new RoommateDAO(database);
+
+        try {
+            flatDAO.create(testflat);
+            roommateDAO.create(testmate);
+        } catch (Exception e) {
+            e.printStackTrace();
+            assert(false);
+        }
+
     }
+
 
     @After
     public void after()
@@ -83,7 +95,7 @@ public class CleaningScheduleDAOTest extends DAOTest {
         CleaningSchedule cleaningschedule =
                 new CleaningSchedule("Keller", currentDateAndTime, testmate, "weekly");
 
-        CleaningScheduleDAO creator = new CleaningScheduleDAO(null);
+        CleaningScheduleDAO creator = new CleaningScheduleDAO(database);
         try {
             assertNotNull(creator.create(cleaningschedule));
         } catch (Exception e) {
@@ -101,11 +113,12 @@ public class CleaningScheduleDAOTest extends DAOTest {
         CleaningSchedule cleaningschedule =
                 new CleaningSchedule("Keller", currentDateAndTime, testmate, "weekly");
 
-        CleaningScheduleDAO creator = new CleaningScheduleDAO(null);
+        CleaningScheduleDAO creator = new CleaningScheduleDAO(database);
         try {
             assertNotNull(creator.create(cleaningschedule));
             cleaningschedule.setName("Balkon");
             assertNotNull(creator.update(cleaningschedule));
+            System.out.println(creator.getAll());
         } catch (Exception e) {
             e.printStackTrace();
             assert(false);
@@ -121,7 +134,7 @@ public class CleaningScheduleDAOTest extends DAOTest {
         CleaningSchedule cleaningschedule =
                 new CleaningSchedule("Keller", currentDateAndTime, testmate, "weekly");
 
-        CleaningScheduleDAO creator = new CleaningScheduleDAO(null);
+        CleaningScheduleDAO creator = new CleaningScheduleDAO(database);
         try {
             assertNotNull(creator.create(cleaningschedule));
             assertNotEquals(0, creator.getAll().size());
@@ -140,7 +153,7 @@ public class CleaningScheduleDAOTest extends DAOTest {
         CleaningSchedule cleaningschedule =
                 new CleaningSchedule("Keller", currentDateAndTime, testmate, "weekly");
 
-        CleaningScheduleDAO creator = new CleaningScheduleDAO(null);
+        CleaningScheduleDAO creator = new CleaningScheduleDAO(database);
         try {
             assertNotNull(creator.create(cleaningschedule));
             assertNotEquals(0, Integer.parseInt(Long.toString(creator.count())));
@@ -159,7 +172,7 @@ public class CleaningScheduleDAOTest extends DAOTest {
         CleaningSchedule cleaningschedule =
                 new CleaningSchedule("Keller", currentDateAndTime, testmate, "weekly");
 
-        CleaningScheduleDAO creator = new CleaningScheduleDAO(null);
+        CleaningScheduleDAO creator = new CleaningScheduleDAO(database);
         try {
             assertNotNull(creator.create(cleaningschedule));
             creator.delete(cleaningschedule);
