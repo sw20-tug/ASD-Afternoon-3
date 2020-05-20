@@ -1,5 +1,6 @@
 package at.tugraz.asdafternoon3.ui;
 
+import at.tugraz.asdafternoon3.data.CleaningSchedule;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
@@ -7,6 +8,9 @@ import com.intellij.uiDesigner.core.Spacer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Vector;
 
 public class CleaningScheduleDialog extends JDialog {
     private JPanel contentPanel;
@@ -22,12 +26,19 @@ public class CleaningScheduleDialog extends JDialog {
     private JTextField tfRoommate;
     private JComboBox cbIntervall;
 
+    private CleaningSchedule cleaningSchedule;
+    private Boolean shouldBeChanged;
 
-    public CleaningScheduleDialog() {
+    public CleaningScheduleDialog(CleaningSchedule cleaning_schedule, Boolean should_be_changed) {
+        this.cleaningSchedule = cleaning_schedule;
+        this.shouldBeChanged = should_be_changed;
         setContentPane(contentPanel);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
+        if (should_be_changed) {
+            changeCleaningSchedule();
+        }
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -65,6 +76,23 @@ public class CleaningScheduleDialog extends JDialog {
     private void onCancel() {
         // add your code here if necessary
         dispose();
+    }
+
+    private void changeCleaningSchedule() {
+        tfName.setText(cleaningSchedule.getName());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd HH:mm");
+        tfStart.setText(cleaningSchedule.getStartTime().format(formatter));
+        ArrayList<String> list = new ArrayList<>();
+        list.add("daily");
+        list.add("weekly");
+        list.add("monthly");
+        list.add("yearly");
+        //Intervall
+        cbIntervall.setModel(new DefaultComboBoxModel(list.toArray()));
+        //TODO: Status updaten
+        tfMarkable.setText(String.valueOf(cleaningSchedule.getId()));
+        tfRoommate.setText(cleaningSchedule.getRoommate().toString());
+        pack();
     }
 
 
