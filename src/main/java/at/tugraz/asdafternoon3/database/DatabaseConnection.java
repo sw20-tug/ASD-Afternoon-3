@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class DatabaseConnection {
 
-    private static DatabaseConnection conn = new DatabaseConnection();
+    private static final DatabaseConnection conn = new DatabaseConnection();
     private SessionFactory sessionFactory;
 
     private DatabaseConnection() {
@@ -25,6 +25,7 @@ public class DatabaseConnection {
         return sessionFactory;
     }
 
+    @SuppressWarnings("rawtypes")
     public <T extends DAO> T createDao(Class<T> type) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         return type.getDeclaredConstructor(SessionFactory.class).newInstance(getSessionFactory());
     }

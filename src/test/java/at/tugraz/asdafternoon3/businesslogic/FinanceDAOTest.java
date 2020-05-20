@@ -59,6 +59,17 @@ public class FinanceDAOTest extends DAOTest {
         assertFalse(creator.validate(finance));
     }
 
+    @Test
+    public void mockTests() throws Exception {
+        Flat flat = generateTestFlat();
+        Roommate ownerRoommate = generateTestRoommate(flat);
+        Finance finance = new Finance("Sofa", 5, ownerRoommate, flat);
+
+        DAOTestUtils.testCreate(FinanceDAO.class, finance);
+        DAOTestUtils.testUpdate(FinanceDAO.class, finance);
+        DAOTestUtils.testDelete(FinanceDAO.class, finance);
+    }
+
     private Flat generateTestFlat() {
         return new Flat("Chaos WG", 2, "Graz");
     }

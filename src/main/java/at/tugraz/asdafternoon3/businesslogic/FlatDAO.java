@@ -138,8 +138,6 @@ public class FlatDAO extends DAO<Flat> {
             session.delete(object);
             t.commit();
         }
-
-
     }
 
     public List<Roommate> getRoommates(Flat flat) {
