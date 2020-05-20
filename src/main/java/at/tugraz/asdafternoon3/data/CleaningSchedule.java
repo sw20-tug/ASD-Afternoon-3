@@ -17,6 +17,7 @@ public class CleaningSchedule extends DatabaseObject {
     @Column
     private LocalDateTime startTime;
 
+    @Column
     @Enumerated(EnumType.STRING)
     private CleaningIntervall intervall;
 

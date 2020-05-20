@@ -32,12 +32,15 @@ public class CleaningScheduleDialog extends JDialog {
     private JTextField tfStart;
     private JTextField tfMarkable;
     private JTextField tfRoommate;
-    private JComboBox cbIntervall;
-    private JComboBox cbRoommate;
+    private JComboBox<CleaningIntervall> cbIntervall;
+    private JComboBox<Roommate> cbRoommate;
     private Flat flat;
 
     private CleaningSchedule cleaningSchedule;
     private Boolean shouldBeChanged;
+
+    private List<Roommate> roommateList = new ArrayList<>();
+    private List<Roommate> roommateList2 = new ArrayList<>();
 
     public CleaningScheduleDialog(CleaningSchedule cleaning_schedule, Boolean should_be_changed, Flat flat) {
         this.cleaningSchedule = cleaning_schedule;
@@ -90,33 +93,41 @@ public class CleaningScheduleDialog extends JDialog {
         LocalDateTime ldt = LocalDateTime.parse(tfStart.getText(), formatter);
 
         Roommate roommate = (Roommate) cbRoommate.getSelectedItem();
-        CleaningScheduleDAO cleaningscheduledao = null;
+        CleaningScheduleDAO cs_dao = null;
 
         try {
-            cleaningscheduledao = DatabaseConnection.getInstance().createDao(CleaningScheduleDAO.class);
+            cs_dao = DatabaseConnection.getInstance().createDao(CleaningScheduleDAO.class);
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(contentPanel, "Couldn't establish database connection");
         }
-        if (cleaningscheduledao != null) {
-            if (!shouldBeChanged) {
-                CleaningSchedule cleaningschedule = new CleaningSchedule(tfName.getText(),
-                        ldt,
-                        roommate,
-                        (CleaningIntervall) cbIntervall.getSelectedItem());
 
-                boolean retval = cleaningscheduledao.validate(cleaningschedule);
+
+        if (cs_dao != null) {
+            CleaningSchedule cs = new CleaningSchedule(tfName.getText(), ldt, roommate, (CleaningIntervall) cbIntervall.getSelectedItem());
+            if (!shouldBeChanged) {
 
                 try {
-                    if (cleaningscheduledao.validate(cleaningschedule)) {
-                        throw new Exception("Input data is not valid");
-                    }
-                    cleaningscheduledao.create(cleaningschedule);
+                    cs_dao.create(cs);
                 } catch (Exception e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(contentPanel, "Couldn't create cleaning schedule\n" + e.getMessage());
                 }
 
+            }
+            else
+            {
+                try {
+                    cleaningSchedule.setIntervall((CleaningIntervall) cbIntervall.getSelectedItem());
+                    cleaningSchedule.setName(tfName.getText());
+                    cleaningSchedule.setRoommate(roommate);
+                    cleaningSchedule.setStartTime(LocalDateTime.parse(tfStart.getText()));
+
+                    cs_dao.update(cleaningSchedule);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(contentPanel, "Couldn't create cleaning schedule\n" + e.getMessage());
+                }
             }
         }
         dispose();
@@ -129,8 +140,6 @@ public class CleaningScheduleDialog extends JDialog {
 
     private void initializeComboboxes() {
 
-        List<Roommate> roommateList = new ArrayList<>();
-        List<Roommate> roommateList2 = new ArrayList<>();
         try {
             roommateList = DatabaseConnection.getInstance().createDao(RoommateDAO.class).getAll();
         } catch (Exception ex) {
@@ -146,9 +155,9 @@ public class CleaningScheduleDialog extends JDialog {
 
         cbRoommate.setModel(new DefaultComboBoxModel(roommateList2.toArray()));
 
-        ArrayList<String> list = new ArrayList<>();
-        list.add("weekly");
-        list.add("monthly");
+        ArrayList<CleaningIntervall> list = new ArrayList<>();
+        list.add(CleaningIntervall.WEEKLY);
+        list.add(CleaningIntervall.MONTHLY);
         //Intervall
         cbIntervall.setModel(new DefaultComboBoxModel(list.toArray()));
     }
@@ -158,7 +167,7 @@ public class CleaningScheduleDialog extends JDialog {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd HH:mm");
         tfStart.setText(cleaningSchedule.getStartTime().format(formatter));
 
-        tfRoommate.setText(cleaningSchedule.getRoommate().toString());
+        cbRoommate.setSelectedItem(cleaningSchedule.getRoommate());
         pack();
     }
 
