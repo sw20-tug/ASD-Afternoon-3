@@ -1,5 +1,6 @@
 package at.tugraz.asdafternoon3.ui;
 
+import at.tugraz.asdafternoon3.businesslogic.CleaningScheduleDAO;
 import at.tugraz.asdafternoon3.businesslogic.RoommateDAO;
 import at.tugraz.asdafternoon3.data.CleaningSchedule;
 import at.tugraz.asdafternoon3.data.Flat;
@@ -47,8 +48,12 @@ public class CleaningScheduleDialog extends JDialog {
 
         initializeComboboxes();
 
+
         if (should_be_changed) {
             changeCleaningSchedule();
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd HH:mm");
+            tfStart.setText(LocalDateTime.now().format(formatter));
         }
 
         buttonOK.addActionListener(new ActionListener() {
@@ -82,13 +87,37 @@ public class CleaningScheduleDialog extends JDialog {
     private void onOK() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd HH:mm");
         LocalDateTime ldt = LocalDateTime.parse(tfStart.getText(), formatter);
-       /* if (!shouldBeChanged) {
-            CleaningSchedule cleaningschedule = new CleaningSchedule(tfName.getText(),
-                    ldt, tfRoommate.getText(),
-                    cbIntervall.getSelectedItem());
 
+        Roommate roommate = (Roommate) cbRoommate.getSelectedItem();
+        CleaningScheduleDAO cleaningscheduledao = null;
+
+        try {
+            cleaningscheduledao = DatabaseConnection.getInstance().createDao(CleaningScheduleDAO.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(contentPanel, "Couldn't establish database connection");
         }
-        */
+        if (cleaningscheduledao != null) {
+            if (!shouldBeChanged) {
+                CleaningSchedule cleaningschedule = new CleaningSchedule(tfName.getText(),
+                        ldt,
+                        roommate,
+                        (String) cbIntervall.getSelectedItem());
+
+                boolean retval = cleaningscheduledao.validate(cleaningschedule);
+
+                try {
+                    if (cleaningscheduledao.validate(cleaningschedule)) {
+                        throw new Exception("Input data is not valid");
+                    }
+                    cleaningscheduledao.create(cleaningschedule);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(contentPanel, "Couldn't create cleaning schedule\n" + e.getMessage());
+                }
+
+            }
+        }
         dispose();
     }
 

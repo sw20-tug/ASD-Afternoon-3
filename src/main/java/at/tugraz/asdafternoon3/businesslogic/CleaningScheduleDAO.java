@@ -12,7 +12,7 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class CleaningScheduleDAO extends DAO<CleaningSchedule> {
-    protected CleaningScheduleDAO(SessionFactory sessionFactory) {
+    public CleaningScheduleDAO(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 
