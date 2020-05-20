@@ -64,6 +64,10 @@ public class CalenderExport {
 
     public void export(String filename) throws IOException {
         File file = new File(filename);
+        export(file);
+    }
+
+    public void export(File file) throws IOException {
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)))) {
             writer.write(export());
         }
