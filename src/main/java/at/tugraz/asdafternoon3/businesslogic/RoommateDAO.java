@@ -103,7 +103,7 @@ public class RoommateDAO extends DAO<Roommate> {
         }
     }
 
-    public List<CleaningSchedule> getCleaningSchedules(Roommate roommate, String intervall) {
+    public List<CleaningSchedule> getCleaningSchedules(Roommate roommate, CleaningIntervall intervall) {
         try (Session session = openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<CleaningSchedule> cr = cb.createQuery(CleaningSchedule.class);

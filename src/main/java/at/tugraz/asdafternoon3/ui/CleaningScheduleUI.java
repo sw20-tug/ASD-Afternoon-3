@@ -58,18 +58,18 @@ public class CleaningScheduleUI {
             List<Roommate> roommates = flatDAO.getRoommates(flat);
 
             for (Roommate roommate : roommates) {
-                weeklyCleaningSchedules.addAll(roommateDAO.getCleaningSchedules(roommate, "weekly"));
-                monthlyCleaningSchedules.addAll(roommateDAO.getCleaningSchedules(roommate, "monthly"));
+                weeklyCleaningSchedules.addAll(roommateDAO.getCleaningSchedules(roommate, CleaningIntervall.WEEKLY));
+                monthlyCleaningSchedules.addAll(roommateDAO.getCleaningSchedules(roommate, CleaningIntervall.MONTHLY));
 
                 completedWeeklyCleaningSchedules.addAll(
                         roommateDAO.getCompletedCleaningSchedules(
-                                roommate, "weekly",
+                                roommate, CleaningIntervall.WEEKLY,
                                 LocalDateTime.now().minusDays(LocalDateTime.now().getDayOfWeek().getValue()),
                                 LocalDateTime.now().plusDays(7 - LocalDateTime.now().getDayOfWeek().getValue())
                         ));
                 completedMonthlyCleaningSchedules.addAll(
                         roommateDAO.getCompletedCleaningSchedules(
-                                roommate, "monthly",
+                                roommate, CleaningIntervall.MONTHLY,
                                 LocalDateTime.now().minusDays(LocalDateTime.now().getDayOfMonth()),
                                 LocalDateTime.now().plusDays(31 - LocalDateTime.now().getDayOfMonth())
                         ));

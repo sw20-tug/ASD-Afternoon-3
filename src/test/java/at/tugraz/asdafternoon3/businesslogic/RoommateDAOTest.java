@@ -66,10 +66,10 @@ public class RoommateDAOTest extends DAOTest {
         try {
             flatDAO.create(flat);
             roommateDAO.create(roommate);
-            int size = roommateDAO.getCleaningSchedules(roommate, "weekly").size();
+            int size = roommateDAO.getCleaningSchedules(roommate, CleaningIntervall.WEEKLY).size();
             cleaningScheduleDAO.create(cleaningSchedule);
 
-            List<CleaningSchedule> cleaningScheduleList = roommateDAO.getCleaningSchedules(roommate, "weekly");
+            List<CleaningSchedule> cleaningScheduleList = roommateDAO.getCleaningSchedules(roommate, CleaningIntervall.WEEKLY);
             System.out.println(cleaningScheduleList.toString());
             assertEquals(size + 1, cleaningScheduleList.size());
 
