@@ -1,7 +1,10 @@
 package at.tugraz.asdafternoon3.ui;
 
 import at.tugraz.asdafternoon3.FlatApplication;
+import at.tugraz.asdafternoon3.businesslogic.CalenderExport;
+import at.tugraz.asdafternoon3.businesslogic.CleaningScheduleDAO;
 import at.tugraz.asdafternoon3.businesslogic.FlatDAO;
+import at.tugraz.asdafternoon3.data.DatabaseObject;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.data.Roommate;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
@@ -11,37 +14,33 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CleaningScheduleExportView {
     private JPanel contentPane;
-    private JComboBox<Roommate> cbRoommate;
     private JButton exportButton;
     private JButton backButton;
 
     private final Flat activeFlat;
-    private final RoommateComboBoxModel model;
 
     public CleaningScheduleExportView(Flat flat) {
         activeFlat = flat;
 
-        List<Roommate> roommates = new ArrayList<>();
-        try {
-            roommates = DatabaseConnection.getInstance().createDao(FlatDAO.class).getRoommates(flat);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(getContentPane(), "Roommates could not be found.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-        model = new RoommateComboBoxModel(roommates);
-        cbRoommate.setModel(model);
-
         backButton.addActionListener(e -> FlatApplication.get().setContentPane(new CleaningScheduleUI(activeFlat).getContentPane()));
         exportButton.addActionListener(e -> {
-            //TODO
-
+            try {
+                CleaningScheduleDAO dao = DatabaseConnection.getInstance().createDao(CleaningScheduleDAO.class);
+                CalenderExport export = new CalenderExport(dao.getAll());
+                JFileChooser fileChooser = new JFileChooser();
+                if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+                    export.export(fileChooser.getSelectedFile());
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(getContentPane(), "Cleaning schedule could not be found.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
-
     }
 
     public JPanel getContentPane() {
@@ -73,11 +72,9 @@ public class CleaningScheduleExportView {
         if (label1Font != null) label1.setFont(label1Font);
         label1.setText("Cleaning Schedule Export");
         panel1.add(label1, new GridConstraints(0, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        cbRoommate = new JComboBox();
-        panel1.add(cbRoommate, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         exportButton = new JButton();
         exportButton.setText("Export");
-        panel1.add(exportButton, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(exportButton, new GridConstraints(1, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         backButton = new JButton();
         backButton.setText("Back");
         panel1.add(backButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -108,4 +105,5 @@ public class CleaningScheduleExportView {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }
