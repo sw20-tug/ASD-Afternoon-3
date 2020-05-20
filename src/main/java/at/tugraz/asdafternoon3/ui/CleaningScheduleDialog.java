@@ -1,6 +1,10 @@
 package at.tugraz.asdafternoon3.ui;
 
+import at.tugraz.asdafternoon3.businesslogic.RoommateDAO;
 import at.tugraz.asdafternoon3.data.CleaningSchedule;
+import at.tugraz.asdafternoon3.data.Flat;
+import at.tugraz.asdafternoon3.data.Roommate;
+import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
@@ -8,9 +12,11 @@ import com.intellij.uiDesigner.core.Spacer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Vector;
+import java.util.List;
 
 public class CleaningScheduleDialog extends JDialog {
     private JPanel contentPanel;
@@ -25,16 +31,21 @@ public class CleaningScheduleDialog extends JDialog {
     private JTextField tfMarkable;
     private JTextField tfRoommate;
     private JComboBox cbIntervall;
+    private JComboBox cbRoommate;
+    private Flat flat;
 
     private CleaningSchedule cleaningSchedule;
     private Boolean shouldBeChanged;
 
-    public CleaningScheduleDialog(CleaningSchedule cleaning_schedule, Boolean should_be_changed) {
+    public CleaningScheduleDialog(CleaningSchedule cleaning_schedule, Boolean should_be_changed, Flat flat) {
         this.cleaningSchedule = cleaning_schedule;
         this.shouldBeChanged = should_be_changed;
+        this.flat = flat;
         setContentPane(contentPanel);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+
+        initializeComboboxes();
 
         if (should_be_changed) {
             changeCleaningSchedule();
@@ -69,7 +80,15 @@ public class CleaningScheduleDialog extends JDialog {
     }
 
     private void onOK() {
-        // add your code here
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd HH:mm");
+        LocalDateTime ldt = LocalDateTime.parse(tfStart.getText(), formatter);
+       /* if (!shouldBeChanged) {
+            CleaningSchedule cleaningschedule = new CleaningSchedule(tfName.getText(),
+                    ldt, tfRoommate.getText(),
+                    cbIntervall.getSelectedItem());
+
+        }
+        */
         dispose();
     }
 
@@ -78,17 +97,37 @@ public class CleaningScheduleDialog extends JDialog {
         dispose();
     }
 
-    private void changeCleaningSchedule() {
-        tfName.setText(cleaningSchedule.getName());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd HH:mm");
-        tfStart.setText(cleaningSchedule.getStartTime().format(formatter));
+    private void initializeComboboxes() {
+
+        List<Roommate> roommateList = new ArrayList<>();
+        List<Roommate> roommateList2 = new ArrayList<>();
+        try {
+            roommateList = DatabaseConnection.getInstance().createDao(RoommateDAO.class).getAll();
+        } catch (Exception ex) {
+
+        }
+        for (int counter = 0; counter < roommateList.size(); counter++) {
+            if (roommateList.get(counter).getFlat().getId() == flat.getId()) {
+
+                roommateList2.add(roommateList.get(counter));
+            }
+
+        }
+
+        cbRoommate.setModel(new DefaultComboBoxModel(roommateList2.toArray()));
+
         ArrayList<String> list = new ArrayList<>();
         list.add("weekly");
         list.add("monthly");
         //Intervall
         cbIntervall.setModel(new DefaultComboBoxModel(list.toArray()));
-        //TODO: Status updaten
-        tfMarkable.setText(String.valueOf(cleaningSchedule.getId()));
+    }
+
+    private void changeCleaningSchedule() {
+        tfName.setText(cleaningSchedule.getName());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd HH:mm");
+        tfStart.setText(cleaningSchedule.getStartTime().format(formatter));
+
         tfRoommate.setText(cleaningSchedule.getRoommate().toString());
         pack();
     }
@@ -130,7 +169,7 @@ public class CleaningScheduleDialog extends JDialog {
         label1.setText("Test dialog");
         pHeader.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         pInput = new JPanel();
-        pInput.setLayout(new GridLayoutManager(5, 2, new Insets(0, 0, 0, 0), -1, -1));
+        pInput.setLayout(new GridLayoutManager(4, 2, new Insets(0, 0, 0, 0), -1, -1));
         pHeader.add(pInput, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label2 = new JLabel();
         label2.setText("Name");
@@ -146,17 +185,12 @@ public class CleaningScheduleDialog extends JDialog {
         label4.setText("Start");
         pInput.add(label4, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label5 = new JLabel();
-        label5.setText("Status");
+        label5.setText("Person");
         pInput.add(label5, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfMarkable = new JTextField();
-        pInput.add(tfMarkable, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label6 = new JLabel();
-        label6.setText("Person");
-        pInput.add(label6, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        tfRoommate = new JTextField();
-        pInput.add(tfRoommate, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         cbIntervall = new JComboBox();
         pInput.add(cbIntervall, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        cbRoommate = new JComboBox();
+        pInput.add(cbRoommate, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -166,4 +200,7 @@ public class CleaningScheduleDialog extends JDialog {
         return contentPanel;
     }
 
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+    }
 }

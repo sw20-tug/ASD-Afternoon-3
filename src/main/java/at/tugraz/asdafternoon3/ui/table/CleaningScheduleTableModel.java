@@ -71,6 +71,5 @@ public class CleaningScheduleTableModel extends AbstractTableModel {
     public CleaningSchedule getElement(int rowIndex) {
         return cleaning_schedule.get(rowIndex);
     }
-
-
 }
+

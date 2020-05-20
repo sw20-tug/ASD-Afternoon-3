@@ -6,6 +6,7 @@ import at.tugraz.asdafternoon3.data.CleaningSchedule;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.data.Roommate;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
+import at.tugraz.asdafternoon3.ui.table.CleaningScheduleTableModel;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -37,8 +38,8 @@ public class CleaningScheduleUI {
 
         try {
             //TODO check how i get data
-            //CleaningScheduleTableModel model = new CleaningScheduleTableModel(DatabaseConnection.getInstance().createDao(CleaningScheduleDAO.class, flat).getAll());
-            //tWeekly.setModel(model);
+            CleaningScheduleTableModel model = new CleaningScheduleTableModel(DatabaseConnection.getInstance().createDao(CleaningScheduleDAO.class).getAll());
+            tWeekly.setModel(model);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -54,7 +55,7 @@ public class CleaningScheduleUI {
                 Roommate testmate = new Roommate("Mark Weizenberg", 23, testflat);
                 CleaningSchedule cleaning_schedule = new CleaningSchedule("Partykeller", currentDateAndTime, testmate, "weekly");
 
-                CleaningScheduleDialog dialog = new CleaningScheduleDialog(cleaning_schedule, true);
+                CleaningScheduleDialog dialog = new CleaningScheduleDialog(cleaning_schedule, true, flat);
                 dialog.setSize(300, 300);
                 dialog.setVisible(true);
             }
@@ -62,7 +63,9 @@ public class CleaningScheduleUI {
         btAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //addCleaningScheduleEntry();
+                CleaningScheduleDialog dialog = new CleaningScheduleDialog(null, false, flat);
+                dialog.setSize(300, 300);
+                dialog.setVisible(true);
             }
         });
         btDelete.addActionListener(new ActionListener() {
@@ -147,9 +150,13 @@ public class CleaningScheduleUI {
         contentPane.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
         mainPenal = new JPanel();
         mainPenal.setLayout(new BorderLayout(0, 0));
-        contentPane.add(mainPenal, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        mainPenal.setEnabled(true);
+        contentPane.add(mainPenal, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, new Dimension(100, 100), new Dimension(100, 100), new Dimension(100, 100), 0, false));
+        tMonthly = new JTable();
+        mainPenal.add(tMonthly, BorderLayout.EAST);
         tWeekly = new JTable();
-        mainPenal.add(tWeekly, BorderLayout.CENTER);
+        tWeekly.setEnabled(false);
+        mainPenal.add(tWeekly, BorderLayout.WEST);
         headerPain = new JPanel();
         headerPain.setLayout(new BorderLayout(0, 0));
         contentPane.add(headerPain, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
