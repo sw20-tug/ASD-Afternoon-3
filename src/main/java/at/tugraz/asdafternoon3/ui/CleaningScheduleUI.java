@@ -27,9 +27,9 @@ public class CleaningScheduleUI {
     private JPanel headerPain;
     private JButton btBack;
     private JTable tWeekly;
-    private JButton btMonthlyEdit;
-    private JButton btMonthlyAdd;
-    private JButton btMonthlyDelete;
+    private JButton btEditMonthly;
+    private JButton btAddMonthly;
+    private JButton btDeleteMonthly;
     private JButton exportButton;
     private JTable tMonthly;
     private JLabel Weekly;
@@ -93,7 +93,7 @@ public class CleaningScheduleUI {
             e.printStackTrace();
         }
 
-        btMonthlyEdit.addActionListener(new ActionListener() {
+        btEditWeekly.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -103,7 +103,7 @@ public class CleaningScheduleUI {
                 dialog.setVisible(true);
             }
         });
-        btMonthlyAdd.addActionListener(new ActionListener() {
+        btAddWeekly.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CleaningScheduleDialog dialog = new CleaningScheduleDialog(null, false, flat);
@@ -111,10 +111,18 @@ public class CleaningScheduleUI {
                 dialog.setVisible(true);
             }
         });
-        btMonthlyDelete.addActionListener(new ActionListener() {
+        btDeleteWeekly.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //deleteCleaningScheduleEntry();
+                CleaningSchedule cs = uncompletedWeeklyCleaningSchedules.get(tWeekly.getSelectedRow());
+                CleaningScheduleDAO cs_dao = null;
+                try {
+                    cs_dao = DatabaseConnection.getInstance().createDao(CleaningScheduleDAO.class);
+                    cs_dao.delete(cs);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(contentPane, "Couldn't establish database connection");
+                }
             }
         });
 
@@ -128,6 +136,40 @@ public class CleaningScheduleUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 FlatApplication.get().setContentPane(new CleaningScheduleExportView(currentFlat).getContentPane());
+            }
+        });
+
+        btEditMonthly.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                CleaningScheduleDialog dialog = new CleaningScheduleDialog(uncompletedMonthlyCleaningSchedules.get(tWeekly.getSelectedRow()), true, flat);
+                dialog.setSize(300, 300);
+                dialog.setVisible(true);
+            }
+        });
+
+        btAddMonthly.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CleaningScheduleDialog dialog = new CleaningScheduleDialog(null, false, flat);
+                dialog.setSize(300, 300);
+                dialog.setVisible(true);
+            }
+        });
+
+        btDeleteMonthly.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CleaningSchedule cs = uncompletedMonthlyCleaningSchedules.get(tWeekly.getSelectedRow());
+                CleaningScheduleDAO cs_dao = null;
+                try {
+                    cs_dao = DatabaseConnection.getInstance().createDao(CleaningScheduleDAO.class);
+                    cs_dao.delete(cs);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(contentPane, "Couldn't establish database connection");
+                }
             }
         });
     }
@@ -217,28 +259,40 @@ public class CleaningScheduleUI {
         Weekly.setText("Weekly (uncompleted)");
         panel1.add(Weekly, BorderLayout.NORTH);
         final JPanel panel2 = new JPanel();
-        panel2.setLayout(new BorderLayout(0, 0));
-        mainPenal.add(panel2, BorderLayout.SOUTH);
+        panel2.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.add(panel2, BorderLayout.SOUTH);
+        btEditWeekly = new JButton();
+        btEditWeekly.setText("Edit Weekly");
+        panel2.add(btEditWeekly, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 1, false));
+        btAddWeekly = new JButton();
+        btAddWeekly.setText("Add Weekly");
+        panel2.add(btAddWeekly, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 1, false));
+        btDeleteWeekly = new JButton();
+        btDeleteWeekly.setText("Delete Weekly");
+        panel2.add(btDeleteWeekly, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel3 = new JPanel();
+        panel3.setLayout(new BorderLayout(0, 0));
+        mainPenal.add(panel3, BorderLayout.SOUTH);
         tMonthly = new JTable();
-        panel2.add(tMonthly, BorderLayout.CENTER);
+        panel3.add(tMonthly, BorderLayout.CENTER);
         Mothly = new JLabel();
         Mothly.setText("Monthly(uncompleted)");
-        panel2.add(Mothly, BorderLayout.NORTH);
-        final JPanel panel3 = new JPanel();
-        panel3.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        contentPane.add(panel3, BorderLayout.SOUTH);
+        panel3.add(Mothly, BorderLayout.NORTH);
         final JPanel panel4 = new JPanel();
-        panel4.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
-        panel3.add(panel4, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        btMonthlyEdit = new JButton();
-        btMonthlyEdit.setText("Edit");
-        panel4.add(btMonthlyEdit, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 1, false));
-        btMonthlyAdd = new JButton();
-        btMonthlyAdd.setText("Add");
-        panel4.add(btMonthlyAdd, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 1, false));
-        btMonthlyDelete = new JButton();
-        btMonthlyDelete.setText("Delete");
-        panel4.add(btMonthlyDelete, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel4.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        contentPane.add(panel4, BorderLayout.SOUTH);
+        final JPanel panel5 = new JPanel();
+        panel5.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
+        panel4.add(panel5, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        btEditMonthly = new JButton();
+        btEditMonthly.setText("Edit Monthly");
+        panel5.add(btEditMonthly, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 1, false));
+        btAddMonthly = new JButton();
+        btAddMonthly.setText("Add Monthly");
+        panel5.add(btAddMonthly, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 1, false));
+        btDeleteMonthly = new JButton();
+        btDeleteMonthly.setText("Delete Monthly");
+        panel5.add(btDeleteMonthly, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
