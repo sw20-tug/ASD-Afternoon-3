@@ -183,5 +183,16 @@ public class CleaningScheduleDAOTest extends DAOTest {
         }
     }
 
+    @Test
+    public void mockTests() throws Exception {
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+        LocalDateTime currentDateAndTime = LocalDateTime.of(currentDate, currentTime);
+        CleaningSchedule cleaningschedule =
+                new CleaningSchedule("Partykeller", currentDateAndTime, testmate, "weekly");
 
+        DAOTestUtils.testCreate(CleaningScheduleDAO.class, cleaningschedule);
+        DAOTestUtils.testUpdate(CleaningScheduleDAO.class, cleaningschedule);
+        DAOTestUtils.testDelete(CleaningScheduleDAO.class, cleaningschedule);
+    }
 }

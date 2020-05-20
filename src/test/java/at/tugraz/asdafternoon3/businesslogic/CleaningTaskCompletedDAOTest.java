@@ -151,4 +151,13 @@ public class CleaningTaskCompletedDAOTest extends DAOTest {
     }
 
 
+    @Test
+    public void mockTests() throws Exception {
+        CleaningTaskCompleted cleaningTaskCompleted =
+                new CleaningTaskCompleted(cleaningSchedule, currentDateAndTime.plusDays(2));
+
+        DAOTestUtils.testCreate(CleaningTaskCompletedDAO.class, cleaningTaskCompleted);
+        DAOTestUtils.testUpdate(CleaningTaskCompletedDAO.class, cleaningTaskCompleted);
+        DAOTestUtils.testDelete(CleaningTaskCompletedDAO.class, cleaningTaskCompleted);
+    }
 }

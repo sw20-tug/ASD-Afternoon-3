@@ -56,15 +56,11 @@ public class FlatDAOTest extends DAOTest {
     }
 
     @Test
-    public void createFlatMock() throws Exception {
+    public void mockTests() throws Exception {
         Flat flat = new Flat("Chaos WG", 2, "Graz");
-
-        SessionFactory databaseMock = TestUtils.mockDatabase();
-        Session sessionMock = TestUtils.mockSession(databaseMock);
-
-        FlatDAO creator = new FlatDAO(databaseMock);
-        assertNotNull(creator.create(flat));
-        Mockito.verify(sessionMock).persist(flat);
+        DAOTestUtils.testCreate(FlatDAO.class, flat);
+        DAOTestUtils.testUpdate(FlatDAO.class, flat);
+        DAOTestUtils.testDelete(FlatDAO.class, flat);
     }
 
     @Test

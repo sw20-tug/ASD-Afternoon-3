@@ -137,6 +137,16 @@ public class RoommateDAOTest extends DAOTest {
         }
     }
 
+    @Test
+    public void mockTests() throws Exception {
+        Flat flat = generateTestFlat();
+        Roommate roommate = new Roommate("Liki Norber", 12, flat);
+
+        DAOTestUtils.testCreate(RoommateDAO.class, roommate);
+        DAOTestUtils.testUpdate(RoommateDAO.class, roommate);
+        DAOTestUtils.testDelete(RoommateDAO.class, roommate);
+    }
+
     private Flat generateTestFlat() {
         return new Flat("Chaos WG", 2, "Graz");
     }

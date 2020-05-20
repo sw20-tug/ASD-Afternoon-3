@@ -47,6 +47,16 @@ public class ShoppingListItemDAOTest extends DAOTest {
         }
     }
 
+    @Test
+    public void mockTests() throws Exception {
+        Flat flat = generateTestFlat();
+        ShoppingListItem item = new ShoppingListItem("Milch", flat);
+
+        DAOTestUtils.testCreate(ShoppingListItemDAO.class, item);
+        DAOTestUtils.testUpdate(ShoppingListItemDAO.class, item);
+        DAOTestUtils.testDelete(ShoppingListItemDAO.class, item);
+    }
+
     private Flat generateTestFlat() {
         return new Flat("Chaos WG", 2, "Graz");
     }
