@@ -83,10 +83,8 @@ public class CleaningScheduleDialog extends JDialog {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd HH:mm");
         tfStart.setText(cleaningSchedule.getStartTime().format(formatter));
         ArrayList<String> list = new ArrayList<>();
-        list.add("daily");
         list.add("weekly");
         list.add("monthly");
-        list.add("yearly");
         //Intervall
         cbIntervall.setModel(new DefaultComboBoxModel(list.toArray()));
         //TODO: Status updaten

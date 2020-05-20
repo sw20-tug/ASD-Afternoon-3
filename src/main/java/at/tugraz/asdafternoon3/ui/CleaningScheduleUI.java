@@ -1,9 +1,11 @@
 package at.tugraz.asdafternoon3.ui;
 
 import at.tugraz.asdafternoon3.FlatApplication;
+import at.tugraz.asdafternoon3.businesslogic.CleaningScheduleDAO;
 import at.tugraz.asdafternoon3.data.CleaningSchedule;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.data.Roommate;
+import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
@@ -20,11 +22,12 @@ public class CleaningScheduleUI {
     private JPanel mainPenal;
     private JPanel headerPain;
     private JButton btBack;
-    private JTable tCleaningSchedule;
+    private JTable tWeekly;
     private JButton btEdit;
     private JButton btAdd;
     private JButton btDelete;
     private JButton exportButton;
+    private JTable tMonthly;
     private Flat currentFlat;
 
 
@@ -35,7 +38,7 @@ public class CleaningScheduleUI {
         try {
             //TODO check how i get data
             //CleaningScheduleTableModel model = new CleaningScheduleTableModel(DatabaseConnection.getInstance().createDao(CleaningScheduleDAO.class, flat).getAll());
-            //tCleaningSchedule.setModel(model);
+            //tWeekly.setModel(model);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -97,7 +100,7 @@ public class CleaningScheduleUI {
                 JOptionPane.showMessageDialog(contentPane, "Cleaning task data is not valid");
             } else {
                 newCleaningEntry = creator.create(newCleaningEntry);
-                ((CleaningScheduleTableModel) tCleaningSchedule.getModel()).addCleaningEntry(newCleaningEntry);
+                ((CleaningScheduleTableModel) tWeekly.getModel()).addCleaningEntry(newCleaningEntry);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -108,13 +111,13 @@ public class CleaningScheduleUI {
     void deleteCleaningScheduleEntry() {}
 
         try {
-            int selectedRow = tCleaningSchedule.getSelectedRow();
-            CleaningScheduleEntry selectedCleaningEntry = ((CleaningScheduleTableModel) tCleaningSchedule.getModel()).getElement(selectedRow);
+            int selectedRow = tWeekly.getSelectedRow();
+            CleaningScheduleEntry selectedCleaningEntry = ((CleaningScheduleTableModel) tWeekly.getModel()).getElement(selectedRow);
 
             CleaningScheduleDAO creator = DatabaseConnection.getInstance().createDao(CleaningScheduleDAO.class);
             creator.delete(selectedCleaningEntry);
-            ((CleaningScheduleTableModel) tCleaningSchedule.getModel()).removeFlat(selectedRow);
-            ((CleaningScheduleTableModel) tCleaningSchedule.getModel()).fireTableDataChanged();
+            ((CleaningScheduleTableModel) tWeekly.getModel()).removeFlat(selectedRow);
+            ((CleaningScheduleTableModel) tWeekly.getModel()).fireTableDataChanged();
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(contentPane, "Could not delete Cleaning task " + e.getMessage());
@@ -145,8 +148,8 @@ public class CleaningScheduleUI {
         mainPenal = new JPanel();
         mainPenal.setLayout(new BorderLayout(0, 0));
         contentPane.add(mainPenal, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        tCleaningSchedule = new JTable();
-        mainPenal.add(tCleaningSchedule, BorderLayout.CENTER);
+        tWeekly = new JTable();
+        mainPenal.add(tWeekly, BorderLayout.CENTER);
         headerPain = new JPanel();
         headerPain.setLayout(new BorderLayout(0, 0));
         contentPane.add(headerPain, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));

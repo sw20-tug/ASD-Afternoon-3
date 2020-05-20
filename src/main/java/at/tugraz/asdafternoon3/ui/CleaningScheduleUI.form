@@ -15,9 +15,15 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="ed27e" class="javax.swing.JTable" binding="tCleaningSchedule">
-            <constraints border-constraint="Center"/>
+          <component id="1c1b4" class="javax.swing.JTable" binding="tMonthly">
+            <constraints border-constraint="East"/>
             <properties/>
+          </component>
+          <component id="ed27e" class="javax.swing.JTable" binding="tWeekly">
+            <constraints border-constraint="West"/>
+            <properties>
+              <enabled value="false"/>
+            </properties>
           </component>
         </children>
       </grid>
