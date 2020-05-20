@@ -35,6 +35,8 @@ public class FlatOverview {
                 FlatApplication.get().setContentPane(new FlatList(flat).getContentPane()));
         financeFurnitureAndEquipmentButton.addActionListener(e ->
             FlatApplication.get().setContentPane(new FinanceOverview(flat).getContentPane()));
+        financeFlatButton.addActionListener(e ->
+                FlatApplication.get().setContentPane(new FinanceFlatOverview(flat).getContentPane()));
         shoppingListButton.addActionListener(e ->
                 FlatApplication.get().setContentPane(new ShoppingList(flat).getContentPane()));
         cleaningScheduleButton.addActionListener(e ->
