@@ -1,7 +1,9 @@
 package at.tugraz.asdafternoon3.ui;
 
 import at.tugraz.asdafternoon3.FlatApplication;
+import at.tugraz.asdafternoon3.businesslogic.FinanceFlatDAO;
 import at.tugraz.asdafternoon3.businesslogic.FlatDAO;
+import at.tugraz.asdafternoon3.data.FinanceFlat;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import at.tugraz.asdafternoon3.ui.table.FlatTableModel;
@@ -70,17 +72,33 @@ public class FlatList {
             size = Integer.parseInt(tfSize.getText());
             Flat newFlat = new Flat(tfName.getText(), size, tfAddress.getText());
             FlatDAO creator = DatabaseConnection.getInstance().createDao(FlatDAO.class);
+            FinanceFlatDAO financeCreator = DatabaseConnection.getInstance().createDao(FinanceFlatDAO.class);
 
             if (!creator.validate(newFlat)) {
                 JOptionPane.showMessageDialog(contentPane, "Flat data is not valid");
             } else {
                 newFlat = creator.create(newFlat);
+                instantiateFinanceFlatItems(newFlat, financeCreator);
                 ((FlatTableModel) flatTable.getModel()).addFlat(newFlat);
             }
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(contentPane, "Could not create flat");
         }
+    }
+
+    private void instantiateFinanceFlatItems(Flat flat, FinanceFlatDAO financeCreator) throws Exception {
+        FinanceFlat rentalFee = new FinanceFlat("Rental fee", 0, flat);
+        FinanceFlat smartphoneBill = new FinanceFlat("Smartphone bill", 0, flat);
+        FinanceFlat energyBill = new FinanceFlat("Energy bill", 0, flat);
+        FinanceFlat internetBill = new FinanceFlat("Internet bill", 0, flat);
+        FinanceFlat tvBill = new FinanceFlat("TV bill", 0, flat);
+
+        rentalFee = financeCreator.create(rentalFee);
+        smartphoneBill = financeCreator.create(smartphoneBill);
+        energyBill = financeCreator.create(energyBill);
+        internetBill = financeCreator.create(internetBill);
+        tvBill = financeCreator.create(tvBill);
     }
 
     private void deleteFlatClicked() {

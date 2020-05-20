@@ -1,9 +1,6 @@
 package at.tugraz.asdafternoon3.businesslogic;
 
-import at.tugraz.asdafternoon3.data.CleaningSchedule;
-import at.tugraz.asdafternoon3.data.CleaningTaskCompleted;
-import at.tugraz.asdafternoon3.data.Flat;
-import at.tugraz.asdafternoon3.data.Roommate;
+import at.tugraz.asdafternoon3.data.*;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -60,7 +57,7 @@ public class RoommateDAOTest extends DAOTest {
         LocalTime currentTime = LocalTime.now();
         LocalDateTime currentDateAndTime = LocalDateTime.of(currentDate, currentTime);
 
-        CleaningSchedule cleaningSchedule = new CleaningSchedule("Garten", currentDateAndTime, roommate, "weekly");
+        CleaningSchedule cleaningSchedule = new CleaningSchedule("Garten", currentDateAndTime, roommate, CleaningIntervall.WEEKLY);
 
         FlatDAO flatDAO = new FlatDAO(database);
         RoommateDAO roommateDAO = new RoommateDAO(database);
@@ -93,10 +90,10 @@ public class RoommateDAOTest extends DAOTest {
 
         CleaningSchedule cleaningSchedule =
                 new CleaningSchedule("Garten", currentDateAndTime,
-                        roommate, "weekly");
+                        roommate, CleaningIntervall.WEEKLY);
         CleaningSchedule cleaningSchedule2 =
                 new CleaningSchedule("Lounge", currentDateAndTime,
-                        roommate, "monthly");
+                        roommate, CleaningIntervall.MONTHLY);
 
         CleaningTaskCompleted cleaningTaskCompleted =
                 new CleaningTaskCompleted(cleaningSchedule, currentDateAndTime.plusHours(1));
@@ -116,20 +113,20 @@ public class RoommateDAOTest extends DAOTest {
             cleaningTaskCompletedDAO.create(cleaningTaskCompleted);
 
             List<CleaningSchedule> completedCleaningSchedules =
-                    roommateDAO.getCompletedCleaningSchedules(roommate, "monthly", currentDateAndTime.minusDays(1), currentDateAndTime.plusDays(1));
+                    roommateDAO.getCompletedCleaningSchedules(roommate, CleaningIntervall.MONTHLY, currentDateAndTime.minusDays(1), currentDateAndTime.plusDays(1));
             System.out.println(completedCleaningSchedules.toString());
             assertEquals(0, completedCleaningSchedules.size());
 
 
 
             completedCleaningSchedules =
-                    roommateDAO.getCompletedCleaningSchedules(roommate, "weekly", currentDateAndTime.minusDays(1), currentDateAndTime.plusDays(1));
+                    roommateDAO.getCompletedCleaningSchedules(roommate, CleaningIntervall.WEEKLY, currentDateAndTime.minusDays(1), currentDateAndTime.plusDays(1));
             System.out.println(completedCleaningSchedules.toString());
             assertEquals(1, completedCleaningSchedules.size());
 
             completedCleaningSchedules =
                     roommateDAO.getCompletedCleaningSchedules(
-                            roommate, "weekly",
+                            roommate, CleaningIntervall.WEEKLY,
                             currentDateAndTime.minusDays(4), currentDateAndTime.minusDays(3));
             System.out.println(completedCleaningSchedules.toString());
             assertEquals(0, completedCleaningSchedules.size());

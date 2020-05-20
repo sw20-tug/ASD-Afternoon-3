@@ -17,8 +17,8 @@ public class CleaningSchedule extends DatabaseObject {
     @Column
     private LocalDateTime startTime;
 
-    @Column
-    private String intervall;
+    @Enumerated(EnumType.STRING)
+    private CleaningIntervall intervall;
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -33,7 +33,7 @@ public class CleaningSchedule extends DatabaseObject {
     }
 
     public CleaningSchedule(String name, LocalDateTime startTime,
-                            Roommate roommate, String intervall) {
+                            Roommate roommate, CleaningIntervall intervall) {
         this.name = name;
         this.startTime = startTime;
         this.roommate = roommate;
@@ -41,7 +41,7 @@ public class CleaningSchedule extends DatabaseObject {
     }
 
     public CleaningSchedule(int id, String name, LocalDateTime startTime,
-                            Roommate roommate, String intervall) {
+                            Roommate roommate, CleaningIntervall intervall) {
         this.id = id;
         this.name = name;
         this.startTime = startTime;
@@ -51,10 +51,6 @@ public class CleaningSchedule extends DatabaseObject {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -82,11 +78,11 @@ public class CleaningSchedule extends DatabaseObject {
     }
 
 
-    public String getIntervall() {
+    public CleaningIntervall getIntervall() {
         return intervall;
     }
 
-    public void setIntervall(String intervall) {
+    public void setIntervall(CleaningIntervall intervall) {
         this.intervall = intervall;
     }
 

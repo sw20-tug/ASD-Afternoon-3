@@ -1,5 +1,6 @@
 package at.tugraz.asdafternoon3.businesslogic;
 
+import at.tugraz.asdafternoon3.data.CleaningIntervall;
 import at.tugraz.asdafternoon3.data.CleaningSchedule;
 import at.tugraz.asdafternoon3.data.Roommate;
 import org.hibernate.Session;
@@ -115,7 +116,7 @@ public class RoommateDAO extends DAO<Roommate> {
     }
 
     public List<CleaningSchedule> getCompletedCleaningSchedules(Roommate roommate,
-                                                       String intervall,
+                                                       CleaningIntervall intervall,
                                                        LocalDateTime start,
                                                        LocalDateTime end) {
         try (Session session = openSession()) {
@@ -133,7 +134,7 @@ public class RoommateDAO extends DAO<Roommate> {
 
             List<CleaningSchedule> completedSchedules = new ArrayList<>();
             LocalDateTime timestamp;
-            String currentIntervall;
+            CleaningIntervall currentIntervall;
             for (Object[] result : results) {
                 System.out.println(result[0] + " " + result[1] + " - " + result[2]
                         + " - " + result[3]+ " - " + result[4]);
@@ -141,13 +142,13 @@ public class RoommateDAO extends DAO<Roommate> {
                 timestamp = (LocalDateTime)result[2];
                 if (timestamp.isBefore(start) || timestamp.isAfter(end))
                     continue;
-                currentIntervall = (String)result[4];
+                currentIntervall = (CleaningIntervall)result[4];
                 if (!intervall.equals(currentIntervall))
                     continue;
 
                 completedSchedules.add(new CleaningSchedule(
                         (int)result[0], (String)result[1], (LocalDateTime)result[2],
-                        (Roommate)result[3], (String)result[4]));
+                        (Roommate)result[3], (CleaningIntervall) result[4]));
             }
 
             em.getTransaction().commit();
