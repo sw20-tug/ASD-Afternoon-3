@@ -32,8 +32,8 @@ public class CleaningScheduleDialog extends JDialog {
     private JTextField tfStart;
     private JTextField tfMarkable;
     private JTextField tfRoommate;
-    private JComboBox cbIntervall;
-    private JComboBox cbRoommate;
+    private JComboBox<CleaningIntervall> cbIntervall;
+    private JComboBox<Roommate> cbRoommate;
     private Flat flat;
 
     private CleaningSchedule cleaningSchedule;
@@ -155,9 +155,9 @@ public class CleaningScheduleDialog extends JDialog {
 
         cbRoommate.setModel(new DefaultComboBoxModel(roommateList2.toArray()));
 
-        ArrayList<String> list = new ArrayList<>();
-        list.add("weekly");
-        list.add("monthly");
+        ArrayList<CleaningIntervall> list = new ArrayList<>();
+        list.add(CleaningIntervall.WEEKLY);
+        list.add(CleaningIntervall.MONTHLY);
         //Intervall
         cbIntervall.setModel(new DefaultComboBoxModel(list.toArray()));
     }
