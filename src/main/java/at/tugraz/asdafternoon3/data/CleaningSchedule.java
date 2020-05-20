@@ -97,4 +97,12 @@ public class CleaningSchedule extends DatabaseObject {
                 ", roommate=" + roommate +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        CleaningSchedule cs = (CleaningSchedule) obj;
+        if (name.equals(cs.name) && intervall.equals(cs.intervall) && roommate.getId() == cs.roommate.getId())
+            return true;
+        return false;
+    }
 }
