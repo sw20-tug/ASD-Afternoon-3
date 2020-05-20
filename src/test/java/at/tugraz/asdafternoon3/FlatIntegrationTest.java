@@ -1,5 +1,9 @@
-package at.tugraz.asdafternoon3.businesslogic;
+package at.tugraz.asdafternoon3;
 
+import at.tugraz.asdafternoon3.businesslogic.DAOTest;
+import at.tugraz.asdafternoon3.businesslogic.FinanceDAO;
+import at.tugraz.asdafternoon3.businesslogic.FlatDAO;
+import at.tugraz.asdafternoon3.businesslogic.RoommateDAO;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.data.Finance;
 import at.tugraz.asdafternoon3.data.Roommate;
@@ -8,7 +12,7 @@ import org.junit.Test;
 import java.util.List;
 import static org.junit.Assert.*;
 
-public class TestAll extends DAOTest {
+public class FlatIntegrationTest extends DAOTest {
 
     @Test
     public void testAll() throws Exception {
@@ -52,6 +56,7 @@ public class TestAll extends DAOTest {
         Finance finance2 = financeList.get(0);
         assert (finance.getName().equals(finance2.getName()));
         assert (finance.getCosts() == finance2.getCosts());
+        //assertEquals(finance.getCosts(), finance2.getCosts());
         assert (finance.getId() == finance2.getId());
         assert (finance.getFlat().getName().equals(finance2.getFlat().getName()));
 
@@ -76,6 +81,7 @@ public class TestAll extends DAOTest {
         rDao.update(roommate);
         assert(rDao.validate(roommate));
 
+        // Delete
         roommateList = rDao.getAll();
         int size1 = roommateList.size();
         rDao.delete(roommate);
@@ -83,7 +89,7 @@ public class TestAll extends DAOTest {
         int size2 = roommateList.size();
         assert(size1 == (size2 + 1));
 
-
+        // Delete
         financeList = fDao.getAll();
         size1 = financeList.size();
         fDao.delete(finance);
