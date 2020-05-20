@@ -121,7 +121,7 @@ public class CleaningScheduleDialog extends JDialog {
                     cleaningSchedule.setIntervall((CleaningIntervall) cbIntervall.getSelectedItem());
                     cleaningSchedule.setName(tfName.getText());
                     cleaningSchedule.setRoommate(roommate);
-                    cleaningSchedule.setStartTime(LocalDateTime.parse(tfStart.getText()));
+                    cleaningSchedule.setStartTime(LocalDateTime.parse(tfStart.getText(), formatter));
 
                     cs_dao.update(cleaningSchedule);
                 } catch (Exception e) {
