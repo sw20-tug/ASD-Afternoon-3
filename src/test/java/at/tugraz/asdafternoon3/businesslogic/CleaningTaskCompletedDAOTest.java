@@ -1,9 +1,6 @@
 package at.tugraz.asdafternoon3.businesslogic;
 
-import at.tugraz.asdafternoon3.data.CleaningSchedule;
-import at.tugraz.asdafternoon3.data.CleaningTaskCompleted;
-import at.tugraz.asdafternoon3.data.Flat;
-import at.tugraz.asdafternoon3.data.Roommate;
+import at.tugraz.asdafternoon3.data.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.After;
@@ -32,7 +29,7 @@ public class CleaningTaskCompletedDAOTest extends DAOTest {
 
         Flat testflat = new Flat("ChaosWG", 22, "Ragnitzstraße 102");
         Roommate testmate = new Roommate("Mark Weizenberg", 23, testflat);
-        cleaningSchedule = new CleaningSchedule("Pool", currentDateAndTime, testmate, "weekly");
+        cleaningSchedule = new CleaningSchedule("Pool", currentDateAndTime, testmate, CleaningIntervall.WEEKLY);
 
         FlatDAO flatDAO = new FlatDAO(database);
         RoommateDAO roommateDAO = new RoommateDAO(database);

@@ -1,6 +1,7 @@
 package at.tugraz.asdafternoon3.ui;
 
 import at.tugraz.asdafternoon3.FlatApplication;
+import at.tugraz.asdafternoon3.data.CleaningIntervall;
 import at.tugraz.asdafternoon3.data.CleaningSchedule;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.data.Roommate;
@@ -49,7 +50,7 @@ public class CleaningScheduleUI {
                 LocalDateTime currentDateAndTime = LocalDateTime.of(currentDate, currentTime);
                 Flat testflat = new Flat("ChaosWG", 22, "Ragnitzstraße 102");
                 Roommate testmate = new Roommate("Mark Weizenberg", 23, testflat);
-                CleaningSchedule cleaning_schedule = new CleaningSchedule("Partykeller", currentDateAndTime, testmate, "weekly");
+                CleaningSchedule cleaning_schedule = new CleaningSchedule("Partykeller", currentDateAndTime, testmate, CleaningIntervall.WEEKLY);
 
                 CleaningScheduleDialog dialog = new CleaningScheduleDialog(cleaning_schedule, true);
                 dialog.setSize(300, 300);

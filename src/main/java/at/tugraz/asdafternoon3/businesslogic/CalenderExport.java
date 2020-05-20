@@ -8,9 +8,7 @@ import net.fortuna.ical4j.model.Recur;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.*;
 
-
 import java.io.*;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +30,18 @@ public class CalenderExport {
         calendar.getProperties().add(CalScale.GREGORIAN);
 
         for (CleaningSchedule entry : entries) {
-            Recur recur = new Recur(Recur.Frequency.WEEKLY, Integer.MAX_VALUE);
+            Recur recur;
+
+            switch (entry.getIntervall()) {
+                case WEEKLY:
+                    recur = new Recur(Recur.Frequency.WEEKLY, Integer.MAX_VALUE);
+                    break;
+                default:
+                case MONTHLY:
+                    recur = new Recur(Recur.Frequency.MONTHLY, Integer.MAX_VALUE);
+                    break;
+            }
+
             RRule rrule = new RRule(recur);
             VEvent event = new VEvent();
             event.getProperties().add(new Uid(String.valueOf(entry.getId())));
@@ -59,18 +68,5 @@ public class CalenderExport {
             writer.write(export());
         }
     }
-
-    public static void main(String[] args) {
-        List<CleaningSchedule> list = new ArrayList<>();
-        list.add(new CleaningSchedule("mario", LocalDateTime.of(2020, 05, 13, 12, 07, 01), null, "weekly"));
-        list.add(new CleaningSchedule("niki", LocalDateTime.of(2020, 05, 15, 15, 07, 01), null, "monthly"));
-        try {
-            new CalenderExport(list).export("mycalendar.ics");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
 }
 

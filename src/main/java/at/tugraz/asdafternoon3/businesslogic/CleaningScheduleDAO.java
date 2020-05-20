@@ -12,7 +12,7 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class CleaningScheduleDAO extends DAO<CleaningSchedule> {
-    protected CleaningScheduleDAO(SessionFactory sessionFactory) {
+    public CleaningScheduleDAO(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 
@@ -30,10 +30,10 @@ public class CleaningScheduleDAO extends DAO<CleaningSchedule> {
         if (object.getRoommate() == null) {
             return false;
         }
-        if (!"weekly".equals(object.getIntervall()) && !"monthly".equals(object.getIntervall()))
-        {
+        if(object.getIntervall() == null) {
             return false;
         }
+
         return true;
     }
 
