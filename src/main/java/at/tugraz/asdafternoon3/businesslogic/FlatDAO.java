@@ -1,9 +1,6 @@
 package at.tugraz.asdafternoon3.businesslogic;
 
-import at.tugraz.asdafternoon3.data.Finance;
-import at.tugraz.asdafternoon3.data.Flat;
-import at.tugraz.asdafternoon3.data.Roommate;
-import at.tugraz.asdafternoon3.data.ShoppingListItem;
+import at.tugraz.asdafternoon3.data.*;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -162,6 +159,18 @@ public class FlatDAO extends DAO<Flat> {
             cr.select(root);
             cr.where(cb.equal(root.get("flat"), flat));
             Query<Finance> query = session.createQuery(cr);
+            return query.getResultList();
+        }
+    }
+
+    public List<FinanceFlat> getFinanceFlat(Flat flat) {
+        try (Session session = openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<FinanceFlat> cr = cb.createQuery(FinanceFlat.class);
+            Root<FinanceFlat> root = cr.from(FinanceFlat.class);
+            cr.select(root);
+            cr.where(cb.equal(root.get("flat"), flat));
+            Query<FinanceFlat> query = session.createQuery(cr);
             return query.getResultList();
         }
     }
