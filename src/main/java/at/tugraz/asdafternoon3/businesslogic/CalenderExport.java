@@ -62,8 +62,8 @@ public class CalenderExport {
 
     public static void main(String[] args) {
         List<CleaningSchedule> list = new ArrayList<>();
-        list.add(new CleaningSchedule("mario", LocalDateTime.of(2020, 05, 13, 12, 07, 01), null));
-        list.add(new CleaningSchedule("niki", LocalDateTime.of(2020, 05, 15, 15, 07, 01), null));
+        list.add(new CleaningSchedule("mario", LocalDateTime.of(2020, 05, 13, 12, 07, 01), null, "weekly"));
+        list.add(new CleaningSchedule("niki", LocalDateTime.of(2020, 05, 15, 15, 07, 01), null, "monthly"));
         try {
             new CalenderExport(list).export("mycalendar.ics");
         } catch (IOException e) {
