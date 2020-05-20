@@ -2,6 +2,7 @@ package at.tugraz.asdafternoon3.ui;
 
 import at.tugraz.asdafternoon3.businesslogic.CleaningScheduleDAO;
 import at.tugraz.asdafternoon3.businesslogic.RoommateDAO;
+import at.tugraz.asdafternoon3.data.CleaningIntervall;
 import at.tugraz.asdafternoon3.data.CleaningSchedule;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.data.Roommate;
@@ -102,7 +103,7 @@ public class CleaningScheduleDialog extends JDialog {
                 CleaningSchedule cleaningschedule = new CleaningSchedule(tfName.getText(),
                         ldt,
                         roommate,
-                        (String) cbIntervall.getSelectedItem());
+                        (CleaningIntervall) cbIntervall.getSelectedItem());
 
                 boolean retval = cleaningscheduledao.validate(cleaningschedule);
 
