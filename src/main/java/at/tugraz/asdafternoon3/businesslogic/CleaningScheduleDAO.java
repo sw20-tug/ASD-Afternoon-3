@@ -30,10 +30,10 @@ public class CleaningScheduleDAO extends DAO<CleaningSchedule> {
         if (object.getRoommate() == null) {
             return false;
         }
-        if (!"weekly".equals(object.getIntervall()) && !"monthly".equals(object.getIntervall()))
-        {
+        if(object.getIntervall() == null) {
             return false;
         }
+
         return true;
     }
 

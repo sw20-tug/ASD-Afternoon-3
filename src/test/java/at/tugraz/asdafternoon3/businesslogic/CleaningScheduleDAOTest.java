@@ -1,5 +1,6 @@
 package at.tugraz.asdafternoon3.businesslogic;
 
+import at.tugraz.asdafternoon3.data.CleaningIntervall;
 import at.tugraz.asdafternoon3.data.CleaningSchedule;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.data.Roommate;
@@ -53,7 +54,7 @@ public class CleaningScheduleDAOTest extends DAOTest {
         LocalDateTime currentDateAndTime = LocalDateTime.of(currentDate, currentTime);
 
         CleaningSchedule cleaningschedule =
-                new CleaningSchedule("Partykeller", currentDateAndTime, testmate, "weekly");
+                new CleaningSchedule("Partykeller", currentDateAndTime, testmate, CleaningIntervall.WEEKLY);
 
         CleaningScheduleDAO creator = new CleaningScheduleDAO(null);
         assertTrue(creator.validate(cleaningschedule));
@@ -66,7 +67,7 @@ public class CleaningScheduleDAOTest extends DAOTest {
         LocalDateTime currentDateAndTime = LocalDateTime.of(currentDate, currentTime);
 
         CleaningSchedule cleaningschedule =
-                new CleaningSchedule("", currentDateAndTime, testmate, "weekly");
+                new CleaningSchedule("", currentDateAndTime, testmate, CleaningIntervall.WEEKLY);
 
         CleaningScheduleDAO creator = new CleaningScheduleDAO(null);
         assertFalse(creator.validate(cleaningschedule));
@@ -80,7 +81,7 @@ public class CleaningScheduleDAOTest extends DAOTest {
         assertFalse(creator.validate(cleaningschedule));
 
         cleaningschedule.setRoommate(testmate);
-        cleaningschedule.setIntervall("");
+        cleaningschedule.setIntervall(null);
         assertFalse(creator.validate(cleaningschedule));
     }
 
@@ -91,7 +92,7 @@ public class CleaningScheduleDAOTest extends DAOTest {
         LocalDateTime currentDateAndTime = LocalDateTime.of(currentDate, currentTime);
 
         CleaningSchedule cleaningschedule =
-                new CleaningSchedule("Keller", currentDateAndTime, testmate, "weekly");
+                new CleaningSchedule("Keller", currentDateAndTime, testmate, CleaningIntervall.WEEKLY);
 
         CleaningScheduleDAO creator = new CleaningScheduleDAO(database);
         try {
@@ -109,7 +110,7 @@ public class CleaningScheduleDAOTest extends DAOTest {
         LocalDateTime currentDateAndTime = LocalDateTime.of(currentDate, currentTime);
 
         CleaningSchedule cleaningschedule =
-                new CleaningSchedule("Keller", currentDateAndTime, testmate, "weekly");
+                new CleaningSchedule("Keller", currentDateAndTime, testmate, CleaningIntervall.WEEKLY);
 
         CleaningScheduleDAO creator = new CleaningScheduleDAO(database);
         try {
@@ -131,7 +132,7 @@ public class CleaningScheduleDAOTest extends DAOTest {
         LocalDateTime currentDateAndTime = LocalDateTime.of(currentDate, currentTime);
 
         CleaningSchedule cleaningschedule =
-                new CleaningSchedule("Keller", currentDateAndTime, testmate, "weekly");
+                new CleaningSchedule("Keller", currentDateAndTime, testmate, CleaningIntervall.WEEKLY);
 
         CleaningScheduleDAO creator = new CleaningScheduleDAO(database);
         try {
@@ -150,7 +151,7 @@ public class CleaningScheduleDAOTest extends DAOTest {
         LocalDateTime currentDateAndTime = LocalDateTime.of(currentDate, currentTime);
 
         CleaningSchedule cleaningschedule =
-                new CleaningSchedule("Keller", currentDateAndTime, testmate, "weekly");
+                new CleaningSchedule("Keller", currentDateAndTime, testmate, CleaningIntervall.WEEKLY);
 
         CleaningScheduleDAO creator = new CleaningScheduleDAO(database);
         try {
@@ -169,7 +170,7 @@ public class CleaningScheduleDAOTest extends DAOTest {
         LocalDateTime currentDateAndTime = LocalDateTime.of(currentDate, currentTime);
 
         CleaningSchedule cleaningschedule =
-                new CleaningSchedule("Keller", currentDateAndTime, testmate, "weekly");
+                new CleaningSchedule("Keller", currentDateAndTime, testmate, CleaningIntervall.WEEKLY);
 
         CleaningScheduleDAO creator = new CleaningScheduleDAO(database);
         try {
