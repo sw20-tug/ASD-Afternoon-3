@@ -6,9 +6,12 @@ import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import at.tugraz.asdafternoon3.ui.FlatOverview;
 import at.tugraz.asdafternoon3.ui.CreateFlatUI;
+import at.tugraz.asdafternoon3.ui.Localization;
 import org.hibernate.dialect.Database;
 
 import javax.swing.*;
+
+import java.util.Locale;
 
 import static java.lang.Thread.sleep;
 
@@ -27,8 +30,12 @@ public class FlatApplication {
 
     public FlatApplication() {
         try {
+            // Init localization
+            Locale current = Localization.getInstance().getCurrentLocale();
+            System.out.println("Language set to: " + current.getLanguage() + " and country: " + current.getCountry());
+
             // create frame
-            this.frame = new JFrame("Flat Application");
+            this.frame = new JFrame(Localization.getInstance().getCurrent().getString("frame.title"));
 
             // Check if a flat is existing
             FlatDAO flatDao = DatabaseConnection.getInstance().createDao(FlatDAO.class);

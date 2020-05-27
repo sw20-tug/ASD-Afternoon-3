@@ -25,8 +25,13 @@ public class FlatOverview {
     private JTextArea taSize;
     private JTextArea taAddress;
     private JButton selectFlatButton;
+    private JLabel lbTitleFlat;
+    private JLabel lbName;
+    private JLabel lbSize;
+    private JLabel lbAddress;
 
     public FlatOverview(Flat flat) {
+        initLocalizations();
         setFlatInformation(flat);
 
         roomMateButton.addActionListener(e ->
@@ -41,6 +46,20 @@ public class FlatOverview {
                 FlatApplication.get().setContentPane(new ShoppingList(flat).getContentPane()));
         cleaningScheduleButton.addActionListener(e ->
                 FlatApplication.get().setContentPane(new CleaningScheduleUI(flat).getContentPane()));
+    }
+
+    private void initLocalizations() {
+        lbTitleFlat.setText(Localization.getInstance().getCurrent().getString("flatoverview.title"));
+        lbName.setText(Localization.getInstance().getCurrent().getString("flatoverview.name"));
+        lbSize.setText(Localization.getInstance().getCurrent().getString("flatoverview.size"));
+        lbAddress.setText(Localization.getInstance().getCurrent().getString("flatoverview.address"));
+
+        roomMateButton.setText(Localization.getInstance().getCurrent().getString("flatoverview.roommates.button"));
+        shoppingListButton.setText(Localization.getInstance().getCurrent().getString("flatoverview.shoppinglist.button"));
+        cleaningScheduleButton.setText(Localization.getInstance().getCurrent().getString("flatoverview.cleaningschedule.button"));
+        financeFurnitureAndEquipmentButton.setText(Localization.getInstance().getCurrent().getString("flatoverview.financefurniture.button"));
+        financeFlatButton.setText(Localization.getInstance().getCurrent().getString("flatoverview.finance.button"));
+        selectFlatButton.setText(Localization.getInstance().getCurrent().getString("flatoverview.selectflat.button"));
     }
 
     public JPanel getContentPane() {
@@ -74,86 +93,83 @@ public class FlatOverview {
         main.setLayout(new BorderLayout(0, 0));
         contentPane.add(main, BorderLayout.CENTER);
         BasicOverview = new JPanel();
-        BasicOverview.setLayout(new GridLayoutManager(9, 4, new Insets(0, 0, 0, 0), -1, -1));
+        BasicOverview.setLayout(new GridLayoutManager(8, 4, new Insets(0, 0, 0, 0), -1, -1));
         BasicOverview.setBackground(new Color(-14078925));
         main.add(BasicOverview, BorderLayout.NORTH);
-        final JLabel label1 = new JLabel();
-        label1.setForeground(new Color(-4145152));
-        label1.setText("Name:");
-        BasicOverview.add(label1, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(68, 18), null, 0, false));
-        final JLabel label2 = new JLabel();
-        label2.setForeground(new Color(-4145152));
-        label2.setText("Size:");
-        BasicOverview.add(label2, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(68, 18), null, 0, false));
-        final JLabel label3 = new JLabel();
-        label3.setForeground(new Color(-4145152));
-        label3.setText("Address:");
-        BasicOverview.add(label3, new GridConstraints(8, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(68, 18), null, 0, false));
-        final JLabel label4 = new JLabel();
-        label4.setBackground(new Color(-14078925));
-        Font label4Font = this.$$$getFont$$$(null, -1, 28, label4.getFont());
-        if (label4Font != null) label4.setFont(label4Font);
-        label4.setForeground(new Color(-4145152));
-        label4.setText("Flat");
-        BasicOverview.add(label4, new GridConstraints(1, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lbName = new JLabel();
+        lbName.setForeground(new Color(-4145152));
+        lbName.setText("Name:");
+        BasicOverview.add(lbName, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(68, 18), null, 0, false));
+        lbSize = new JLabel();
+        lbSize.setForeground(new Color(-4145152));
+        lbSize.setText("Size:");
+        BasicOverview.add(lbSize, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(68, 18), null, 0, false));
+        lbAddress = new JLabel();
+        lbAddress.setForeground(new Color(-4145152));
+        lbAddress.setText("Address:");
+        BasicOverview.add(lbAddress, new GridConstraints(7, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(68, 18), null, 0, false));
+        lbTitleFlat = new JLabel();
+        lbTitleFlat.setBackground(new Color(-14078925));
+        Font lbTitleFlatFont = this.$$$getFont$$$(null, -1, 28, lbTitleFlat.getFont());
+        if (lbTitleFlatFont != null) lbTitleFlat.setFont(lbTitleFlatFont);
+        lbTitleFlat.setForeground(new Color(-4145152));
+        lbTitleFlat.setText("Flat");
+        BasicOverview.add(lbTitleFlat, new GridConstraints(1, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
-        BasicOverview.add(spacer1, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 35), new Dimension(358, 35), new Dimension(-1, 35), 35, false));
+        BasicOverview.add(spacer1, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 35), new Dimension(358, 35), new Dimension(-1, 35), 35, false));
         final Spacer spacer2 = new Spacer();
-        BasicOverview.add(spacer2, new GridConstraints(5, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 10), new Dimension(358, 10), new Dimension(-1, 10), 10, false));
+        BasicOverview.add(spacer2, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 10), new Dimension(358, 10), new Dimension(-1, 10), 10, false));
         final Spacer spacer3 = new Spacer();
-        BasicOverview.add(spacer3, new GridConstraints(7, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 10), new Dimension(358, 10), new Dimension(-1, 10), 10, false));
+        BasicOverview.add(spacer3, new GridConstraints(6, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 10), new Dimension(358, 10), new Dimension(-1, 10), 10, false));
         taName = new JTextArea();
         taName.setBackground(new Color(-12632257));
         taName.setEnabled(false);
         taName.setForeground(new Color(-2103318));
         taName.setText("");
-        BasicOverview.add(taName, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(358, 50), null, 0, false));
+        BasicOverview.add(taName, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(358, 50), null, 0, false));
         taSize = new JTextArea();
         taSize.setBackground(new Color(-12632257));
         taSize.setEnabled(false);
         taSize.setForeground(new Color(-2103318));
-        BasicOverview.add(taSize, new GridConstraints(6, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(358, 50), null, 0, false));
+        BasicOverview.add(taSize, new GridConstraints(5, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(358, 50), null, 0, false));
         taAddress = new JTextArea();
         taAddress.setBackground(new Color(-12632257));
         taAddress.setEnabled(false);
         taAddress.setForeground(new Color(-2103318));
-        BasicOverview.add(taAddress, new GridConstraints(8, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(358, 50), null, 0, false));
+        BasicOverview.add(taAddress, new GridConstraints(7, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(358, 50), null, 0, false));
         final Spacer spacer4 = new Spacer();
-        BasicOverview.add(spacer4, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 20, false));
+        BasicOverview.add(spacer4, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 20, false));
         final Spacer spacer5 = new Spacer();
-        BasicOverview.add(spacer5, new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 20, false));
+        BasicOverview.add(spacer5, new GridConstraints(3, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 20, false));
         final Spacer spacer6 = new Spacer();
         BasicOverview.add(spacer6, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 5, false));
-        final JLabel label5 = new JLabel();
-        label5.setText("test");
-        BasicOverview.add(label5, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         Navigation = new JPanel();
         Navigation.setLayout(new GridLayoutManager(11, 4, new Insets(0, 0, 0, 0), -1, -1));
         Navigation.setBackground(new Color(-14078925));
         main.add(Navigation, BorderLayout.CENTER);
         shoppingListButton = new JButton();
         shoppingListButton.setBackground(new Color(-12816512));
-        shoppingListButton.setForeground(new Color(-1));
+        shoppingListButton.setForeground(new Color(-16777216));
         shoppingListButton.setText("Shopping list");
         Navigation.add(shoppingListButton, new GridConstraints(3, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cleaningScheduleButton = new JButton();
         cleaningScheduleButton.setBackground(new Color(-12816512));
-        cleaningScheduleButton.setForeground(new Color(-1));
+        cleaningScheduleButton.setForeground(new Color(-16777216));
         cleaningScheduleButton.setText("Cleaning schedule");
         Navigation.add(cleaningScheduleButton, new GridConstraints(5, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         financeFurnitureAndEquipmentButton = new JButton();
         financeFurnitureAndEquipmentButton.setBackground(new Color(-12816512));
-        financeFurnitureAndEquipmentButton.setForeground(new Color(-1));
+        financeFurnitureAndEquipmentButton.setForeground(new Color(-16777216));
         financeFurnitureAndEquipmentButton.setText("Finance furniture and equipment");
         Navigation.add(financeFurnitureAndEquipmentButton, new GridConstraints(7, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         financeFlatButton = new JButton();
         financeFlatButton.setBackground(new Color(-12816512));
-        financeFlatButton.setForeground(new Color(-1));
+        financeFlatButton.setForeground(new Color(-16777216));
         financeFlatButton.setText("Finance flat");
         Navigation.add(financeFlatButton, new GridConstraints(9, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         roomMateButton = new JButton();
         roomMateButton.setBackground(new Color(-12816512));
-        roomMateButton.setForeground(new Color(-1));
+        roomMateButton.setForeground(new Color(-16777216));
         roomMateButton.setText("Roommates");
         Navigation.add(roomMateButton, new GridConstraints(1, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer7 = new Spacer();
