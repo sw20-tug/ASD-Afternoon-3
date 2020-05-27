@@ -115,7 +115,7 @@ public class FinanceFlatOverview {
         lTotalCosts.setText(String.valueOf(sum));
 
         FlatDAO creator = new FlatDAO(DatabaseConnection.getInstance().getSessionFactory());
-        int nRoommates = creator.getRoommates(activeFlat).size() + 1;
+        int nRoommates = creator.getRoommates(activeFlat).size();
         if (nRoommates == 0) {
             lRoommateCosts.setText("No roommates");
         } else {
