@@ -273,69 +273,127 @@ public class CleaningScheduleUI {
     private void $$$setupUI$$$() {
         contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout(0, 0));
+        contentPane.setBackground(new Color(-14078925));
         headerPain = new JPanel();
         headerPain.setLayout(new BorderLayout(0, 0));
+        headerPain.setBackground(new Color(-14078925));
         contentPane.add(headerPain, BorderLayout.NORTH);
         btBack = new JButton();
+        btBack.setBackground(new Color(-12816512));
+        btBack.setForeground(new Color(-2103318));
         btBack.setText("Back");
         headerPain.add(btBack, BorderLayout.WEST);
         final JLabel label1 = new JLabel();
+        label1.setBackground(new Color(-14078925));
+        Font label1Font = this.$$$getFont$$$(null, -1, 20, label1.getFont());
+        if (label1Font != null) label1.setFont(label1Font);
+        label1.setForeground(new Color(-4145152));
         label1.setText("Cleaning schedule");
         headerPain.add(label1, BorderLayout.CENTER);
         exportButton = new JButton();
+        exportButton.setBackground(new Color(-12816512));
+        exportButton.setForeground(new Color(-2103318));
         exportButton.setText("Export");
         headerPain.add(exportButton, BorderLayout.EAST);
         mainPenal = new JPanel();
         mainPenal.setLayout(new BorderLayout(0, 0));
+        mainPenal.setBackground(new Color(-14078925));
         mainPenal.setEnabled(true);
         contentPane.add(mainPenal, BorderLayout.CENTER);
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new BorderLayout(0, 0));
+        panel1.setBackground(new Color(-14078925));
         mainPenal.add(panel1, BorderLayout.CENTER);
         tWeekly = new JTable();
+        tWeekly.setBackground(new Color(-14078925));
         tWeekly.setEnabled(true);
+        tWeekly.setForeground(new Color(-2103318));
+        tWeekly.setGridColor(new Color(-12816512));
         panel1.add(tWeekly, BorderLayout.CENTER);
         Weekly = new JLabel();
+        Weekly.setBackground(new Color(-14078925));
+        Weekly.setForeground(new Color(-4145152));
         Weekly.setText("Weekly (uncompleted)");
         panel1.add(Weekly, BorderLayout.NORTH);
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
+        panel2.setBackground(new Color(-14078925));
         panel1.add(panel2, BorderLayout.SOUTH);
         btEditWeekly = new JButton();
+        btEditWeekly.setBackground(new Color(-12816512));
+        btEditWeekly.setForeground(new Color(-2103318));
         btEditWeekly.setText("Edit Weekly");
         panel2.add(btEditWeekly, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 1, false));
         btDeleteWeekly = new JButton();
+        btDeleteWeekly.setBackground(new Color(-12816512));
+        btDeleteWeekly.setForeground(new Color(-2103318));
         btDeleteWeekly.setText("Delete Weekly");
         panel2.add(btDeleteWeekly, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btCompletedWeekly = new JButton();
+        btCompletedWeekly.setBackground(new Color(-12816512));
+        btCompletedWeekly.setForeground(new Color(-2103318));
         btCompletedWeekly.setText("Set Completed");
         panel2.add(btCompletedWeekly, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new BorderLayout(0, 0));
+        panel3.setBackground(new Color(-14078925));
         mainPenal.add(panel3, BorderLayout.SOUTH);
         tMonthly = new JTable();
+        tMonthly.setBackground(new Color(-14078925));
+        tMonthly.setForeground(new Color(-2103318));
+        tMonthly.setGridColor(new Color(-12816512));
         panel3.add(tMonthly, BorderLayout.CENTER);
         Mothly = new JLabel();
+        Mothly.setForeground(new Color(-4145152));
         Mothly.setText("Monthly(uncompleted)");
         panel3.add(Mothly, BorderLayout.NORTH);
         monthlyPanel = new JPanel();
         monthlyPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        monthlyPanel.setBackground(new Color(-14078925));
         contentPane.add(monthlyPanel, BorderLayout.SOUTH);
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridLayoutManager(2, 3, new Insets(0, 0, 0, 0), -1, -1));
+        panel4.setBackground(new Color(-14078925));
         monthlyPanel.add(panel4, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         btEditMonthly = new JButton();
+        btEditMonthly.setBackground(new Color(-12816512));
+        btEditMonthly.setForeground(new Color(-2103318));
         btEditMonthly.setText("Edit Monthly");
         panel4.add(btEditMonthly, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 1, false));
         btDeleteMonthly = new JButton();
+        btDeleteMonthly.setBackground(new Color(-12816512));
+        btDeleteMonthly.setForeground(new Color(-2103318));
         btDeleteMonthly.setText("Delete Monthly");
         panel4.add(btDeleteMonthly, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btCompetedMonthly = new JButton();
+        btCompetedMonthly.setBackground(new Color(-12816512));
+        btCompetedMonthly.setForeground(new Color(-2103318));
         btCompetedMonthly.setText("Set Completed");
         panel4.add(btCompetedMonthly, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btAddWeeklyOrMonthly = new JButton();
+        btAddWeeklyOrMonthly.setBackground(new Color(-12816512));
+        btAddWeeklyOrMonthly.setForeground(new Color(-2103318));
         btAddWeeklyOrMonthly.setText("Add Weekly or Monthly");
         panel4.add(btAddWeeklyOrMonthly, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 1, false));
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
+        if (currentFont == null) return null;
+        String resultName;
+        if (fontName == null) {
+            resultName = currentFont.getName();
+        } else {
+            Font testFont = new Font(fontName, Font.PLAIN, 10);
+            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
+                resultName = fontName;
+            } else {
+                resultName = currentFont.getName();
+            }
+        }
+        return new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
     }
 
     /**
