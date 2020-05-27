@@ -9,7 +9,7 @@ import java.util.List;
 
 public class RoommateComboBoxModel extends AbstractListModel<Roommate> implements ComboBoxModel<Roommate> {
 
-    private List<Roommate> roommates = new ArrayList<>();
+    private final List<Roommate> roommates = new ArrayList<>();
     private int selection = -1;
 
     public RoommateComboBoxModel(List<Roommate> roommates) {
@@ -23,7 +23,7 @@ public class RoommateComboBoxModel extends AbstractListModel<Roommate> implement
     }
 
     @Override
-    public Object getSelectedItem() {
+    public Roommate getSelectedItem() {
         return getElementAt(selection);
     }
 
