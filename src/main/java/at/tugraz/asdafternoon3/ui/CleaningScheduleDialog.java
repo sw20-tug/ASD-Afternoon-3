@@ -53,7 +53,7 @@ public class CleaningScheduleDialog extends JDialog {
         initializeComboboxes();
 
 
-        if (should_be_changed) {
+        if (shouldBeChanged) {
             changeCleaningSchedule();
         } else {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd HH:mm");
@@ -136,6 +136,7 @@ public class CleaningScheduleDialog extends JDialog {
     private void onCancel() {
         // add your code here if necessary
         dispose();
+
     }
 
     private void initializeComboboxes() {
@@ -160,6 +161,9 @@ public class CleaningScheduleDialog extends JDialog {
         list.add(CleaningIntervall.MONTHLY);
         //Intervall
         cbIntervall.setModel(new DefaultComboBoxModel(list.toArray()));
+        cbIntervall.setSelectedItem(cleaningSchedule.getIntervall());
+
+
     }
 
     private void changeCleaningSchedule() {
