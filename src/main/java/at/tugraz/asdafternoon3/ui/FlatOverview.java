@@ -34,7 +34,7 @@ public class FlatOverview {
         selectFlatButton.addActionListener(e ->
                 FlatApplication.get().setContentPane(new FlatList(flat).getContentPane()));
         financeFurnitureAndEquipmentButton.addActionListener(e ->
-            FlatApplication.get().setContentPane(new FinanceOverview(flat).getContentPane()));
+                FlatApplication.get().setContentPane(new FinanceOverview(flat).getContentPane()));
         financeFlatButton.addActionListener(e ->
                 FlatApplication.get().setContentPane(new FinanceFlatOverview(flat).getContentPane()));
         shoppingListButton.addActionListener(e ->
@@ -103,14 +103,20 @@ public class FlatOverview {
         final Spacer spacer3 = new Spacer();
         BasicOverview.add(spacer3, new GridConstraints(7, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 10), new Dimension(358, 10), new Dimension(-1, 10), 10, false));
         taName = new JTextArea();
+        taName.setBackground(new Color(-12632257));
         taName.setEnabled(false);
+        taName.setForeground(new Color(-2103318));
         taName.setText("");
         BasicOverview.add(taName, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(358, 50), null, 0, false));
         taSize = new JTextArea();
+        taSize.setBackground(new Color(-12632257));
         taSize.setEnabled(false);
+        taSize.setForeground(new Color(-2103318));
         BasicOverview.add(taSize, new GridConstraints(6, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(358, 50), null, 0, false));
         taAddress = new JTextArea();
+        taAddress.setBackground(new Color(-12632257));
         taAddress.setEnabled(false);
+        taAddress.setForeground(new Color(-2103318));
         BasicOverview.add(taAddress, new GridConstraints(8, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(358, 50), null, 0, false));
         final Spacer spacer4 = new Spacer();
         BasicOverview.add(spacer4, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 20, false));
@@ -167,6 +173,8 @@ public class FlatOverview {
         final Spacer spacer14 = new Spacer();
         Navigation.add(spacer14, new GridConstraints(2, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 20), new Dimension(-1, 20), new Dimension(-1, 20), 20, false));
         selectFlatButton = new JButton();
+        selectFlatButton.setBackground(new Color(-12816512));
+        selectFlatButton.setForeground(new Color(-2103318));
         selectFlatButton.setText("Select flat");
         Navigation.add(selectFlatButton, new GridConstraints(8, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
