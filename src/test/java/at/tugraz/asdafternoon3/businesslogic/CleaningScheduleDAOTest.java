@@ -145,6 +145,30 @@ public class CleaningScheduleDAOTest extends DAOTest {
     }
 
     @Test
+    public void getForRoommate() throws Exception {
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+        LocalDateTime currentDateAndTime = LocalDateTime.of(currentDate, currentTime);
+
+        CleaningSchedule cleaningschedule =
+                new CleaningSchedule("Keller", currentDateAndTime, testmate, CleaningIntervall.WEEKLY);
+
+        Roommate mark = new Roommate("Mark von Weizenberg", 23, testflat);
+        RoommateDAO roommateDAO = new RoommateDAO(database);
+        roommateDAO.create(mark);
+
+        CleaningSchedule cleaningschedule2 =
+                new CleaningSchedule("Keller2", currentDateAndTime, mark, CleaningIntervall.WEEKLY);
+
+        CleaningScheduleDAO creator = new CleaningScheduleDAO(database);
+
+        assertNotNull(creator.create(cleaningschedule));
+        assertNotNull(creator.create(cleaningschedule2));
+
+        assertEquals(1, creator.getForRoommate(testmate).size());
+    }
+
+    @Test
     public void count() throws Exception {
         LocalDate currentDate = LocalDate.now();
         LocalTime currentTime = LocalTime.now();
