@@ -1,6 +1,7 @@
 package at.tugraz.asdafternoon3.businesslogic;
 
 import at.tugraz.asdafternoon3.data.CleaningSchedule;
+import at.tugraz.asdafternoon3.data.Roommate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -74,6 +75,18 @@ public class CleaningScheduleDAO extends DAO<CleaningSchedule> {
             CriteriaQuery<CleaningSchedule> cr = cb.createQuery(CleaningSchedule.class);
             Root<CleaningSchedule> root = cr.from(CleaningSchedule.class);
             cr.select(root);
+            Query<CleaningSchedule> query = session.createQuery(cr);
+            return query.getResultList();
+        }
+    }
+
+    public List<CleaningSchedule> getForRoommate(Roommate roommate) throws Exception {
+        try (Session session = openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<CleaningSchedule> cr = cb.createQuery(CleaningSchedule.class);
+            Root<CleaningSchedule> root = cr.from(CleaningSchedule.class);
+            cr.select(root);
+            cr.where(cb.equal(root.get("roommate"), roommate));
             Query<CleaningSchedule> query = session.createQuery(cr);
             return query.getResultList();
         }

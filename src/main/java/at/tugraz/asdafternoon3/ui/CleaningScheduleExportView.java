@@ -4,6 +4,7 @@ import at.tugraz.asdafternoon3.FlatApplication;
 import at.tugraz.asdafternoon3.businesslogic.CalenderExport;
 import at.tugraz.asdafternoon3.businesslogic.CleaningScheduleDAO;
 import at.tugraz.asdafternoon3.businesslogic.FlatDAO;
+import at.tugraz.asdafternoon3.data.CleaningSchedule;
 import at.tugraz.asdafternoon3.data.DatabaseObject;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.data.Roommate;
@@ -13,7 +14,9 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,20 +25,40 @@ public class CleaningScheduleExportView {
     private JPanel contentPane;
     private JButton exportButton;
     private JButton backButton;
+    private JComboBox<Roommate> cbRoommates;
 
     private final Flat activeFlat;
+    private final RoommateComboBoxModel model;
 
     public CleaningScheduleExportView(Flat flat) {
         activeFlat = flat;
+
+        List<Roommate> roommates = new ArrayList<>();
+        try {
+            roommates = DatabaseConnection.getInstance().createDao(FlatDAO.class).getRoommates(flat);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(getContentPane(), "Roommates could not be found.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        model = new RoommateComboBoxModel(roommates);
+        cbRoommates.setModel(model);
 
         backButton.addActionListener(e -> FlatApplication.get().setContentPane(new CleaningScheduleUI(activeFlat).getContentPane()));
         exportButton.addActionListener(e -> {
             try {
                 CleaningScheduleDAO dao = DatabaseConnection.getInstance().createDao(CleaningScheduleDAO.class);
-                CalenderExport export = new CalenderExport(dao.getAll());
+                Roommate selected = model.getSelectedItem();
+                CalenderExport export = new CalenderExport(selected == null ? dao.getAll() : dao.getForRoommate(selected));
                 JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileFilter(new FileNameExtensionFilter("ICS file", "ics"));
                 if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-                    export.export(fileChooser.getSelectedFile());
+                    // lil hacky
+                    File file = fileChooser.getSelectedFile();
+                    String filename = file.getAbsolutePath();
+                    if (!filename.endsWith(".ics")) {
+                        filename += ".ics";
+                    }
+                    export.export(new File(filename));
                 }
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(getContentPane(), "Cleaning schedule could not be found.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -74,10 +97,12 @@ public class CleaningScheduleExportView {
         panel1.add(label1, new GridConstraints(0, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         exportButton = new JButton();
         exportButton.setText("Export");
-        panel1.add(exportButton, new GridConstraints(1, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(exportButton, new GridConstraints(1, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         backButton = new JButton();
         backButton.setText("Back");
         panel1.add(backButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        cbRoommates = new JComboBox();
+        panel1.add(cbRoommates, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
