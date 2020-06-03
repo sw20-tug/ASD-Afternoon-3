@@ -15,6 +15,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,9 +102,10 @@ public class CleaningScheduleDialog extends JDialog {
         buttonOK.setText(Localization.getInstance().getCurrent().getString("frame.button.ok"));
         buttonCancel.setText(Localization.getInstance().getCurrent().getString("frame.button.cancel"));
     }
+
     private void onOK() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd HH:mm");
-        LocalDateTime ldt = LocalDateTime.parse(tfStart.getText(), formatter);
+        LocalDateTime ldt = null;
 
         Roommate roommate = (Roommate) cbRoommate.getSelectedItem();
         CleaningScheduleDAO cs_dao = null;
@@ -117,27 +119,53 @@ public class CleaningScheduleDialog extends JDialog {
 
 
         if (cs_dao != null) {
-            CleaningSchedule cs = new CleaningSchedule(tfName.getText(), ldt, roommate, (CleaningIntervall) cbIntervall.getSelectedItem());
+
             if (!shouldBeChanged) {
 
                 try {
+                    ldt = LocalDateTime.parse(tfStart.getText(), formatter);
+                    CleaningSchedule cs = new CleaningSchedule(tfName.getText(), ldt, roommate, (CleaningIntervall) cbIntervall.getSelectedItem());
+
+                    if (!cs_dao.validate(cs))
+                        throw new Exception("Cleaning schedule item to add/modify is not valid!");
+
                     cs_dao.create(cs);
-                } catch (Exception e) {
+                } catch (DateTimeParseException e)
+                {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(contentPanel, "Couldn't create cleaning schedule\n" + "Date was not valid!");
+                    return;
+                }
+                catch (Exception e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(contentPanel, "Couldn't create cleaning schedule\n" + e.getMessage());
+                    return;
                 }
 
             } else {
                 try {
+                    ldt = LocalDateTime.parse(tfStart.getText(), formatter);
+                    CleaningSchedule cs = new CleaningSchedule(tfName.getText(), ldt, roommate, (CleaningIntervall) cbIntervall.getSelectedItem());
+
                     cleaningSchedule.setIntervall((CleaningIntervall) cbIntervall.getSelectedItem());
                     cleaningSchedule.setName(tfName.getText());
                     cleaningSchedule.setRoommate(roommate);
                     cleaningSchedule.setStartTime(LocalDateTime.parse(tfStart.getText(), formatter));
 
+                    if (!cs_dao.validate(cs))
+                        throw new Exception("Cleaning schedule item to add/modify is not valid!");
+
                     cs_dao.update(cleaningSchedule);
-                } catch (Exception e) {
+                } catch (DateTimeParseException e)
+                {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(contentPanel, "Couldn't create cleaning schedule\n" + "Date was not valid!");
+                    return;
+                }
+                catch (Exception e) {
                     e.printStackTrace();
                     JOptionPane.showMessageDialog(contentPanel, "Couldn't create cleaning schedule\n" + e.getMessage());
+                    return;
                 }
             }
         }
