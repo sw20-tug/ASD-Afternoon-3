@@ -66,6 +66,7 @@ public class CalenderExportTest {
         CalendarBuilder builder = new CalendarBuilder();
         Calendar calendar = builder.build(fin);
         assertNotNull(calendar);
+        fin.close();
 
         File file = new File(filename);
         assertTrue(file.delete());

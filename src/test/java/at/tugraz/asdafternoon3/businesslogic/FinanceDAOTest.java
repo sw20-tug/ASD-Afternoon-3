@@ -21,6 +21,22 @@ public class FinanceDAOTest extends DAOTest {
     }
 
     @Test
+    public void countTest() throws Exception {
+        Flat flat = generateTestFlat();
+        FlatDAO fDao = new FlatDAO(database);
+        assertNotNull(fDao.create(flat));
+
+        Roommate ownerRoommate = generateTestRoommate(flat);
+        RoommateDAO rDao = new RoommateDAO(database);
+        assertNotNull(rDao.create(ownerRoommate));
+
+        Finance finance = new Finance("Sofa", 200, ownerRoommate, flat);
+        FinanceDAO creator = new FinanceDAO(database);
+        assertNotNull(creator.create(finance));
+        assertEquals(1, (long) creator.count());
+    }
+
+    @Test
     public void createFinanceInvalidCosts() {
         Flat flat = generateTestFlat();
         Roommate ownerRoommate = generateTestRoommate(flat);

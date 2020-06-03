@@ -21,8 +21,10 @@ public class TestUtils {
 
     public static void closeTestDatabase(String identifier) {
         String filename = "flat_test_" + identifier + ".db";
+
         File file = new File(filename);
-        file.delete();
+        assert file.exists();
+        assert file.delete();
     }
 
     public static SessionFactory mockDatabase() {

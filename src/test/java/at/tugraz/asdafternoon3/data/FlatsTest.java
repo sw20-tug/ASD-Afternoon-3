@@ -19,6 +19,7 @@ public class FlatsTest {
 
     @After
     public void tearDown() throws Exception {
+        database.close();
         TestUtils.closeTestDatabase(MethodHandles.lookup().lookupClass().getName());
         database = null;
     }

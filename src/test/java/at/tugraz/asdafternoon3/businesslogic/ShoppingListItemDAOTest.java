@@ -57,6 +57,16 @@ public class ShoppingListItemDAOTest extends DAOTest {
         DAOTestUtils.testDelete(ShoppingListItemDAO.class, item);
     }
 
+    @Test
+    public void countTest() throws Exception {
+        assertNull(new ShoppingListItemDAO(null).count());
+    }
+
+    @Test
+    public void getAllTest() throws Exception {
+        assertNull(new ShoppingListItemDAO(null).getAll());
+    }
+
     private Flat generateTestFlat() {
         return new Flat("Chaos WG", 2, "Graz");
     }
