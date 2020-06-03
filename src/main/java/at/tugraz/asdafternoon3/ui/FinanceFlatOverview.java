@@ -28,6 +28,9 @@ public class FinanceFlatOverview {
     private JTextField tfTitle;
     private JLabel lTotalCosts;
     private JLabel lRoommateCosts;
+    private JLabel lHeader;
+    private JLabel lTotalSum;
+    private JLabel lCostsPerRoommate;
 
     private final Flat activeFlat;
     private final FinanceFlatTableModel tableModel;
@@ -35,6 +38,7 @@ public class FinanceFlatOverview {
     private final List<FinanceFlat> financeItems;
 
     public FinanceFlatOverview(Flat flat) {
+        initLocalization();
         this.activeFlat = flat;
 
         this.financeItems = new ArrayList<>();
@@ -84,6 +88,15 @@ public class FinanceFlatOverview {
                 JOptionPane.showMessageDialog(contentPane, "Could not remove object");
             }
         });
+    }
+
+    private void initLocalization() {
+        lHeader.setText(Localization.getInstance().getCurrent().getString("financeflat.header"));
+        lTotalSum.setText(Localization.getInstance().getCurrent().getString("financeflat.totalsum"));
+        lCostsPerRoommate.setText(Localization.getInstance().getCurrent().getString("financeflat.costsperroommate"));
+        addButton.setText(Localization.getInstance().getCurrent().getString("financeflat.button.add"));
+        removeButton.setText(Localization.getInstance().getCurrent().getString("financeflat.button.remove"));
+        backButton.setText(Localization.getInstance().getCurrent().getString("frame.button.back"));
     }
 
     private FinanceFlat createFinanceFlat() {
@@ -150,10 +163,10 @@ public class FinanceFlatOverview {
         panel1.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         panel1.setBackground(new Color(-14078925));
         contentPane.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label1 = new JLabel();
-        label1.setForeground(new Color(-4145152));
-        label1.setText("Finance Flat Overview");
-        panel1.add(label1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lHeader = new JLabel();
+        lHeader.setForeground(new Color(-4145152));
+        lHeader.setText("Finance Flat Overview");
+        panel1.add(lHeader, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         backButton = new JButton();
         backButton.setBackground(new Color(-12816512));
         backButton.setForeground(new Color(-2103318));
@@ -189,16 +202,16 @@ public class FinanceFlatOverview {
         panel3.setBackground(new Color(-14078925));
         panel3.setForeground(new Color(-2103318));
         contentPane.add(panel3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label2 = new JLabel();
-        label2.setForeground(new Color(-2103318));
-        label2.setText("Costs per Roommate:");
-        panel3.add(label2, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lCostsPerRoommate = new JLabel();
+        lCostsPerRoommate.setForeground(new Color(-2103318));
+        lCostsPerRoommate.setText("Costs per Roommate:");
+        panel3.add(lCostsPerRoommate, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
         panel3.add(spacer1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        final JLabel label3 = new JLabel();
-        label3.setForeground(new Color(-2103318));
-        label3.setText("Total sum:");
-        panel3.add(label3, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lTotalSum = new JLabel();
+        lTotalSum.setForeground(new Color(-2103318));
+        lTotalSum.setText("Total sum:");
+        panel3.add(lTotalSum, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lTotalCosts = new JLabel();
         lTotalCosts.setForeground(new Color(-2103318));
         lTotalCosts.setText("0");

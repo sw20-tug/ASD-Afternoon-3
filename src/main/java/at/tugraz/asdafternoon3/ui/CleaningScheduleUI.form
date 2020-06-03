@@ -24,7 +24,7 @@
               <text value="Back"/>
             </properties>
           </component>
-          <component id="cf0f" class="javax.swing.JLabel">
+          <component id="cf0f" class="javax.swing.JLabel" binding="lHeader">
             <constraints border-constraint="Center"/>
             <properties>
               <background color="-14078925"/>
@@ -67,7 +67,7 @@
                   <gridColor color="-12816512"/>
                 </properties>
               </component>
-              <component id="de229" class="javax.swing.JLabel" binding="Weekly">
+              <component id="de229" class="javax.swing.JLabel" binding="lWeeklyTableHeader">
                 <constraints border-constraint="North"/>
                 <properties>
                   <background color="-14078925"/>
@@ -132,7 +132,7 @@
                   <gridColor color="-12816512"/>
                 </properties>
               </component>
-              <component id="f289e" class="javax.swing.JLabel" binding="Mothly">
+              <component id="f289e" class="javax.swing.JLabel" binding="lMonthlyTableHeader">
                 <constraints border-constraint="North"/>
                 <properties>
                   <foreground color="-4145152"/>

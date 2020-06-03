@@ -9,7 +9,6 @@ import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import at.tugraz.asdafternoon3.ui.table.FlatTableModel;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,9 +27,14 @@ public class FlatList {
     private JTextField tfAddress;
     private JTextField tfSize;
     private JButton backButton;
+    private JLabel lHeader;
+    private JLabel lName;
+    private JLabel lAddress;
+    private JLabel lSize;
     private Flat currentFlat;
 
     public FlatList(Flat flat) {
+        initLocalizations();
         try {
             currentFlat = flat;
             FlatTableModel model = new FlatTableModel(DatabaseConnection.getInstance().createDao(FlatDAO.class).getAll());
@@ -63,6 +67,17 @@ public class FlatList {
                 FlatApplication.get().setContentPane(new FlatOverview(currentFlat).getContentPane());
             }
         });
+    }
+
+    private void initLocalizations() {
+        lHeader.setText(Localization.getInstance().getCurrent().getString("flatlist.header"));
+        lName.setText(Localization.getInstance().getCurrent().getString("flatlist.name"));
+        lAddress.setText(Localization.getInstance().getCurrent().getString("flatlist.address"));
+        lSize.setText(Localization.getInstance().getCurrent().getString("flatlist.size"));
+        addButton.setText(Localization.getInstance().getCurrent().getString("flatlist.button.add"));
+        removeButton.setText(Localization.getInstance().getCurrent().getString("flatlist.button.remove"));
+        setToCurrentButton.setText(Localization.getInstance().getCurrent().getString("flatlist.button.settocurrent"));
+        backButton.setText(Localization.getInstance().getCurrent().getString("frame.button.back"));
     }
 
     private void addFlatClicked() {
@@ -192,10 +207,10 @@ public class FlatList {
         panel3.setLayout(new GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
         panel3.setBackground(new Color(-14078925));
         panel1.add(panel3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label1 = new JLabel();
-        label1.setForeground(new Color(-4145152));
-        label1.setText("Name");
-        panel3.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lName = new JLabel();
+        lName.setForeground(new Color(-4145152));
+        lName.setText("Name");
+        panel3.add(lName, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfName = new JTextField();
         tfName.setBackground(new Color(-12632257));
         tfName.setForeground(new Color(-2103318));
@@ -208,14 +223,14 @@ public class FlatList {
         tfSize.setBackground(new Color(-12632257));
         tfSize.setForeground(new Color(-2103318));
         panel3.add(tfSize, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        final JLabel label2 = new JLabel();
-        label2.setForeground(new Color(-4145152));
-        label2.setText("Size");
-        panel3.add(label2, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label3 = new JLabel();
-        label3.setForeground(new Color(-4145152));
-        label3.setText("Address");
-        panel3.add(label3, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lSize = new JLabel();
+        lSize.setForeground(new Color(-4145152));
+        lSize.setText("Size");
+        panel3.add(lSize, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lAddress = new JLabel();
+        lAddress.setForeground(new Color(-4145152));
+        lAddress.setText("Address");
+        panel3.add(lAddress, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new BorderLayout(0, 0));
         panel4.setBackground(new Color(-14078925));
@@ -225,14 +240,14 @@ public class FlatList {
         backButton.setForeground(new Color(-2103318));
         backButton.setText("Back");
         panel4.add(backButton, BorderLayout.WEST);
-        final JLabel label4 = new JLabel();
-        label4.setBackground(new Color(-14078925));
-        Font label4Font = this.$$$getFont$$$(null, -1, 20, label4.getFont());
-        if (label4Font != null) label4.setFont(label4Font);
-        label4.setForeground(new Color(-4145152));
-        label4.setText("Flat List");
-        label4.setVerticalTextPosition(0);
-        panel4.add(label4, BorderLayout.CENTER);
+        lHeader = new JLabel();
+        lHeader.setBackground(new Color(-14078925));
+        Font lHeaderFont = this.$$$getFont$$$(null, -1, 20, lHeader.getFont());
+        if (lHeaderFont != null) lHeader.setFont(lHeaderFont);
+        lHeader.setForeground(new Color(-4145152));
+        lHeader.setText("Flat List");
+        lHeader.setVerticalTextPosition(0);
+        panel4.add(lHeader, BorderLayout.CENTER);
         pControl = new JPanel();
         pControl.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         pControl.setBackground(new Color(-14078925));

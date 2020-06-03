@@ -2,13 +2,10 @@ package at.tugraz.asdafternoon3.ui;
 
 import at.tugraz.asdafternoon3.FlatApplication;
 import at.tugraz.asdafternoon3.businesslogic.FlatDAO;
-import at.tugraz.asdafternoon3.businesslogic.RoommateDAO;
 import at.tugraz.asdafternoon3.businesslogic.ShoppingListItemDAO;
 import at.tugraz.asdafternoon3.data.Flat;
-import at.tugraz.asdafternoon3.data.Roommate;
 import at.tugraz.asdafternoon3.data.ShoppingListItem;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
-import at.tugraz.asdafternoon3.ui.table.RoommateTableModel;
 import at.tugraz.asdafternoon3.ui.table.ShoppingListTableModel;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -16,8 +13,6 @@ import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,11 +24,14 @@ public class ShoppingList {
     private JButton removeButton;
     private JCheckBox cbHide;
     private JButton backButton;
+    private JLabel lItem;
+    private JLabel lHeader;
 
     private final Flat activeFlat;
     private final ShoppingListTableModel tableModel;
 
     public ShoppingList(Flat flat) {
+        initLocalizations();
         this.activeFlat = flat;
 
         List<ShoppingListItem> items = new ArrayList<>();
@@ -90,6 +88,15 @@ public class ShoppingList {
         });
     }
 
+    private void initLocalizations() {
+        lHeader.setText(Localization.getInstance().getCurrent().getString("shoppinglist.header"));
+        lItem.setText(Localization.getInstance().getCurrent().getString("shoppinglist.item"));
+        cbHide.setText(Localization.getInstance().getCurrent().getString("shoppinglist.hidecompleted"));
+        addButton.setText(Localization.getInstance().getCurrent().getString("shoppinglist.button.add"));
+        removeButton.setText(Localization.getInstance().getCurrent().getString("shoppinglist.button.remove"));
+        backButton.setText(Localization.getInstance().getCurrent().getString("frame.button.back"));
+    }
+
     private ShoppingListItem createItem() {
         ShoppingListItem item = new ShoppingListItem(tfItem.getText(), activeFlat);
         ShoppingListItem result = null;
@@ -139,33 +146,37 @@ public class ShoppingList {
         shoppingTable.setGridColor(new Color(-12816512));
         contentPane.add(shoppingTable, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
         panel1.setBackground(new Color(-14078925));
         contentPane.add(panel1, new GridConstraints(2, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         tfItem = new JTextField();
         tfItem.setBackground(new Color(-12632257));
         tfItem.setForeground(new Color(-2103318));
-        panel1.add(tfItem, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        panel1.add(tfItem, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         addButton = new JButton();
         addButton.setBackground(new Color(-12816512));
         addButton.setForeground(new Color(-2103318));
         addButton.setText("Add");
-        panel1.add(addButton, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(addButton, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         removeButton = new JButton();
         removeButton.setBackground(new Color(-12816512));
         removeButton.setForeground(new Color(-2103318));
         removeButton.setText("Remove");
-        panel1.add(removeButton, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 1, false));
+        panel1.add(removeButton, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 1, false));
+        lItem = new JLabel();
+        lItem.setForeground(new Color(-4145152));
+        lItem.setText("Item");
+        panel1.add(lItem, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
         panel2.setBackground(new Color(-14078925));
         contentPane.add(panel2, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label1 = new JLabel();
-        Font label1Font = this.$$$getFont$$$(null, -1, 22, label1.getFont());
-        if (label1Font != null) label1.setFont(label1Font);
-        label1.setForeground(new Color(-4145152));
-        label1.setText("Shopping List");
-        panel2.add(label1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lHeader = new JLabel();
+        Font lHeaderFont = this.$$$getFont$$$(null, -1, 22, lHeader.getFont());
+        if (lHeaderFont != null) lHeader.setFont(lHeaderFont);
+        lHeader.setForeground(new Color(-4145152));
+        lHeader.setText("Shopping List");
+        panel2.add(lHeader, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cbHide = new JCheckBox();
         cbHide.setBackground(new Color(-14078925));
         cbHide.setForeground(new Color(-4145152));

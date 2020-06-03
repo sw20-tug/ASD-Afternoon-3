@@ -22,7 +22,7 @@
         </properties>
         <border type="none"/>
         <children>
-          <component id="b4fe0" class="javax.swing.JLabel">
+          <component id="b4fe0" class="javax.swing.JLabel" binding="lSubHeader">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
                 <preferred-size width="375" height="36"/>
@@ -37,7 +37,7 @@
               <text value="FLAT"/>
             </properties>
           </component>
-          <component id="64681" class="javax.swing.JLabel">
+          <component id="64681" class="javax.swing.JLabel" binding="lHeader">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="0.0" weighty="0.0"/>
@@ -70,7 +70,7 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="31aed" class="javax.swing.JLabel">
+              <component id="31aed" class="javax.swing.JLabel" binding="lName">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -105,7 +105,7 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="79814" class="javax.swing.JLabel">
+              <component id="79814" class="javax.swing.JLabel" binding="lAddress">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -139,7 +139,7 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="c7ab9" class="javax.swing.JLabel">
+              <component id="c7ab9" class="javax.swing.JLabel" binding="lSize">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>

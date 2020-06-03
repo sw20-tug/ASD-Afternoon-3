@@ -29,14 +29,15 @@ public class CleaningScheduleUI {
     private JButton btDeleteMonthly;
     private JButton exportButton;
     private JTable tMonthly;
-    private JLabel Weekly;
-    private JLabel Mothly;
+    private JLabel lWeeklyTableHeader;
+    private JLabel lMonthlyTableHeader;
     private JButton btEditWeekly;
     private JButton btAddWeeklyOrMonthly;
     private JButton btDeleteWeekly;
     private JPanel monthlyPanel;
     private JButton btCompletedWeekly;
     private JButton btCompetedMonthly;
+    private JLabel lHeader;
     private Flat currentFlat;
 
     private final List<CleaningSchedule> weeklyCleaningSchedules = new ArrayList<>();
@@ -83,7 +84,7 @@ public class CleaningScheduleUI {
     };
 
     public CleaningScheduleUI(Flat flat) {
-
+        initLocalizations();
         currentFlat = flat;
 
         refillData();
@@ -100,6 +101,7 @@ public class CleaningScheduleUI {
                 dialog.setVisible(true);
             }
         });
+
 
         btDeleteWeekly.addActionListener(new ActionListener() {
             @Override
@@ -201,6 +203,21 @@ public class CleaningScheduleUI {
         });
     }
 
+    private void initLocalizations() {
+        lHeader.setText(Localization.getInstance().getCurrent().getString("cleaningschedule.ui.header"));
+        lWeeklyTableHeader.setText(Localization.getInstance().getCurrent().getString("cleaningschedule.ui.weekly.tableheader"));
+        lMonthlyTableHeader.setText(Localization.getInstance().getCurrent().getString("cleaningschedule.ui.monthly.tableheader"));
+        btAddWeeklyOrMonthly.setText(Localization.getInstance().getCurrent().getString("cleaningschedule.ui.add.button"));
+        btCompletedWeekly.setText(Localization.getInstance().getCurrent().getString("cleaningschedule.ui.weekly.setcompleted.button"));
+        btEditWeekly.setText(Localization.getInstance().getCurrent().getString("cleaningschedule.ui.weekly.edit.button"));
+        btDeleteWeekly.setText(Localization.getInstance().getCurrent().getString("cleaningschedule.ui.weekly.delete.button"));
+        btCompetedMonthly.setText(Localization.getInstance().getCurrent().getString("cleaningschedule.ui.monthly.setcompleted.button"));
+        btEditMonthly.setText(Localization.getInstance().getCurrent().getString("cleaningschedule.ui.monthly.edit.button"));
+        btDeleteMonthly.setText(Localization.getInstance().getCurrent().getString("cleaningschedule.ui.monthly.delete.button"));
+        btBack.setText(Localization.getInstance().getCurrent().getString("frame.button.back"));
+        exportButton.setText(Localization.getInstance().getCurrent().getString("cleaningschedule.ui.export.button"));
+    }
+
     private void refillData() {
         weeklyCleaningSchedules.clear();
         completedMonthlyCleaningSchedules.clear();
@@ -283,13 +300,13 @@ public class CleaningScheduleUI {
         btBack.setForeground(new Color(-2103318));
         btBack.setText("Back");
         headerPain.add(btBack, BorderLayout.WEST);
-        final JLabel label1 = new JLabel();
-        label1.setBackground(new Color(-14078925));
-        Font label1Font = this.$$$getFont$$$(null, -1, 20, label1.getFont());
-        if (label1Font != null) label1.setFont(label1Font);
-        label1.setForeground(new Color(-4145152));
-        label1.setText("Cleaning schedule");
-        headerPain.add(label1, BorderLayout.CENTER);
+        lHeader = new JLabel();
+        lHeader.setBackground(new Color(-14078925));
+        Font lHeaderFont = this.$$$getFont$$$(null, -1, 20, lHeader.getFont());
+        if (lHeaderFont != null) lHeader.setFont(lHeaderFont);
+        lHeader.setForeground(new Color(-4145152));
+        lHeader.setText("Cleaning schedule");
+        headerPain.add(lHeader, BorderLayout.CENTER);
         exportButton = new JButton();
         exportButton.setBackground(new Color(-12816512));
         exportButton.setForeground(new Color(-2103318));
@@ -310,11 +327,11 @@ public class CleaningScheduleUI {
         tWeekly.setForeground(new Color(-2103318));
         tWeekly.setGridColor(new Color(-12816512));
         panel1.add(tWeekly, BorderLayout.CENTER);
-        Weekly = new JLabel();
-        Weekly.setBackground(new Color(-14078925));
-        Weekly.setForeground(new Color(-4145152));
-        Weekly.setText("Weekly (uncompleted)");
-        panel1.add(Weekly, BorderLayout.NORTH);
+        lWeeklyTableHeader = new JLabel();
+        lWeeklyTableHeader.setBackground(new Color(-14078925));
+        lWeeklyTableHeader.setForeground(new Color(-4145152));
+        lWeeklyTableHeader.setText("Weekly (uncompleted)");
+        panel1.add(lWeeklyTableHeader, BorderLayout.NORTH);
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
         panel2.setBackground(new Color(-14078925));
@@ -343,10 +360,10 @@ public class CleaningScheduleUI {
         tMonthly.setForeground(new Color(-2103318));
         tMonthly.setGridColor(new Color(-12816512));
         panel3.add(tMonthly, BorderLayout.CENTER);
-        Mothly = new JLabel();
-        Mothly.setForeground(new Color(-4145152));
-        Mothly.setText("Monthly(uncompleted)");
-        panel3.add(Mothly, BorderLayout.NORTH);
+        lMonthlyTableHeader = new JLabel();
+        lMonthlyTableHeader.setForeground(new Color(-4145152));
+        lMonthlyTableHeader.setText("Monthly(uncompleted)");
+        panel3.add(lMonthlyTableHeader, BorderLayout.NORTH);
         monthlyPanel = new JPanel();
         monthlyPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         monthlyPanel.setBackground(new Color(-14078925));
