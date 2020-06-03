@@ -132,7 +132,7 @@ public class CleaningScheduleDialog extends JDialog {
                     cs_dao.create(cs);
                 } catch (DateTimeParseException e)
                 {
-                    e.printStackTrace();
+                    e.printStackTrace();d
                     JOptionPane.showMessageDialog(contentPanel, "Couldn't create cleaning schedule\n" + "Date was not valid!");
                     return;
                 }
