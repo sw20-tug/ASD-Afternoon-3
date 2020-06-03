@@ -40,6 +40,19 @@ public class RoommateDAOTest extends DAOTest {
     }
 
     @Test
+    public void countTest() throws Exception {
+        Flat flat = generateTestFlat();
+        FlatDAO fDao = new FlatDAO(database);
+        assertNotNull(fDao.create(flat));
+
+        Roommate roommate = new Roommate("Liki Norber", 12, flat);
+        RoommateDAO rDao = new RoommateDAO(database);
+        assertNotNull(rDao.create(roommate));
+
+        assertEquals(1, (long) rDao.count());
+    }
+
+    @Test
     public void createRoommateNoFlat() {
         Roommate roommate = new Roommate("Andi Goldberger", 50, null);
 

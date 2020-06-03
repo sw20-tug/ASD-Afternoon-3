@@ -1,7 +1,10 @@
 package at.tugraz.asdafternoon3.businesslogic;
 
 import at.tugraz.asdafternoon3.TestUtils;
+import at.tugraz.asdafternoon3.data.Finance;
+import at.tugraz.asdafternoon3.data.FinanceFlat;
 import at.tugraz.asdafternoon3.data.Flat;
+import at.tugraz.asdafternoon3.data.Roommate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -10,6 +13,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -126,6 +131,35 @@ public class FlatDAOTest extends DAOTest {
             e.printStackTrace();
             assert (false);
         }
+    }
+
+    @Test
+    public void getFinanceTest() throws Exception {
+        Flat flat = generateTestFlat();
+        FlatDAO fDao = new FlatDAO(database);
+        assertNotNull(fDao.create(flat));
+
+        FinanceFlat financeFlat = new FinanceFlat("Test", 100, flat);
+        FinanceFlatDAO creator = new FinanceFlatDAO(database);
+        assertNotNull(creator.create(financeFlat));
+        List<FinanceFlat> fList = fDao.getFinanceFlat(flat);
+        assertEquals(1, fList.size());
+        assertEquals("Test", fList.get(0).getTitle());
+        assertEquals(100, fList.get(0).getPrice());
+        assertEquals(financeFlat.getFlat().getId(), fList.get(0).getFlat().getId());
+        assertEquals(financeFlat.getId(), fList.get(0).getId());
+    }
+
+    @Test
+    public void countTest() throws Exception {
+        Flat flat = generateTestFlat();
+        FlatDAO fDao = new FlatDAO(database);
+        assertNotNull(fDao.create(flat));
+        assertEquals(1, (long) fDao.count());
+    }
+
+    private Flat generateTestFlat() {
+        return new Flat("Chaos WG", 2, "Graz");
     }
 
 
