@@ -28,6 +28,8 @@ public class FlatList {
     private JTextField tfAddress;
     private JTextField tfSize;
     private JButton backButton;
+    private JLabel lName;
+    private JLabel lHeader;
     private Flat currentFlat;
 
     public FlatList(Flat flat) {

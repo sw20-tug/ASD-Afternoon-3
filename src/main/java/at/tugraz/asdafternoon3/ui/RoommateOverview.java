@@ -26,6 +26,8 @@ public class RoommateOverview {
     private JButton removeButton;
     private JPanel contentPane;
     private JButton backButton;
+    private JLabel lName;
+    private JLabel lAge;
 
     private final Flat activeFlat;
     private final RoommateTableModel tableModel;
