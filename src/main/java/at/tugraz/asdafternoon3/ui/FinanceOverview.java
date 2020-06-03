@@ -3,22 +3,18 @@ package at.tugraz.asdafternoon3.ui;
 import at.tugraz.asdafternoon3.FlatApplication;
 import at.tugraz.asdafternoon3.businesslogic.FinanceDAO;
 import at.tugraz.asdafternoon3.businesslogic.FlatDAO;
-import at.tugraz.asdafternoon3.businesslogic.RoommateDAO;
 import at.tugraz.asdafternoon3.data.Finance;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.data.Roommate;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
 import at.tugraz.asdafternoon3.ui.combobox.RoommateComboBoxModel;
 import at.tugraz.asdafternoon3.ui.table.FinanceFurnitureModel;
-import at.tugraz.asdafternoon3.ui.table.RoommateTableModel;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,12 +27,14 @@ public class FinanceOverview {
     private JComboBox<Roommate> cbRoommate;
     private JSpinner spMoney;
     private JTextField tfName;
+    private JLabel lHeader;
 
     private final Flat activeFlat;
     private final RoommateComboBoxModel model;
     private final FinanceFurnitureModel tableModel;
 
     public FinanceOverview(Flat flat) {
+        initLocalizations();
         this.activeFlat = flat;
 
         List<Roommate> roommates = new ArrayList<>();
@@ -82,6 +80,13 @@ public class FinanceOverview {
                 JOptionPane.showMessageDialog(contentPane, "Could not remove roommate");
             }
         });
+    }
+
+    private void initLocalizations() {
+        lHeader.setText(Localization.getInstance().getCurrent().getString("financeoverview.header"));
+        addButton.setText(Localization.getInstance().getCurrent().getString("financeoverview.button.add"));
+        removeButton.setText(Localization.getInstance().getCurrent().getString("financeoverview.button.remove"));
+        backButton.setText(Localization.getInstance().getCurrent().getString("frame.button.back"));
     }
 
     private Finance createFinance() {
@@ -145,12 +150,12 @@ public class FinanceOverview {
         panel1.add(backButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
         panel1.add(spacer1, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
-        final JLabel label1 = new JLabel();
-        Font label1Font = this.$$$getFont$$$(null, -1, 22, label1.getFont());
-        if (label1Font != null) label1.setFont(label1Font);
-        label1.setForeground(new Color(-4145152));
-        label1.setText("Finance Overview");
-        panel1.add(label1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lHeader = new JLabel();
+        Font lHeaderFont = this.$$$getFont$$$(null, -1, 22, lHeader.getFont());
+        if (lHeaderFont != null) lHeader.setFont(lHeaderFont);
+        lHeader.setForeground(new Color(-4145152));
+        lHeader.setText("Finance Overview");
+        panel1.add(lHeader, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 6, new Insets(0, 0, 0, 0), -1, -1));
         panel2.setBackground(new Color(-14078925));
@@ -173,10 +178,10 @@ public class FinanceOverview {
         spMoney.setBackground(new Color(-12632257));
         spMoney.setForeground(new Color(-2103318));
         panel2.add(spMoney, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label2 = new JLabel();
-        label2.setForeground(new Color(-2103318));
-        label2.setText("€");
-        panel2.add(label2, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label1 = new JLabel();
+        label1.setForeground(new Color(-2103318));
+        label1.setText("€");
+        panel2.add(label1, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfName = new JTextField();
         tfName.setBackground(new Color(-12632257));
         tfName.setForeground(new Color(-2103318));

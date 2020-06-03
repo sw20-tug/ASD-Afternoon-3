@@ -21,16 +21,30 @@ public class CreateFlatUI {
     private JTextField tfName;
     private JTextField tfAddress;
     private JTextField tfSize;
+    private JLabel lHeader;
+    private JLabel lSubHeader;
+    private JLabel lName;
+    private JLabel lAddress;
+    private JLabel lSize;
     private JButton clickMeButton;
 
     public CreateFlatUI() {
-
+        initLocalizations();
         btCreateNewFlat.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 createFlat();
             }
         });
+    }
+
+    private void initLocalizations() {
+        lHeader.setText(Localization.getInstance().getCurrent().getString("createflat.header"));
+        lSubHeader.setText(Localization.getInstance().getCurrent().getString("createflat.subheader"));
+        lName.setText(Localization.getInstance().getCurrent().getString("createflat.name"));
+        lAddress.setText(Localization.getInstance().getCurrent().getString("createflat.address"));
+        lSize.setText(Localization.getInstance().getCurrent().getString("createflat.size"));
+        btCreateNewFlat.setText(Localization.getInstance().getCurrent().getString("createflat.button.create"));
     }
 
     private void createFlat() {
@@ -109,29 +123,29 @@ public class CreateFlatUI {
         Panel1.setFocusable(true);
         Panel1.setForeground(new Color(-14078925));
         contentPane.add(Panel1, BorderLayout.NORTH);
-        final JLabel label1 = new JLabel();
-        Font label1Font = this.$$$getFont$$$(null, -1, 26, label1.getFont());
-        if (label1Font != null) label1.setFont(label1Font);
-        label1.setForeground(new Color(-4145152));
-        label1.setHorizontalAlignment(10);
-        label1.setHorizontalTextPosition(11);
-        label1.setText("FLAT");
+        lSubHeader = new JLabel();
+        Font lSubHeaderFont = this.$$$getFont$$$(null, -1, 26, lSubHeader.getFont());
+        if (lSubHeaderFont != null) lSubHeader.setFont(lSubHeaderFont);
+        lSubHeader.setForeground(new Color(-4145152));
+        lSubHeader.setHorizontalAlignment(10);
+        lSubHeader.setHorizontalTextPosition(11);
+        lSubHeader.setText("FLAT");
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        Panel1.add(label1, gbc);
-        final JLabel label2 = new JLabel();
-        Font label2Font = this.$$$getFont$$$(null, -1, 28, label2.getFont());
-        if (label2Font != null) label2.setFont(label2Font);
-        label2.setForeground(new Color(-4145152));
-        label2.setText("ASD-Afternoon-3");
+        Panel1.add(lSubHeader, gbc);
+        lHeader = new JLabel();
+        Font lHeaderFont = this.$$$getFont$$$(null, -1, 28, lHeader.getFont());
+        if (lHeaderFont != null) lHeader.setFont(lHeaderFont);
+        lHeader.setForeground(new Color(-4145152));
+        lHeader.setText("ASD-Afternoon-3");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
-        Panel1.add(label2, gbc);
+        Panel1.add(lHeader, gbc);
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.setBackground(new Color(-14078925));
@@ -142,12 +156,12 @@ public class CreateFlatUI {
         panel2.setBackground(new Color(-14078925));
         panel2.setForeground(new Color(-12236470));
         panel1.add(panel2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label3 = new JLabel();
-        Font label3Font = this.$$$getFont$$$("Arial", -1, 14, label3.getFont());
-        if (label3Font != null) label3.setFont(label3Font);
-        label3.setForeground(new Color(-4145152));
-        label3.setText("Name");
-        panel2.add(label3, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lName = new JLabel();
+        Font lNameFont = this.$$$getFont$$$("Arial", -1, 14, lName.getFont());
+        if (lNameFont != null) lName.setFont(lNameFont);
+        lName.setForeground(new Color(-4145152));
+        lName.setText("Name");
+        panel2.add(lName, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfName = new JTextField();
         tfName.setBackground(new Color(-12632257));
         tfName.setCaretColor(new Color(-2103318));
@@ -158,12 +172,12 @@ public class CreateFlatUI {
         panel3.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         panel3.setBackground(new Color(-14078925));
         panel1.add(panel3, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label4 = new JLabel();
-        Font label4Font = this.$$$getFont$$$("Arial", -1, 14, label4.getFont());
-        if (label4Font != null) label4.setFont(label4Font);
-        label4.setForeground(new Color(-4145152));
-        label4.setText("Address");
-        panel3.add(label4, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lAddress = new JLabel();
+        Font lAddressFont = this.$$$getFont$$$("Arial", -1, 14, lAddress.getFont());
+        if (lAddressFont != null) lAddress.setFont(lAddressFont);
+        lAddress.setForeground(new Color(-4145152));
+        lAddress.setText("Address");
+        panel3.add(lAddress, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfAddress = new JTextField();
         tfAddress.setBackground(new Color(-12632257));
         tfAddress.setCaretColor(new Color(-2103318));
@@ -173,12 +187,12 @@ public class CreateFlatUI {
         panel4.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         panel4.setBackground(new Color(-14078925));
         panel1.add(panel4, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label5 = new JLabel();
-        Font label5Font = this.$$$getFont$$$("Arial", -1, 14, label5.getFont());
-        if (label5Font != null) label5.setFont(label5Font);
-        label5.setForeground(new Color(-4145152));
-        label5.setText("Size");
-        panel4.add(label5, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lSize = new JLabel();
+        Font lSizeFont = this.$$$getFont$$$("Arial", -1, 14, lSize.getFont());
+        if (lSizeFont != null) lSize.setFont(lSizeFont);
+        lSize.setForeground(new Color(-4145152));
+        lSize.setText("Size");
+        panel4.add(lSize, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tfSize = new JTextField();
         tfSize.setBackground(new Color(-12632257));
         tfSize.setCaretColor(new Color(-2103318));
