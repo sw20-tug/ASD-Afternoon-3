@@ -10,8 +10,8 @@ import java.util.ResourceBundle;
 public class Localization {
 
     private static Localization instance;
-    private final Locale currentLocale;
-    private final ResourceBundle currentMessages;
+    private  Locale currentLocale;
+    private  ResourceBundle currentMessages;
 
     private Localization() {
         // Probably not the best idea to init stuff here, but who cares
@@ -41,6 +41,36 @@ public class Localization {
         }
 
         return locale;
+    }
+
+    public void setLocale(String locale)
+    {
+        if (locale == null)
+            return;
+
+        switch (locale) {
+            case "Chinese":
+                currentMessages = ResourceBundle.getBundle("MessagesBundle", new Locale("zh", "CN"));
+                break;
+            case "German":
+                currentMessages = ResourceBundle.getBundle("MessagesBundle", new Locale("de", "AT"));
+                break;
+            case "English":
+                currentMessages = ResourceBundle.getBundle("MessagesBundle", new Locale("en", "US"));
+                break;
+            case "Italian":
+                currentMessages = ResourceBundle.getBundle("MessagesBundle", new Locale("it", "IT"));
+                break;
+            case "Russian":
+                currentMessages = ResourceBundle.getBundle("MessagesBundle", new Locale("ru", "RU"));
+                break;
+            case "Spanish":
+                currentMessages = ResourceBundle.getBundle("MessagesBundle", new Locale("es", "ES"));
+                break;
+
+            default:
+                return;
+        }
     }
 
     public static Localization getInstance() {

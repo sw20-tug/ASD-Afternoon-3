@@ -157,6 +157,7 @@
                 <properties>
                   <background color="-12632257"/>
                   <foreground color="-2103318"/>
+                  <model/>
                 </properties>
               </component>
               <component id="3e1b4" class="javax.swing.JButton" binding="setLanguageButton" default-binding="true">
