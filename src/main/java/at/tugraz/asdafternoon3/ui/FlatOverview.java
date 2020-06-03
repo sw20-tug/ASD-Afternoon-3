@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class FlatOverview {
     private JPanel contentPane;
@@ -32,9 +33,23 @@ public class FlatOverview {
     private JComboBox languageBox;
     private JButton setLanguageButton;
 
+    private ArrayList languages;
+
     public FlatOverview(Flat flat) {
+        languages = new ArrayList<String>();
+        languages.add("Chinese");
+        languages.add("German");
+        languages.add("English");
+        languages.add("Italian");
+        languages.add("Russian");
+        languages.add("Spanish");
+        DefaultComboBoxModel cbm = new DefaultComboBoxModel();
+        cbm.addAll(languages);
+        languageBox.setModel(cbm);
+
         initLocalizations();
         setFlatInformation(flat);
+
 
         roomMateButton.addActionListener(e ->
                 FlatApplication.get().setContentPane(new RoommateOverview(flat).getContentPane()));
@@ -48,6 +63,18 @@ public class FlatOverview {
                 FlatApplication.get().setContentPane(new ShoppingList(flat).getContentPane()));
         cleaningScheduleButton.addActionListener(e ->
                 FlatApplication.get().setContentPane(new CleaningScheduleUI(flat).getContentPane()));
+        setLanguageButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                onSetLanguage();
+            }
+        });
+    }
+
+    private void onSetLanguage() {
+        Localization.getInstance().setLocale((String) languageBox.getSelectedItem());
+        System.out.println("Selected language: " + (String) languageBox.getSelectedItem());
+        initLocalizations();
     }
 
     private void initLocalizations() {
@@ -154,6 +181,8 @@ public class FlatOverview {
         languageBox = new JComboBox();
         languageBox.setBackground(new Color(-12632257));
         languageBox.setForeground(new Color(-2103318));
+        final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
+        languageBox.setModel(defaultComboBoxModel1);
         BasicOverview.add(languageBox, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         setLanguageButton = new JButton();
         setLanguageButton.setBackground(new Color(-12816512));
