@@ -91,12 +91,18 @@ public class FlatOverview {
     private void $$$setupUI$$$() {
         contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout(0, 0));
+        contentPane.setMaximumSize(new Dimension(400, 400));
+        contentPane.setMinimumSize(new Dimension(400, 400));
+        contentPane.setPreferredSize(new Dimension(1200, 750));
         main = new JPanel();
         main.setLayout(new BorderLayout(0, 0));
         contentPane.add(main, BorderLayout.CENTER);
         BasicOverview = new JPanel();
         BasicOverview.setLayout(new GridLayoutManager(8, 4, new Insets(0, 0, 0, 0), -1, -1));
         BasicOverview.setBackground(new Color(-14078925));
+        BasicOverview.setMaximumSize(new Dimension(300, 300));
+        BasicOverview.setMinimumSize(new Dimension(300, 300));
+        BasicOverview.setPreferredSize(new Dimension(300, 300));
         main.add(BasicOverview, BorderLayout.NORTH);
         lbName = new JLabel();
         lbName.setForeground(new Color(-4145152));
@@ -140,9 +146,9 @@ public class FlatOverview {
         taAddress.setForeground(new Color(-2103318));
         BasicOverview.add(taAddress, new GridConstraints(7, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(358, 50), null, 0, false));
         final Spacer spacer4 = new Spacer();
-        BasicOverview.add(spacer4, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 20, false));
+        BasicOverview.add(spacer4, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 5, false));
         final Spacer spacer5 = new Spacer();
-        BasicOverview.add(spacer5, new GridConstraints(3, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 20, false));
+        BasicOverview.add(spacer5, new GridConstraints(3, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 5, false));
         final Spacer spacer6 = new Spacer();
         BasicOverview.add(spacer6, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 5, false));
         languageBox = new JComboBox();
@@ -154,10 +160,6 @@ public class FlatOverview {
         setLanguageButton.setForeground(new Color(-2103318));
         setLanguageButton.setText("Set Language");
         BasicOverview.add(setLanguageButton, new GridConstraints(2, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label1 = new JLabel();
-        label1.setForeground(new Color(-4145152));
-        label1.setText("Select preferred language");
-        BasicOverview.add(label1, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         Navigation = new JPanel();
         Navigation.setLayout(new GridLayoutManager(13, 3, new Insets(0, 0, 0, 0), -1, -1));
         Navigation.setBackground(new Color(-14078925));

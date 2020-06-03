@@ -133,7 +133,7 @@ public class CreateFlatUI {
         gbc.gridy = 0;
         Panel1.add(label2, gbc);
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(3, 1, new Insets(0, 10, 0, 10), -1, -1));
         panel1.setBackground(new Color(-14078925));
         panel1.setForeground(new Color(-14078925));
         contentPane.add(panel1, BorderLayout.CENTER);
