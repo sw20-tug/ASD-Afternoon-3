@@ -41,6 +41,7 @@ public class FlatOverview {
         languages.add("German");
         languages.add("English");
         languages.add("Italian");
+        languages.add("Latin");
         languages.add("Russian");
         languages.add("Spanish");
         DefaultComboBoxModel cbm = new DefaultComboBoxModel();

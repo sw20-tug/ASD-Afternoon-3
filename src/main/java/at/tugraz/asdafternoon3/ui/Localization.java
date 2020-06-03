@@ -61,6 +61,9 @@ public class Localization {
             case "Italian":
                 currentMessages = ResourceBundle.getBundle("MessagesBundle", new Locale("it", "IT"));
                 break;
+            case "Latin":
+                currentMessages = ResourceBundle.getBundle("MessagesBundle", new Locale("la", "RO"));
+                break;
             case "Russian":
                 currentMessages = ResourceBundle.getBundle("MessagesBundle", new Locale("ru", "RU"));
                 break;
