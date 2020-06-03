@@ -12,6 +12,12 @@
         <property name="hbm2ddl.auto">update</property>
 
         <mapping class="at.tugraz.asdafternoon3.data.Flat"/>
+        <mapping class="at.tugraz.asdafternoon3.data.FinanceFlat"/>
         <mapping class="at.tugraz.asdafternoon3.data.Roommate"/>
+        <mapping class="at.tugraz.asdafternoon3.data.CleaningSchedule"/>
+        <mapping class="at.tugraz.asdafternoon3.data.CleaningTaskCompleted"/>
+        <mapping class="at.tugraz.asdafternoon3.data.ShoppingListItem"/>
+        <mapping class="at.tugraz.asdafternoon3.data.Finance"/>
+
     </session-factory>
 </hibernate-configuration>

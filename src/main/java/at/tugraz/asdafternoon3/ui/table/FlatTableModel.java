@@ -40,7 +40,7 @@ public class FlatTableModel extends AbstractTableModel {
             case 2:
                 return "Size";
             case 3:
-                return "Adress";
+                return "Address";
             case 4:
                 return "Current Flat";
             default:

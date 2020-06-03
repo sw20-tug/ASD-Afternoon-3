@@ -13,8 +13,6 @@ import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,11 +24,15 @@ public class RoommateOverview {
     private JButton removeButton;
     private JPanel contentPane;
     private JButton backButton;
+    private JLabel lHeader;
+    private JLabel lName;
+    private JLabel lAge;
 
     private final Flat activeFlat;
     private final RoommateTableModel tableModel;
 
     public RoommateOverview(Flat flat) {
+        initLocalizations();
         this.activeFlat = flat;
 
         List<Roommate> roommates = new ArrayList<>();
@@ -67,6 +69,15 @@ public class RoommateOverview {
         backButton.addActionListener(e -> {
             FlatApplication.get().setContentPane(new FlatOverview(activeFlat).getContentPane());
         });
+    }
+
+    private void initLocalizations() {
+        lHeader.setText(Localization.getInstance().getCurrent().getString("roommate.header"));
+        lName.setText(Localization.getInstance().getCurrent().getString("roommate.name"));
+        lAge.setText(Localization.getInstance().getCurrent().getString("roommate.age"));
+        addButton.setText(Localization.getInstance().getCurrent().getString("roommate.button.add"));
+        removeButton.setText(Localization.getInstance().getCurrent().getString("roommate.button.remove"));
+        backButton.setText(Localization.getInstance().getCurrent().getString("frame.button.back"));
     }
 
     private Roommate createRoommate() {
@@ -112,41 +123,61 @@ public class RoommateOverview {
      */
     private void $$$setupUI$$$() {
         contentPane = new JPanel();
-        contentPane.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
+        contentPane.setLayout(new GridLayoutManager(3, 1, new Insets(10, 10, 10, 10), -1, -1));
+        contentPane.setBackground(new Color(-14078925));
         roommateTable = new JTable();
+        roommateTable.setBackground(new Color(-14078925));
+        roommateTable.setForeground(new Color(-2103318));
+        roommateTable.setGridColor(new Color(-12816512));
         contentPane.add(roommateTable, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(2, 4, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setBackground(new Color(-14078925));
         contentPane.add(panel1, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         tfName = new JTextField();
+        tfName.setBackground(new Color(-12632257));
+        tfName.setForeground(new Color(-2103318));
+        tfName.setText("");
         tfName.setToolTipText("Name");
         panel1.add(tfName, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         tfAge = new JTextField();
+        tfAge.setBackground(new Color(-12632257));
+        tfAge.setForeground(new Color(-2103318));
         tfAge.setToolTipText("Age");
         panel1.add(tfAge, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         addButton = new JButton();
+        addButton.setBackground(new Color(-12816512));
+        addButton.setForeground(new Color(-2103318));
         addButton.setText("Add");
-        panel1.add(addButton, new GridConstraints(0, 2, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(addButton, new GridConstraints(0, 2, 2, 1, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         removeButton = new JButton();
+        removeButton.setBackground(new Color(-12816512));
+        removeButton.setForeground(new Color(-2103318));
         removeButton.setText("Remove");
-        panel1.add(removeButton, new GridConstraints(0, 3, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label1 = new JLabel();
-        label1.setText("Name");
-        panel1.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label2 = new JLabel();
-        label2.setText("Age");
-        panel1.add(label2, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel1.add(removeButton, new GridConstraints(0, 3, 2, 1, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lName = new JLabel();
+        lName.setForeground(new Color(-4670720));
+        lName.setText("Name");
+        panel1.add(lName, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lAge = new JLabel();
+        lAge.setForeground(new Color(-4670720));
+        lAge.setText("Age");
+        panel1.add(lAge, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
+        panel2.setBackground(new Color(-14078925));
         contentPane.add(panel2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label3 = new JLabel();
-        Font label3Font = this.$$$getFont$$$(null, -1, 22, label3.getFont());
-        if (label3Font != null) label3.setFont(label3Font);
-        label3.setText("Roommates");
-        panel2.add(label3, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lHeader = new JLabel();
+        Font lHeaderFont = this.$$$getFont$$$(null, -1, 22, lHeader.getFont());
+        if (lHeaderFont != null) lHeader.setFont(lHeaderFont);
+        lHeader.setForeground(new Color(-4145152));
+        lHeader.setText("Roommates");
+        panel2.add(lHeader, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
         panel2.add(spacer1, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         backButton = new JButton();
+        backButton.setBackground(new Color(-12816512));
+        backButton.setForeground(new Color(-2103318));
         backButton.setText("< Back");
         panel2.add(backButton, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }

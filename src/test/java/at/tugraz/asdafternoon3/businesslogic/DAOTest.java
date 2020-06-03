@@ -18,6 +18,7 @@ public abstract class DAOTest {
 
     @AfterClass
     public static void tearDownAfterClass() throws Exception {
+        database.close();
         TestUtils.closeTestDatabase(MethodHandles.lookup().lookupClass().getName());
         database = null;
     }

@@ -1,16 +1,14 @@
 package at.tugraz.asdafternoon3;
 
-import at.tugraz.asdafternoon3.businesslogic.DAO;
 import at.tugraz.asdafternoon3.businesslogic.FlatDAO;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
-import at.tugraz.asdafternoon3.ui.FlatOverview;
 import at.tugraz.asdafternoon3.ui.CreateFlatUI;
-import org.hibernate.dialect.Database;
+import at.tugraz.asdafternoon3.ui.FlatOverview;
+import at.tugraz.asdafternoon3.ui.Localization;
 
 import javax.swing.*;
-
-import static java.lang.Thread.sleep;
+import java.util.Locale;
 
 public class FlatApplication {
 
@@ -27,8 +25,12 @@ public class FlatApplication {
 
     public FlatApplication() {
         try {
+            // Init localization
+            Locale current = Localization.getInstance().getCurrentLocale();
+            System.out.println("Language set to: " + current.getLanguage() + " and country: " + current.getCountry());
+
             // create frame
-            this.frame = new JFrame("Flat Application");
+            this.frame = new JFrame(Localization.getInstance().getCurrent().getString("frame.title"));
 
             // Check if a flat is existing
             FlatDAO flatDao = DatabaseConnection.getInstance().createDao(FlatDAO.class);
@@ -42,6 +44,7 @@ public class FlatApplication {
             }
 
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setLocationRelativeTo(null);
             frame.pack();
             frame.setVisible(true);
         } catch (Exception ex) {
