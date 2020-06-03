@@ -1,19 +1,14 @@
 package at.tugraz.asdafternoon3;
 
-import at.tugraz.asdafternoon3.businesslogic.DAO;
 import at.tugraz.asdafternoon3.businesslogic.FlatDAO;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
-import at.tugraz.asdafternoon3.ui.FlatOverview;
 import at.tugraz.asdafternoon3.ui.CreateFlatUI;
+import at.tugraz.asdafternoon3.ui.FlatOverview;
 import at.tugraz.asdafternoon3.ui.Localization;
-import org.hibernate.dialect.Database;
 
 import javax.swing.*;
-
 import java.util.Locale;
-
-import static java.lang.Thread.sleep;
 
 public class FlatApplication {
 
@@ -49,6 +44,7 @@ public class FlatApplication {
             }
 
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setLocationRelativeTo(null);
             frame.pack();
             frame.setVisible(true);
         } catch (Exception ex) {
