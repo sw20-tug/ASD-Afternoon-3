@@ -4,8 +4,6 @@ import at.tugraz.asdafternoon3.FlatApplication;
 import at.tugraz.asdafternoon3.businesslogic.CalenderExport;
 import at.tugraz.asdafternoon3.businesslogic.CleaningScheduleDAO;
 import at.tugraz.asdafternoon3.businesslogic.FlatDAO;
-import at.tugraz.asdafternoon3.data.CleaningSchedule;
-import at.tugraz.asdafternoon3.data.DatabaseObject;
 import at.tugraz.asdafternoon3.data.Flat;
 import at.tugraz.asdafternoon3.data.Roommate;
 import at.tugraz.asdafternoon3.database.DatabaseConnection;
@@ -17,7 +15,6 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,13 +23,14 @@ public class CleaningScheduleExportView {
     private JButton exportButton;
     private JButton backButton;
     private JComboBox<Roommate> cbRoommates;
+    private JLabel lHeader;
 
     private final Flat activeFlat;
     private final RoommateComboBoxModel model;
 
     public CleaningScheduleExportView(Flat flat) {
         activeFlat = flat;
-
+        initLocalizations();
         List<Roommate> roommates = new ArrayList<>();
         try {
             roommates = DatabaseConnection.getInstance().createDao(FlatDAO.class).getRoommates(flat);
@@ -66,6 +64,13 @@ public class CleaningScheduleExportView {
         });
     }
 
+    private void initLocalizations() {
+        lHeader.setText(Localization.getInstance().getCurrent().getString("cleaningschedule.export.header"));
+        backButton.setText(Localization.getInstance().getCurrent().getString("frame.button.ok"));
+        exportButton.setText(Localization.getInstance().getCurrent().getString("cleaningschedule.export.export.button"));
+
+    }
+
     public JPanel getContentPane() {
         return contentPane;
     }
@@ -91,12 +96,12 @@ public class CleaningScheduleExportView {
         panel1.setLayout(new GridLayoutManager(2, 3, new Insets(0, 0, 0, 0), -1, -1));
         panel1.setBackground(new Color(-14078925));
         contentPane.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label1 = new JLabel();
-        Font label1Font = this.$$$getFont$$$(null, -1, 22, label1.getFont());
-        if (label1Font != null) label1.setFont(label1Font);
-        label1.setForeground(new Color(-4145152));
-        label1.setText("Cleaning Schedule Export");
-        panel1.add(label1, new GridConstraints(0, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lHeader = new JLabel();
+        Font lHeaderFont = this.$$$getFont$$$(null, -1, 22, lHeader.getFont());
+        if (lHeaderFont != null) lHeader.setFont(lHeaderFont);
+        lHeader.setForeground(new Color(-4145152));
+        lHeader.setText("Cleaning Schedule Export");
+        panel1.add(lHeader, new GridConstraints(0, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         exportButton = new JButton();
         exportButton.setBackground(new Color(-12816512));
         exportButton.setForeground(new Color(-2103318));

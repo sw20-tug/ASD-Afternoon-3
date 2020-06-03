@@ -144,7 +144,7 @@ public class CleaningScheduleUI {
         btAddWeeklyOrMonthly.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CleaningScheduleDialog dialog = new CleaningScheduleDialog(null, false, flat);
+                CleaningScheduleDialog dialog = new CleaningScheduleDialog(new CleaningSchedule(), false, flat);
                 dialog.setSize(300, 300);
                 dialog.addWindowListener(onCloseDialogListener);
                 dialog.setVisible(true);

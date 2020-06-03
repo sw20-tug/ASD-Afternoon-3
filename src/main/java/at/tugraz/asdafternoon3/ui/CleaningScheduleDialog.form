@@ -61,7 +61,7 @@
         </properties>
         <border type="none"/>
         <children>
-          <component id="27460" class="javax.swing.JLabel">
+          <component id="27460" class="javax.swing.JLabel" binding="tHeader">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -81,7 +81,7 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="962cb" class="javax.swing.JLabel">
+              <component id="962cb" class="javax.swing.JLabel" binding="tName">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -112,7 +112,7 @@
                   <foreground color="-2103318"/>
                 </properties>
               </component>
-              <component id="7768" class="javax.swing.JLabel">
+              <component id="7768" class="javax.swing.JLabel" binding="tInterval">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -121,7 +121,7 @@
                   <text value="Intervall"/>
                 </properties>
               </component>
-              <component id="20e4b" class="javax.swing.JLabel">
+              <component id="20e4b" class="javax.swing.JLabel" binding="tStart">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -130,7 +130,7 @@
                   <text value="Start"/>
                 </properties>
               </component>
-              <component id="9776f" class="javax.swing.JLabel">
+              <component id="9776f" class="javax.swing.JLabel" binding="tPerson">
                 <constraints>
                   <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
